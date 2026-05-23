@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmed</title>
+<style>
+body{font-family:Arial,sans-serif;padding:30px;text-align:center;max-width:600px;margin:auto;background:#f5f5f5}
+.box{background:#fff;padding:30px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1)}
+h1{color:#28a745;margin-bottom:15px}
+.status{padding:12px;border-radius:8px;margin:20px 0;font-weight:bold}
+.paid{background:#d4edda;color:#155724;border:1px solid #c3e6cb}
+.pending{background:#fff3cd;color:#856404;border:1px solid #ffeaa7}
+.btn{padding:15px 30px;background:#ff6600;color:#fff;text-decoration:none;border-radius:5px;display:inline-block;margin-top:15px;font-weight:bold}
+.detail{color:#666;margin:8px 0}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h1>✅ Order Confirmed!</h1>
+  
+  <div id="paymentStatus" class="status"></div>
+  
+  <p class="detail" id="methodText"></p>
+  <p class="detail">Thank you for your purchase. You’ll receive a confirmation SMS shortly.</p>
+  
+  <a href="index.html" class="btn">Continue Shopping</a>
+</div>
+
+<script>
+const method = localStorage.getItem('paymentMethod');
+const status = localStorage.getItem('paymentStatus');
+
+const statusDiv = document.getElementById('paymentStatus');
+const methodText = document.getElementById('methodText');
+
+if(method === 'cod'){
+  statusDiv.className = 'status pending';
+  statusDiv.textContent = 'Payment: Pay on Delivery';
+  methodText.textContent = 'Pay cash when your order arrives.';
+} else if(method === 'mpesa'){
+  statusDiv.className = 'status paid';
+  statusDiv.textContent = 'Payment: Paid with M-Pesa';
+  methodText.textContent = 'Your payment was successful.';
+} else if(method === 'card'){
+  statusDiv.className = 'status paid';
+  statusDiv.textContent = 'Payment: Paid with Card';
+  methodText.textContent = 'Your payment was successful.';
+} else {
+  statusDiv.className = 'status pending';
+  statusDiv.textContent = 'Payment: Pending';
+  methodText.textContent = 'Payment method not selected.';
+}
+
+// Clear cart after showing confirmation
+localStorage.removeItem('cart');
+localStorage.removeItem('paymentMethod');
+localStorage.removeItem('paymentStatus');
+</script>
+
+</body>
+</html>

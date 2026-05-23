@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout</title>
+<style>
+body{font-family:Arial,sans-serif;padding:20px;max-width:600px;margin:auto}
+input,select{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:5px}
+button{width:100%;padding:15px;background:#ff6600;color:#fff;border:none;border-radius:5px;font-size:16px;font-weight:bold;margin-top:10px}
+nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="cart.html">Cart</a>
+</nav>
+
+<h2>Checkout</h2>
+
+<input type="text" placeholder="Full Name" id="name">
+<input type="tel" placeholder="Phone Number" id="phone">
+<input type="text" placeholder="Address" id="address">
+
+<button onclick="proceedPayment()">Proceed to Payment</button>
+
+<script>
+function proceedPayment(){
+  const name = document.getElementById('name').value;
+  if(!name){alert('Enter your name'); return;}
+  localStorage.setItem('orderInfo', JSON.stringify({name}));
+  window.location.href = 'payment.html';
+}
+</script>
+
+</body>
+</html>

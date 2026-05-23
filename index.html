@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitui Collection</title>
+<style>
+body{font-family:Arial,sans-serif;padding:20px;max-width:800px;margin:auto;background:#f9f9f9}
+.product{border:1px solid #ddd;background:#fff;padding:15px;margin:10px 0;border-radius:8px;display:flex;gap:15px;align-items:center}
+.product img{width:100px;height:100px;object-fit:cover;border-radius:5px}
+button{padding:10px 20px;background:#ff6600;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold}
+button:active{background:#e65c00}
+nav{margin-bottom:20px}
+nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold}
+h1{margin-bottom:20px}
+.cart-count{background:#ff6600;color:#fff;padding:2px 8px;border-radius:12px;font-size:13px;margin-left:5px}
+
+.toast{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:#333;
+  color:#fff;
+  padding:14px 24px;
+  border-radius:8px;
+  font-weight:bold;
+  opacity:0;
+  transition:all 0.3s ease;
+  z-index:1000;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2)
+}
+.toast.show{
+  transform:translateX(-50%) translateY(0);
+  opacity:1;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="cart.html">Cart <span class="cart-count" id="cartCount">0</span></a>
+</nav>
+
+<h1>Kitui Collection</h1>
+
+<div class="product">
+  <img src="https://via.placeholder.com/100">
+  <div>
+    <h3>Classic Black Tee</h3>
+    <p>KSh 1999</p>
+    <button onclick="addToCart(1)">Add to Cart</button>
+  </div>
+</div>
+
+<div class="product">
+  <img src="https://via.placeholder.com/100">
+  <div>
+    <h3>Slim Fit Jeans</h3>
+    <p>KSh 3999</p>
+    <button onclick="addToCart(2)">Add to Cart</button>
+  </div>
+</div>
+
+<div class="toast" id="toast">Added to cart!</div>
+
+<script>
+function updateCartCount(){
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  let count = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+}
+
+function showToast(message){
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(()=> toast.classList.remove('show'), 2000);
+}
+
+function addToCart(id){
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  let item = cart.find(i => i.id === id);
+  
+  if(item) {
+    item.qty += 1;
+    showToast('Item quantity updated!');
+  } else {
+    cart.push({id:id, qty:1});
+    showToast('Added to cart!');
+  }
+  
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+}
+
+// Update cart count on page load
+updateCartCount();
+</script>
+
+</body>
+</html>
