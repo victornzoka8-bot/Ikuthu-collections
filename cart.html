@@ -30,12 +30,23 @@ select{width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius
 <div class="container" id="cartContainer"></div>
 
 <script>
-const products = [
-  {id:1,name:"Classic Black Tee",price:1999,img:"https://via.placeholder.com/80"},
-  {id:2,name:"Slim Fit Jeans",price:3999,img:"https://via.placeholder.com/80"},
-  {id:3,name:"Hoodie Gray",price:4999,img:"https://via.placeholder.com/80"},
-  {id:4,name:"Casual Sneakers",price:5999,img:"https://via.placeholder.com/80"}
-];
+let products = [];
+
+async function loadProducts(){
+  const res = await fetch('/products.csv');
+  const text = await res.text();
+  const rows = text.split('\n').slice(1);
+  
+  products = rows.map((row, i) => {
+    const [name, price, img] = row.split(',');
+    return {
+      id: i + 1,
+      name: name.trim(),
+      price: parseInt(price.trim()),
+      img: img.trim()
+    };
+  }).filter(p => p.name);
+}
 
 const locations = [
   {name:"Kitui Town", fee:180},
@@ -149,8 +160,8 @@ function checkout(){
   const user = localStorage.getItem('user');
   window.location.href = user? 'checkout.html' : 'login.html';
 }
+loadProducts().then(renderCart);
 
-renderCart();
 </script>
 </body>
 </html>
