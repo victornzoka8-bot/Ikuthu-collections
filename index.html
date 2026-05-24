@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Welcom, Shop with us.</title>
+<title>Ikuthu Collections</title>
 <style>
 body{font-family:Arial,sans-serif;background:linear-gradient(to right,#4facfe,#00f2fe);padding:20px;max-width:800px;margin:auto;}
-.product{border:1px solid #ddd;background:#fff;padding:15px;margin:10px 0;border-radius:8px;display:flex;gap:15px;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px;margin-top:20px}
+.product{border:1px solid #ddd;background:#fff;padding:15px;border-radius:8px;display:flex;gap:15px;align-items:center}
 .product img{width:100px;height:100px;object-fit:cover;border-radius:5px}
 button{padding:10px 20px;background:#ff6600;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold}
 button:active{background:#e65c00}
@@ -43,29 +44,38 @@ h1{margin-bottom:20px}
   <a href="cart.html">Cart <span class="cart-count" id="cartCount">0</span></a>
 </nav>
 
-<h1>Kitui Collection</h1>
-
-<div class="product">
-  <img src="https://via.placeholder.com/100">
-  <div>
-    <h3>Classic Black Tee</h3>
-    <p>KSh 1999</p>
-    <button onclick="addToCart(1)">Add to Cart</button>
-  </div>
-</div>
-
-<div class="product">
-  <img src="https://via.placeholder.com/100">
-  <div>
-    <h3>Slim Fit Jeans</h3>
-    <p>KSh 3999</p>
-    <button onclick="addToCart(2)">Add to Cart</button>
-  </div>
-</div>
+<h1>Ikuthu Collection</h1>
+<div class="grid" id="products"></div>
 
 <div class="toast" id="toast">Added to cart!</div>
 
 <script>
+const productsContainer = document.getElementById('products');
+
+// Load products from CSV
+fetch('/data/products.csv')
+  .then(res => res.text())
+  .then(csv => {
+    const rows = csv.split('\n').slice(1); // skip header
+    rows.forEach(row => {
+      if (!row.trim()) return;
+      const [id, name, price, image] = row.split(',');
+      
+      productsContainer.innerHTML += `
+        <div class="product">
+          <img src="${image.trim()}">
+          <div>
+            <h3>${name.trim()}</h3>
+            <p>KSh ${price.trim()}</p>
+            <button onclick="addToCart(${id.trim()})">Add to Cart</button>
+          </div>
+        </div>
+      `;
+    });
+  })
+  .catch(err => console.log('Error loading products:', err));
+
+// Cart functions
 function updateCartCount(){
   let cart = JSON.parse(localStorage.getItem('cart') || '[]');
   let count = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -81,13 +91,13 @@ function showToast(message){
 
 function addToCart(id){
   let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  let item = cart.find(i => i.id === id);
+  let item = cart.find(i => i.id === parseInt(id));
   
   if(item) {
     item.qty += 1;
     showToast('Item quantity updated!');
   } else {
-    cart.push({id:id, qty:1});
+    cart.push({id:parseInt(id), qty:1});
     showToast('Added to cart!');
   }
   
@@ -95,7 +105,6 @@ function addToCart(id){
   updateCartCount();
 }
 
-// Update cart count on page load
 updateCartCount();
 </script>
 
