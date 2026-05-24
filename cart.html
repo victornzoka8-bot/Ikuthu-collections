@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,48 +31,48 @@ select{width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius
 <script>
 let products = [];
 const csvData = `name,price,img
-1,Classic MX,750,/shirt-01
-2,Pique cotton pool,850,/shirt-02
-3,Graphic tee,500,/shirt-03
-4,Mtx Cotton,600,/shirt-04
-5,Lipier Samon,550,/shirt-05
-6,Dvt Cotton,560,/shirt-06
-7,Modal Royen,750,/shirt-07
-8,NkT Corsd,600,/shirt-08
-9,SHF Cjf,900,/shirt-09
-10,Fsg Hds,750,/shirt-10
-11,Saf Gdf,750,/shirt-11
-12,SGD Vf,960,/shirt-12
-13,Sadc,570,/shirt-13
-14,Dhfs,740,/shirt-14
-15,Hfd Vjf,500,/shirt-15
-16,Dgfd Bvc,660,/shirt-16
-17,Gdsc nng,700,/shirt-17
-18,Vjgd Hf,547,/shirt-18
-19,Fgdv,750,/shirt-19
-20,Dhf,960,/shirt-20
-21,Bhd Bv,560,/shirt-21
-22,Jgd nb,580,/shirt-22
-23,Hdsv,780,/shirt-23
-24,FSV Hjg,630,/shirt-24
-25,DVD Gnf,580,/shirt-25
-26,Shgc,246,/shirt-26
-27,Fhvc,588,/shirt-27
-28,Hgdv Gn,570,/shirt-28
-29,HdvBj,680,/shirt-29
-30,Nfvbn,560,/shirt-30
-31,Jdbn,760,/shirt-31
-32,Dbbc,750,/shirt-32
-33,Svncv,570,/shirt-33
-34,Shnnhn,560,/shirt-34
-35,Dbncn,540,/shirt-35
-36,Dbvx,750,/shirt-36
-37,Fhbcb,600,/shirt-37
-38,Dgnnv,950,/shirt-38
-39,Dhmgvn,850,/shirt-39
-40,Fnmvcm,700,/shirt-40
-41,Fjmcn,550,/shirt-41
-42,Fmnvm,580,/shirt-42';
+Classic MX,750,/shirt-01
+Pique cotton pool,850,/shirt-02
+Graphic tee,500,/shirt-03
+Mtx Cotton,600,/shirt-04
+Lipier Samon,550,/shirt-05
+Dvt Cotton,560,/shirt-06
+Modal Royen,750,/shirt-07
+NkT Corsd,600,/shirt-08
+SHF Cjf,900,/shirt-09
+Fsg Hds,750,/shirt-10
+Saf Gdf,750,/shirt-11
+SGD Vf,960,/shirt-12
+Sadc,570,/shirt-13
+Dhfs,740,/shirt-14
+Hfd Vjf,500,/shirt-15
+Dgfd Bvc,660,/shirt-16
+Gdsc nng,700,/shirt-17
+Vjgd Hf,547,/shirt-18
+Fgdv,750,/shirt-19
+Dhf,960,/shirt-20
+Bhd Bv,560,/shirt-21
+Jgd nb,580,/shirt-22
+Hdsv,780,/shirt-23
+FSV Hjg,630,/shirt-24
+DVD Gnf,580,/shirt-25
+Shgc,246,/shirt-26
+Fhvc,588,/shirt-27
+Hgdv Gn,570,/shirt-28
+HdvBj,680,/shirt-29
+Nfvbn,560,/shirt-30
+Jdbn,760,/shirt-31
+Dbbc,750,/shirt-32
+Svncv,570,/shirt-33
+Shnnhn,560,/shirt-34
+Dbncn,540,/shirt-35
+Dbvx,750,/shirt-36
+Fhbcb,600,/shirt-37
+Dgnnv,950,/shirt-38
+Dhmgvn,850,/shirt-39
+Fnmvcm,700,/shirt-40
+Fjmcn,550,/shirt-41
+Fmnvm,580,/shirt-42`;
 
 function loadProducts(){
   const rows = csvData.split('\n').slice(1);
@@ -86,11 +85,12 @@ function loadProducts(){
       img: img.trim()
     };
   }).filter(p => p.name);
-  
   renderCart();
-  
- loadProducts();
+}
+
+loadProducts();
 </script>
+
 <script>
 const locations = [
   {name:"Kitui Town", fee:180},
@@ -121,6 +121,7 @@ function renderCart(){
 
   cart.forEach(item => {
     const prod = products.find(p => p.id === item.id);
+    if(!prod) return;
     const subtotal = prod.price * item.qty;
     itemTotal += subtotal;
 
@@ -204,8 +205,6 @@ function checkout(){
   const user = localStorage.getItem('user');
   window.location.href = user? 'checkout.html' : 'login.html';
 }
-
-
 </script>
 </body>
 </html>
