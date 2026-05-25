@@ -3,50 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payment - Kitui Collection</title>
+<title>Payment</title>
 <style>
-body{font-family:Arial,sans-serif;padding:20px;max-width:600px;margin:auto;text-align:center;background:#f5f5f5}
-.container{background:#fff;padding:25px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-h2{margin-bottom:10px}
-p{color:#666;margin-bottom:20px}
-.pay-option{width:100%;padding:15px;background:#fff;border:2px solid #ddd;border-radius:8px;font-size:16px;font-weight:bold;margin:10px 0;cursor:pointer;text-align:left;display:flex;align-items:center;gap:10px}
-.pay-option:active{border-color:#ff6600}
-.pay-now{background:#28a745;color:#fff;border-color:#28a745}
-.pay-cod{background:#ff6600;color:#fff;border-color:#ff6600}
-nav{margin-bottom:20px;text-align:left}
-nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold}
-.icon{font-size:22px}
+body{font-family:Arial,sans-serif;padding:20px;max-width:600px;margin:auto;background:#f5f5f5}
+.container{background:#fff;padding:20px;border-radius:8px}
+h2{margin-bottom:20px}
+.order-box{background:#f9f9f9;padding:15px;border-radius:5px;margin-bottom:20px}
+.btn{width:100%;padding:15px;margin:10px 0;border:none;border-radius:5px;font-size:16px;font-weight:bold;cursor:pointer}
+.btn-cash{background:#4CAF50;color:#fff}
+.btn-mpesa{background:#00B300;color:#fff}
+.back{color:#333;text-decoration:none;display:inline-block;margin-bottom:15px}
+.loading{display:none;text-align:center;padding:20px}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="cart.html">Cart</a>
-</nav>
-
 <div class="container">
+  <a href="checkout.html" class="back">← Back</a>
   <h2>Select Payment Method</h2>
-  <p>Choose how you want to pay</p>
 
-  <button class="pay-option pay-now" onclick="pay('mpesa')">
-    <span class="icon">📱</span> Pay Now with M-Pesa
-  </button>
+  <div class="order-box" id="orderSummary"></div>
 
-  <button class="pay-option pay-now" onclick="pay('card')">
-    <span class="icon">💳</span> Pay Now with Card
-  </button>
+  <button class="btn btn-cash" onclick="payCash()">Pay on Delivery</button>
+  <button class="btn btn-mpesa" onclick="payMpesa()">Pay with M-Pesa</button>
 
-  <button class="pay-option pay-cod" onclick="pay('cod')">
-    <span class="icon">💵</span> Pay on Delivery
-  </button>
+  <div class="loading" id="loading">Placing your order...</div>
 </div>
 
 <script>
-function pay(method){
-  localStorage.setItem('paymentMethod', method);
-  localStorage.setItem('paymentStatus', method === 'cod' ? 'pending' : 'paid');
-  window.location.href = 'confirmation.html';
+const orderData = JSON.parse(localStorage.getItem('pendingOrder') || '{}');
+
+if(!orderData.total){
+  alert('No order found. Redirecting to cart.');
+  window.location.href = 'cart.html';
+}
+
+document.getElementById('orderSummary').innerHTML = `
+  <p><strong>Name:</strong> ${orderData.name}</p>
+  <p><strong>Phone:</strong> ${orderData.phone}</p>
+  <p><strong>Delivery:</strong> ${orderData.location}</p>
+  <p style="font-size:18px;margin-top:10px"><strong>Total:</strong> KSh ${orderData.total.toLocaleString()}</p>
+`;
+
+function payCash(){
+  orderData.paymentMethod = 'Cash on Delivery';
+  submitOrder();
+}
+
+function payMpesa(){
+  orderData.paymentMethod = 'M-Pesa';
+  alert('Send KSh ' + orderData.total + ' to Till 123456\nThen click OK to confirm your order');
+  submitOrder();
+}
+
+function submitOrder(){
+  document.getElementById('loading').style.display = 'block';
+
+  fetch('https://formspree.io/f/YOUR-FORM-ID', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(orderData)
+  })
+ .then(response => {
+    if(response.ok){
+      localStorage.removeItem('cart');
+      localStorage.removeItem('pendingOrder');
+      window.location.href = 'confirmation.html';
+    } else {
+      alert('Error placing order. Please try again.');
+      document.getElementById('loading').style.display = 'none';
+    }
+  })
+ .catch(() => {
+    alert('Network error. Check your connection and try again.');
+    document.getElementById('loading').style.display = 'none';
+  });
 }
 </script>
 
