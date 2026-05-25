@@ -8,13 +8,13 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Arial,sans-serif;background:#f5f5f5}
 .header{background:#fff;padding:15px;display:flex;align-items:center;border-bottom:1px solid #ddd;position:sticky;top:0;z-index:10}
-.container{max-width:600px;margin:0 auto;padding:10px;padding-bottom:100px}
+.container{max-width:600px;margin:0 auto;padding:10px;padding-bottom:120px}
 .item{background:#fff;padding:15px;margin:10px 0;border-radius:5px;display:flex;gap:15px}
 .item img{width:80px;height:80px;object-fit:cover;border-radius:5px}
 .item-info{flex:1}
 .qty-controls{display:flex;gap:10px;align-items:center;margin-top:10px}
 .qty-btn{width:30px;height:30px;border:1px solid #ddd;background:#fff;border-radius:5px;cursor:pointer}
-.summary{background:#fff;padding:15px;margin:10px 0;border-radius:5px;position:fixed;bottom:0;left:0;right:0;max-width:600px;margin:0 auto}
+.summary{background:#fff;padding:15px;margin:10px 0;border-radius:5px;position:fixed;bottom:0;left:0;right:0;max-width:600px;margin:0 auto;box-shadow:0 -2px 10px rgba(0,0,0,0.1)}
 .btn-checkout{width:100%;padding:15px;background:#ff6600;color:#fff;border:none;border-radius:5px;font-size:16px;font-weight:bold;cursor:pointer}
 .empty{text-align:center;padding:50px;color:#666}
 select{width:100%;padding:10px;margin:10px 0;border:1px solid #ddd;border-radius:5px;font-size:14px}
@@ -39,39 +39,7 @@ const products = [
   {id:7,name:"Modal Royen",price:750,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-07"},
   {id:8,name:"NkT Corsd",price:600,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-08"},
   {id:9,name:"SHF Cjf",price:900,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-09"},
-  {id:10,name:"Fsg Hds",price:750,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-10"},
-  {id:11,name:"Saf Gdf",price:750,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-11"},
-  {id:12,name:"SGD Vf",price:960,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-12"},
-  {id:13,name:"Sadc",price:570,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-13"},
-  {id:14,name:"Dhfs",price:740,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-14"},
-  {id:15,name:"Hfd Vjf",price:500,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-15"},
-  {id:16,name:"Dgfd Bvc",price:660,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-16"},
-  {id:17,name:"Gdsc nng",price:700,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-17"},
-  {id:18,name:"Vjgd Hf",price:547,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-18"},
-  {id:19,name:"Fgdv",price:750,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-19"},
-  {id:20,name:"Dhf",price:960,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-20"},
-  {id:21,name:"Bhd Bv",price:560,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-21"},
-  {id:22,name:"Jgd nb",price:580,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-22"},
-  {id:23,name:"Hdsv",price:780,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-23"},
-  {id:24,name:"FSV Hjg",price:630,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-24"},
-  {id:25,name:"DVD Gnf",price:580,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-25"},
-  {id:26,name:"Shgc",price:246,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-26"},
-  {id:27,name:"Fhvc",price:588,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-27"},
-  {id:28,name:"Hgdv Gn",price:570,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-28"},
-  {id:29,name:"HdvBj",price:680,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-29"},
-  {id:30,name:"Nfvbn",price:560,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-30"},
-  {id:31,name:"Jdbn",price:760,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-31"},
-  {id:32,name:"Dbbc",price:750,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-32"},
-  {id:33,name:"Svncv",price:570,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-33"},
-  {id:34,name:"Shnnhn",price:560,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-34"},
-  {id:35,name:"Dbncn",price:540,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-35"},
-  {id:36,name:"Dbvx",price:750,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-36"},
-  {id:37,name:"Fhbcb",price:600,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-37"},
-  {id:38,name:"Dgnnv",price:950,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-38"},
-  {id:39,name:"Dhmgvn",price:850,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-39"},
-  {id:40,name:"Fnmvcm",price:700,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-40"},
-  {id:41,name:"Fjmcn",price:550,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-41"},
-  {id:42,name:"Fmnvm",price:580,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-42"}
+  {id:10,name:"Fsg Hds",price:750,img:"https://raw.githubusercontent.com/victornzoka8-bot/Ikuthu-collections/main/shirt-10"}
 ];
 
 const locations = [
@@ -184,8 +152,7 @@ function removeItem(id){
 }
 
 function checkout(){
-  const user = localStorage.getItem('user');
-  window.location.href = user? 'checkout.html' : 'login.html';
+  window.location.href = 'checkout.html';
 }
 
 renderCart();
