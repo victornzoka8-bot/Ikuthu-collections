@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout</title>
 <style>
-body{font-family:Arial,sans-serif;padding:20px;max-width:600px;margin:auto}
-input,select{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:5px}
-button{width:100%;padding:15px;background:#ff6600;color:#fff;border:none;border-radius:5px;font-size:16px;font-weight:bold;margin-top:10px}
+body{font-family:Arial,sans-serif;padding:20px;max-width:600px;margin:auto;background:#f5f5f5}
+.container{background:#fff;padding:20px;border-radius:8px}
+input,textarea{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:5px;font-size:14px;box-sizing:border-box}
+button{width:100%;padding:15px;background:#ff6600;color:#fff;border:none;border-radius:5px;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer}
+.order-summary{background:#f9f9f9;padding:15px;border-radius:5px;margin:15px 0}
 nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold}
 </style>
 </head>
@@ -18,21 +20,69 @@ nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold}
   <a href="cart.html">Cart</a>
 </nav>
 
-<h2>Checkout</h2>
+<div class="container">
+  <h2>Checkout</h2>
+  <div class="order-summary" id="orderSummary">Loading order...</div>
 
-<input type="text" placeholder="Full Name" id="name">
-<input type="tel" placeholder="Phone Number" id="phone">
-<input type="text" placeholder="Address" id="address">
-
-<button onclick="proceedPayment()">Proceed to Payment</button>
+  <form id="order-form">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="tel" name="phone" placeholder="Phone Number" required>
+    <textarea name="address" placeholder="Delivery Address" rows="3" required></textarea>
+    <button type="submit">Continue to Payment</button>
+  </form>
+</div>
 
 <script>
-function proceedPayment(){
-  const name = document.getElementById('name').value;
-  if(!name){alert('Enter your name'); return;}
-  localStorage.setItem('orderInfo', JSON.stringify({name}));
+const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+const selectedLoc = JSON.parse(localStorage.getItem('selectedLocation') || '{"name":"Kitui Town","fee":180}');
+
+const products = [
+  {id:1,name:"White Cotton MX",price:750},
+  {id:2,name:"Pique cotton pool",price:850},
+  {id:3,name:"Graphic tee",price:500},
+  {id:4,name:"Mtx Cotton",price:600},
+  {id:5,name:"Lipier Samon",price:550},
+  {id:6,name:"Dvt Cotton",price:560},
+  {id:7,name:"Modal Royen",price:750},
+  {id:8,name:"NkT Corsd",price:600},
+  {id:9,name:"SHF Cjf",price:900},
+  {id:10,name:"Fsg Hds",price:750}
+];
+
+let subtotal = 0;
+let summaryHTML = '<h4>Order Summary</h4>';
+
+cart.forEach(item => {
+  const prod = products.find(p => p.id === item.id);
+  if(prod){
+    const itemTotal = prod.price * item.qty;
+    subtotal += itemTotal;
+    summaryHTML += `<p>${prod.name} x${item.qty} - KSh ${itemTotal.toLocaleString()}</p>`;
+  }
+});
+
+const total = subtotal + selectedLoc.fee;
+summaryHTML += `<hr style="margin:10px 0">
+<p><strong>Subtotal:</strong> KSh ${subtotal.toLocaleString()}</p>
+<p><strong>Delivery to ${selectedLoc.name}:</strong> KSh ${selectedLoc.fee}</p>
+<p style="font-size:18px"><strong>Total:</strong> KSh ${total.toLocaleString()}</p>`;
+
+document.getElementById('orderSummary').innerHTML = summaryHTML;
+
+document.getElementById('order-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const orderData = Object.fromEntries(formData.entries());
+
+  orderData.cart = cart;
+  orderData.subtotal = subtotal;
+  orderData.delivery = selectedLoc.fee;
+  orderData.location = selectedLoc.name;
+  orderData.total = total;
+
+  localStorage.setItem('pendingOrder', JSON.stringify(orderData));
   window.location.href = 'payment.html';
-}
+});
 </script>
 
 </body>
