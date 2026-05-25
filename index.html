@@ -198,9 +198,9 @@ button:active{background:#e65c00}
 <div class="grid" id="products"></div>
 
 <!-- Product Modal -->
-<div class="modal" id="productModal" onclick="closeModal()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <span class="modal-close" onclick="closeModal()">&times;</span>
+<div class="modal" id="productModal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal(event)">&times;</span>
     <img class="modal-main-img" id="modalMainImg" src="">
     <div class="thumbnails" id="modalThumbs"></div>
     <h3 id="modalName" style="margin:15px 0 5px 0;"></h3>
@@ -284,26 +284,37 @@ function openModal(id){
   document.getElementById('modalName').textContent = product.name;
   document.getElementById('modalDesc').textContent = product.description;
   document.getElementById('modalPrice').textContent = `KSh ${product.price}`;
-  document.getElementById('modalAddBtn').onclick = () => {
+  document.getElementById('modalAddBtn').onclick = (e) => {
+    e.stopPropagation();
     addToCart(product.id);
-    closeModal();
+    closeModal(e);
   };
   
   document.getElementById('modalThumbs').innerHTML = images.map((img, i) => 
-    `<img src="${img}" class="${i===0?'active':''}" onclick="switchModalImg(this,'${img}')">`
+    `<img src="${img}" class="${i===0?'active':''}" onclick="event.stopPropagation(); switchModalImg(this,'${img}')">`
   ).join('');
   
-  document.getElementById('productModal').style.display = 'block';
+  const modal = document.getElementById('productModal');
+  modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
+  
+  // Close only when clicking the dark background
+  modal.onclick = (e) => {
+    if(e.target.id === 'productModal'){
+      closeModal(e);
+    }
+  };
 }
 
 function switchModalImg(el, src){
+  event.stopPropagation();
   document.getElementById('modalMainImg').src = src;
   document.querySelectorAll('.thumbnails img').forEach(img => img.classList.remove('active'));
   el.classList.add('active');
 }
 
-function closeModal(){
+function closeModal(e){
+  if(e) e.preventDefault();
   document.getElementById('productModal').style.display = 'none';
   document.body.style.overflow = 'auto';
 }
