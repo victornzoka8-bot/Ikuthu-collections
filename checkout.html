@@ -5,12 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout</title>
 <style>
-body{font-family:Arial,sans-serif;padding:20px;max-width:600px;margin:auto;background:#f5f5f5}
-.container{background:#fff;padding:20px;border-radius:8px}
-input,textarea{width:100%;padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:5px;font-size:14px;box-sizing:border-box}
-button{width:100%;padding:15px;background:#ff6600;color:#fff;border:none;border-radius:5px;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer}
-.order-summary{background:#f9f9f9;padding:15px;border-radius:5px;margin:15px 0}
-nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#f5f5f5;padding:20px;max-width:600px;margin:auto;}
+nav{margin-bottom:20px;}
+nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold;font-size:15px;}
+.container{background:#fff;padding:20px;border-radius:8px;}
+h2{font-size:26px;font-weight:700;margin-bottom:16px;}
+.order-summary{background:#f9f9f9;padding:15px;border-radius:5px;margin:15px 0;}
+.order-summary h4{margin-bottom:12px;font-size:16px;}
+.order-summary p{margin:6px 0;font-size:14px;}
+.order-summary hr{border:none;border-top:1px solid #ddd;margin:10px 0;}
+
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13px;color:#666;margin-bottom:6px;font-weight:500;}
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:5px;
+  font-size:14px;
+  box-sizing:border-box;
+  outline:none;
+}
+input:focus,textarea:focus,select:focus{border-color:#000;}
+textarea{resize:none;font-family:inherit;}
+
+.error{color:#d32f2f;font-size:13px;margin-top:6px;display:none;}
+.field.invalid input,
+.field.invalid textarea,
+.field.invalid select{border-color:#d32f2f;}
+.field.invalid .error{display:block;}
+
+button{width:100%;padding:15px;background:#ff6600;color:#fff;border:none;border-radius:5px;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer;}
+button:active{background:#e55f00;}
 </style>
 </head>
 <body>
@@ -24,10 +51,45 @@ nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold}
   <h2>Checkout</h2>
   <div class="order-summary" id="orderSummary">Loading order...</div>
 
-  <form id="order-form">
-    <input type="text" name="name" placeholder="Full Name" required>
-    <input type="tel" name="phone" placeholder="Phone Number" required>
-    <textarea name="address" placeholder="Delivery Address" rows="3" required></textarea>
+  <form id="order-form" novalidate>
+    <div class="field" id="nameField">
+      <label>Full Name</label>
+      <input type="text" id="name" placeholder="John Doe">
+      <div class="error">Enter your full name</div>
+    </div>
+    
+    <div class="field" id="phoneField">
+      <label>Phone Number</label>
+      <input type="tel" id="phone" placeholder="0712345678">
+      <div class="error">Enter a valid Kenyan number</div>
+    </div>
+    
+    <div class="field" id="townField">
+      <label>Town</label>
+      <select id="town">
+        <option value="">Select your town</option>
+        <option value="Kitui Town" data-fee="180">Kitui Town - KSh 180</option>
+        <option value="Nairobi CBD" data-fee="300">Nairobi CBD - KSh 300</option>
+        <option value="Mombasa" data-fee="350">Mombasa - KSh 350</option>
+        <option value="Nakuru" data-fee="250">Nakuru - KSh 250</option>
+        <option value="Kisumu" data-fee="280">Kisumu - KSh 280</option>
+        <option value="Other Locations" data-fee="400">Other Locations - KSh 400</option>
+      </select>
+      <div class="error">Select a town</div>
+    </div>
+    
+    <div class="field" id="areaField">
+      <label>Area / Estate</label>
+      <input type="text" id="area" placeholder="Kwa Mutua, Westlands, Mwembe Tayari">
+      <div class="error">Enter your area or estate</div>
+    </div>
+    
+    <div class="field" id="landmarkField">
+      <label>Landmark / House No.</label>
+      <input type="text" id="landmark" placeholder="Opposite Mall, House 12B">
+      <div class="error">Enter a landmark or house number</div>
+    </div>
+    
     <button type="submit">Continue to Payment</button>
   </form>
 </div>
@@ -49,6 +111,16 @@ const products = [
   {id:10,name:"Fsg Hds",price:750}
 ];
 
+// Delivery towns from your screenshot
+const deliveryTowns = [
+  {name:"Kitui Town", fee:180},
+  {name:"Nairobi CBD", fee:300},
+  {name:"Mombasa", fee:350},
+  {name:"Nakuru", fee:250},
+  {name:"Kisumu", fee:280},
+  {name:"Other Locations", fee:400}
+];
+
 let subtotal = 0;
 let summaryHTML = '<h4>Order Summary</h4>';
 
@@ -61,28 +133,94 @@ cart.forEach(item => {
   }
 });
 
-const total = subtotal + selectedLoc.fee;
-summaryHTML += `<hr style="margin:10px 0">
+let deliveryFee = selectedLoc.fee;
+let deliveryTown = selectedLoc.name;
+let total = subtotal + deliveryFee;
+
+summaryHTML += `<hr>
 <p><strong>Subtotal:</strong> KSh ${subtotal.toLocaleString()}</p>
-<p><strong>Delivery to ${selectedLoc.name}:</strong> KSh ${selectedLoc.fee}</p>
-<p style="font-size:18px"><strong>Total:</strong> KSh ${total.toLocaleString()}</p>`;
+<p id="deliveryLine"><strong>Delivery to ${deliveryTown}:</strong> KSh ${deliveryFee}</p>
+<p style="font-size:18px" id="totalLine"><strong>Total:</strong> KSh ${total.toLocaleString()}</p>`;
 
 document.getElementById('orderSummary').innerHTML = summaryHTML;
 
+// Set default town in dropdown
+const townSelect = document.getElementById('town');
+townSelect.value = deliveryTown;
+
+// Update fees when town changes
+townSelect.addEventListener('change', () => {
+  const selected = deliveryTowns.find(t => t.name === townSelect.value);
+  if(selected){
+    deliveryFee = selected.fee;
+    deliveryTown = selected.name;
+    total = subtotal + deliveryFee;
+    
+    document.getElementById('deliveryLine').innerHTML = `<strong>Delivery to ${deliveryTown}:</strong> KSh ${deliveryFee}`;
+    document.getElementById('totalLine').innerHTML = `<strong>Total:</strong> KSh ${total.toLocaleString()}`;
+  }
+});
+
+// Form validation
 document.getElementById('order-form').addEventListener('submit', (e) => {
   e.preventDefault();
-  const formData = new FormData(e.target);
-  const orderData = Object.fromEntries(formData.entries());
-
-  orderData.cart = cart;
-  orderData.subtotal = subtotal;
-  orderData.delivery = selectedLoc.fee;
-  orderData.location = selectedLoc.name;
-  orderData.total = total;
+  
+  const name = getVal('name');
+  const phone = getVal('phone').replace(/[\s\-]/g,'');
+  const town = townSelect.value;
+  const area = getVal('area');
+  const landmark = getVal('landmark');
+  
+  let valid = true;
+  
+  if(!name) valid = setError('nameField', true);
+  else setError('nameField', false);
+  
+  if(!/^0(7|1)\d{8}$|^254(7|1)\d{8}$/.test(phone)) valid = setError('phoneField', true);
+  else setError('phoneField', false);
+  
+  if(!town) valid = setError('townField', true);
+  else setError('townField', false);
+  
+  if(!area) valid = setError('areaField', true);
+  else setError('areaField', false);
+  
+  if(!landmark || landmark.length < 5) valid = setError('landmarkField', true);
+  else setError('landmarkField', false);
+  
+  if(!valid) return;
+  
+  // Format phone to 254 format for M-Pesa
+  const mpesaPhone = phone.startsWith('0') ? '254' + phone.slice(1) : phone;
+  const fullAddress = `${landmark}, ${area}, ${town}`;
+  
+  const orderData = {
+    name: name,
+    phone: mpesaPhone,
+    address: fullAddress,
+    town: town,
+    area: area,
+    landmark: landmark,
+    cart: cart,
+    subtotal: subtotal,
+    delivery: deliveryFee,
+    location: town,
+    total: total
+  };
 
   localStorage.setItem('pendingOrder', JSON.stringify(orderData));
   window.location.href = 'payment.html';
 });
+
+function getVal(id){
+  return document.getElementById(id).value.trim();
+}
+
+function setError(fieldId, show){
+  const field = document.getElementById(fieldId);
+  field.classList.toggle('invalid', show);
+  return !show;
+}
 </script>
 
 </body>
