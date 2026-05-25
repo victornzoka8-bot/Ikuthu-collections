@@ -1,43 +1,43 @@
-id,name,price,image
-1,Classic MX,750,/shirt-01
-2,Pique cotton pool,850,/shirt-02
-3,Graphic tee,500,/shirt-03
-4,Mtx Cotton,600,/shirt-04
-5,Lipier Samon,550,/shirt-05
-6,Dvt Cotton,560,/shirt-06
-7,Modal Royen,750,/shirt-07
-8,NkT Corsd,600,/shirt-08
-9,SHF Cjf,900,/shirt-09
-10,Fsg Hds,750,/shirt-10
-11,Saf Gdf,750,/shirt-11
-12,SGD Vf,960,/shirt-12
-13,Sadc,570,/shirt-13
-14,Dhfs,740,/shirt-14
-15,Hfd Vjf,500,/shirt-15
-16,Dgfd Bvc,660,/shirt-16
-17,Gdsc nng,700,/shirt-17
-18,Vjgd Hf,547,/shirt-18
-19,Fgdv,750,/shirt-19
-20,Dhf,960,/shirt-20
-21,Bhd Bv,560,/shirt-21
-22,Jgd nb,580,/shirt-22
-23,Hdsv,780,/shirt-23
-24,FSV Hjg,630,/shirt-24
-25,DVD Gnf,580,/shirt-25
-26,Shgc,246,/shirt-26
-27,Fhvc,588,/shirt-27
-28,Hgdv Gn,570,/shirt-28
-29,HdvBj,680,/shirt-29
-30,Nfvbn,560,/shirt-30
-31,Jdbn,760,/shirt-31
-32,Dbbc,750,/shirt-32
-33,Svncv,570,/shirt-33
-34,Shnnhn,560,/shirt-34
-35,Dbncn,540,/shirt-35
-36,Dbvx,750,/shirt-36
-37,Fhbcb,600,/shirt-37
-38,Dgnnv,950,/shirt-38
-39,Dhmgvn,850,/shirt-39
-40,Fnmvcm,700,/shirt-40
-41,Fjmcn,550,/shirt-41
-42,Fmnvm,580,/shirt-42
+id,name,price,image,category
+1,White Cotton MX,750,/shirt-01,shirts
+2,Pique cotton pool,850,/shirt-02,shirts
+3,Graphic tee,500,/shirt-03,shirts
+4,Mtx Cotton,600,/shirt-04,shirts
+5,Lipier Samon,550,/shirt-05,shirts
+6,Dvt Cotton,560,/shirt-06,shirts
+7,Modal Royen,750,/shirt-07,shirts
+8,NkT Corsd,600,/shirt-08,shirts
+9,SHF Cjf,900,/shirt-09,shirts
+10,Fsg Hds,750,/shirt-10,shirts
+11,Saf Gdf,750,/shirt-11,shirts
+12,SGD Vf,960,/shirt-12,shirts
+13,Sadc,570,/shirt-13,shirts
+14,Dhfs,740,/shirt-14,shirts
+15,Hfd Vjf,500,/shirt-15,shirts
+16,Dgfd Bvc,660,/shirt-16,shirts
+17,Gdsc nng,700,/shirt-17,shirts
+18,Vjgd Hf,547,/shirt-18,shirts
+19,Fgdv,750,/shirt-19,shirts
+20,Dhf,960,/shirt-20,shirts
+21,Bhd Bv,560,/shirt-21,shirts
+22,Jgd nb,580,/shirt-22,shirts
+23,Hdsv,780,/shirt-23,shirts
+24,FSV Hjg,630,/shirt-24,shirts
+25,DVD Gnf,580,/shirt-25,shirts
+26,Shgc,246,/shirt-26,shirts
+27,Fhvc,588,/shirt-27,shirts
+28,Hgdv Gn,570,/shirt-28,shirts
+29,HdvBj,680,/shirt-29,shirts
+30,Nfvbn,560,/shirt-30,shirts
+31,Jdbn,760,/shirt-31,shirts
+32,Dbbc,750,/shirt-32,shirts
+33,Svncv,570,/shirt-33,shirts
+34,Shnnhn,560,/shirt-34,shirts
+35,Dbncn,540,/shirt-35,shirts
+36,Dbvx,750,/shirt-36,shirts
+37,Fhbcb,600,/shirt-37,shirts
+38,Dgnnv,950,/shirt-38,shirts
+39,Dhmgvn,850,/shirt-39,shirts
+40,Fnmvcm,700,/shirt-40,shirts
+41,Fjmcn,550,/shirt-41,shirts
+42,Fmnvm,580,/shirt-42,shirts
