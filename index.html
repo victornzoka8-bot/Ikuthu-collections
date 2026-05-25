@@ -62,8 +62,11 @@ h1{margin-bottom:15px}
   border:1px solid #ddd;
   background:#fff;
   padding:12px;
-  border-radius:8px
+  border-radius:8px;
+  cursor:pointer;
+  transition:transform 0.1s;
 }
+.product:active{transform:scale(0.98)}
 .product img{
   width:100%;
   height:160px;
@@ -97,6 +100,57 @@ button{
   width:100%
 }
 button:active{background:#e65c00}
+
+/* Modal for product gallery */
+.modal{
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.85);
+  z-index:1000;
+  overflow-y:auto;
+}
+.modal-content{
+  background:#fff;
+  max-width:500px;
+  margin:5% auto;
+  padding:15px;
+  border-radius:12px;
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:28px;
+  cursor:pointer;
+  color:#333;
+}
+.modal-main-img{
+  width:100%;
+  height:400px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-bottom:10px;
+}
+.thumbnails{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:5px;
+}
+.thumbnails img{
+  width:70px;
+  height:70px;
+  object-fit:cover;
+  border-radius:6px;
+  cursor:pointer;
+  border:2px solid transparent;
+}
+.thumbnails img.active{
+  border-color:#ff6600;
+}
 
 .toast{
   position:fixed;
@@ -143,6 +197,19 @@ button:active{background:#e65c00}
 
 <div class="grid" id="products"></div>
 
+<!-- Product Modal -->
+<div class="modal" id="productModal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <span class="modal-close" onclick="closeModal()">&times;</span>
+    <img class="modal-main-img" id="modalMainImg" src="">
+    <div class="thumbnails" id="modalThumbs"></div>
+    <h3 id="modalName" style="margin:15px 0 5px 0;"></h3>
+    <p id="modalDesc" style="color:#666;font-size:14px;"></p>
+    <p id="modalPrice" style="font-weight:bold;font-size:18px;margin:10px 0;"></p>
+    <button id="modalAddBtn">Add to Cart</button>
+  </div>
+</div>
+
 <div class="toast" id="toast">Added to cart!</div>
 
 <script>
@@ -150,7 +217,7 @@ const productsContainer = document.getElementById('products');
 let allProducts = [];
 let currentCategory = 'all';
 
-// Load products from CSV and read description column
+// Load products from CSV - now reads 7th column 'images'
 fetch('/data/products.csv')
   .then(res => res.text())
   .then(csv => {
@@ -158,14 +225,15 @@ fetch('/data/products.csv')
     allProducts = rows
       .filter(row => row.trim())
       .map(row => {
-        const [id, name, price, image, category, description] = row.split(',');
+        const [id, name, price, image, category, description, images] = row.split(',');
         return {
           id: id.trim(),
           name: name.trim(),
           price: price.trim(),
           image: image.trim(),
           category: category ? category.trim() : 'shirts',
-          description: description ? description.trim() : ''
+          description: description ? description.trim() : '',
+          images: images ? images.trim() : image.trim()
         }
       });
     renderProducts();
@@ -187,12 +255,12 @@ function renderProducts(){
   }
   
   productsContainer.innerHTML = filtered.map(p => `
-    <div class="product">
+    <div class="product" onclick="openModal(${p.id})">
       <img src="${p.image}" alt="${p.name}">
       <h3>${p.name}</h3>
       <p class="desc">${p.description}</p>
       <p class="price">KSh ${p.price}</p>
-      <button onclick="addToCart(${p.id})">Add to Cart</button>
+      <button onclick="event.stopPropagation(); addToCart(${p.id})">Add to Cart</button>
     </div>
   `).join('');
 }
@@ -206,6 +274,39 @@ document.getElementById('categoryFilter').addEventListener('click', (e) => {
     renderProducts();
   }
 });
+
+// Modal functions
+function openModal(id){
+  const product = allProducts.find(p => p.id == id);
+  const images = product.images.split('|').filter(i => i.trim());
+  
+  document.getElementById('modalMainImg').src = images[0];
+  document.getElementById('modalName').textContent = product.name;
+  document.getElementById('modalDesc').textContent = product.description;
+  document.getElementById('modalPrice').textContent = `KSh ${product.price}`;
+  document.getElementById('modalAddBtn').onclick = () => {
+    addToCart(product.id);
+    closeModal();
+  };
+  
+  document.getElementById('modalThumbs').innerHTML = images.map((img, i) => 
+    `<img src="${img}" class="${i===0?'active':''}" onclick="switchModalImg(this,'${img}')">`
+  ).join('');
+  
+  document.getElementById('productModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function switchModalImg(el, src){
+  document.getElementById('modalMainImg').src = src;
+  document.querySelectorAll('.thumbnails img').forEach(img => img.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function closeModal(){
+  document.getElementById('productModal').style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
 
 // Cart functions
 function updateCartCount(){
