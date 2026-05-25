@@ -27,7 +27,7 @@ h2{font-size:26px;font-weight:700;margin-bottom:16px;}
 .modal{
   background:#fff;
   border-radius:12px;
-  max-width:380px;
+  max-width:400px;
   width:100%;
   padding:24px;
   box-shadow:0 10px 30px rgba(0,0,0,0.2);
@@ -37,38 +37,37 @@ h2{font-size:26px;font-weight:700;margin-bottom:16px;}
   from{transform:scale(0.95);opacity:0;}
   to{transform:scale(1);opacity:1;}
 }
-.modal h3{
-  font-size:18px;
-  margin-bottom:12px;
-  font-weight:700;
+.modal h3{font-size:18px;margin-bottom:16px;font-weight:700;}
+
+/* Method Selector Modal */
+.method-option{
+  border:2px solid #e0e0e0;
+  border-radius:10px;
+  padding:14px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:all 0.2s;
 }
-.modal p{
-  font-size:15px;
-  line-height:1.5;
-  color:#333;
-  margin-bottom:12px;
+.method-option:hover{border-color:#ff6600;}
+.method-header{display:flex;align-items:center;gap:10px;}
+.method-header input[type="radio"]{
+  width:18px;height:18px;accent-color:#ff6600;
 }
-.modal .amount{
-  font-size:24px;
-  font-weight:700;
-  color:#000;
-  margin:10px 0;
-}
-.modal .mpesa-box{
+.method-title{font-weight:600;font-size:15px;}
+.method-desc{font-size:13px;color:#666;margin-top:4px;margin-left:28px;}
+
+/* M-Pesa Payment Modal */
+.mpesa-box{
   background:#f5f5f5;
   padding:12px;
   border-radius:8px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin:14px 0;
   border:1px solid #e0e0e0;
+  margin:14px 0;
 }
-.modal .mpesa-box span{
-  font-weight:600;
-  font-size:16px;
-  letter-spacing:0.5px;
-}
+.mpesa-box span{font-weight:600;font-size:16px;letter-spacing:0.5px;}
 .copy-btn{
   background:#ff6600;
   color:#fff;
@@ -78,12 +77,8 @@ h2{font-size:26px;font-weight:700;margin-bottom:16px;}
   font-size:13px;
   cursor:pointer;
 }
-.copy-btn:active{background:#e55f00;}
-.modal-actions{
-  display:flex;
-  gap:10px;
-  margin-top:20px;
-}
+.amount{font-size:24px;font-weight:700;color:#000;margin:10px 0;}
+.modal-actions{display:flex;gap:10px;margin-top:20px;}
 .modal-btn{
   flex:1;
   padding:13px;
@@ -93,17 +88,9 @@ h2{font-size:26px;font-weight:700;margin-bottom:16px;}
   font-weight:600;
   cursor:pointer;
 }
-.btn-confirm{
-  background:#ff6600;
-  color:#fff;
-}
-.btn-confirm:active{background:#e55f00;}
-.btn-cancel{
-  background:#e0e0e0;
-  color:#333;
-}
+.btn-confirm{background:#ff6600;color:#fff;}
+.btn-cancel{background:#e0e0e0;color:#333;}
 
-/* Toast */
 .toast{
   position:fixed;
   bottom:30px;
@@ -132,11 +119,38 @@ h2{font-size:26px;font-weight:700;margin-bottom:16px;}
 
 <div class="container">
   <h2>Payment</h2>
-  <p>Complete payment to confirm your order.</p>
+  <p>Choose how you want to pay for your order.</p>
 </div>
 
-<!-- Payment Modal -->
-<div class="modal-overlay" id="payModal">
+<!-- Modal 1: Select Payment Method -->
+<div class="modal-overlay show" id="methodModal">
+  <div class="modal">
+    <h3>Select Payment Method</h3>
+    
+    <div class="method-option" onclick="selectMethod('mpesa')">
+      <label class="method-header">
+        <input type="radio" name="paymentMethod" value="mpesa">
+        <span class="method-title">Pay with M-Pesa</span>
+      </label>
+      <p class="method-desc">Pay now via M-Pesa. Order confirmed after payment.</p>
+    </div>
+
+    <div class="method-option" onclick="selectMethod('cod')">
+      <label class="method-header">
+        <input type="radio" name="paymentMethod" value="cod">
+        <span class="method-title">Pay on Delivery</span>
+      </label>
+      <p class="method-desc">Pay cash to the rider when your order arrives.</p>
+    </div>
+    
+    <div class="modal-actions">
+      <button class="modal-btn btn-cancel" onclick="goBack()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 2: M-Pesa Payment Details -->
+<div class="modal-overlay" id="mpesaModal">
   <div class="modal">
     <h3>Complete Payment</h3>
     <p>Send payment via M-Pesa to:</p>
@@ -152,8 +166,8 @@ h2{font-size:26px;font-weight:700;margin-bottom:16px;}
     <p><strong>Important:</strong> After paying, click "I've Paid" below. Your order will be confirmed once payment is verified.</p>
     
     <div class="modal-actions">
-      <button class="modal-btn btn-cancel" onclick="goBack()">Cancel</button>
-      <button class="modal-btn btn-confirm" onclick="confirmPayment()">I've Paid</button>
+      <button class="modal-btn btn-cancel" onclick="backToMethod()">Cancel</button>
+      <button class="modal-btn btn-confirm" onclick="confirmMpesaPayment()">I've Paid</button>
     </div>
   </div>
 </div>
@@ -164,18 +178,32 @@ h2{font-size:26px;font-weight:700;margin-bottom:16px;}
 const order = JSON.parse(localStorage.getItem('pendingOrder') || '{}');
 const MPESA_NUMBER = '0758903057';
 
-// Auto-show modal when page loads
 window.addEventListener('DOMContentLoaded', () => {
   if(!order.total){
     alert('No order found. Redirecting...');
     window.location.href = 'cart.html';
     return;
   }
-  
   document.getElementById('modalAmount').textContent = `KSh ${order.total.toLocaleString()}`;
-  document.getElementById('mpesaNumber').textContent = MPESA_NUMBER;
-  document.getElementById('payModal').classList.add('show');
 });
+
+function selectMethod(method){
+  if(method === 'mpesa'){
+    document.getElementById('methodModal').classList.remove('show');
+    document.getElementById('mpesaModal').classList.add('show');
+  } 
+  else if(method === 'cod'){
+    order.paymentMethod = 'cod';
+    order.status = 'pending_cod';
+    localStorage.setItem('pendingOrder', JSON.stringify(order));
+    window.location.href = 'order-success.html';
+  }
+}
+
+function backToMethod(){
+  document.getElementById('mpesaModal').classList.remove('show');
+  document.getElementById('methodModal').classList.add('show');
+}
 
 function copyNumber(){
   navigator.clipboard.writeText(MPESA_NUMBER);
@@ -189,29 +217,23 @@ function showToast(){
 }
 
 function goBack(){
-  document.getElementById('payModal').classList.remove('show');
   window.location.href = 'checkout.html';
 }
 
-function confirmPayment(){
-  // Close modal and redirect to success/processing page
-  document.getElementById('payModal').classList.remove('show');
-  
-  // Here you would normally call your backend to verify payment
-  // For now, we'll just mark as pending and go to success page
-  
-  // Optional: Save order status
-  order.status = 'pending_payment';
+function confirmMpesaPayment(){
+  order.paymentMethod = 'mpesa';
+  order.status = 'awaiting_payment';
   localStorage.setItem('pendingOrder', JSON.stringify(order));
   
-  window.location.href = 'order-success.html';
+  document.getElementById('mpesaModal').classList.remove('show');
+  window.location.href = 'order-processing.html';
 }
 
 // Prevent closing modal by clicking outside
-document.getElementById('payModal').addEventListener('click', (e) => {
-  if(e.target.id === 'payModal'){
-    // Do nothing - force user to use buttons
-  }
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if(e.target === modal) e.stopPropagation();
+  });
 });
 </script>
 
