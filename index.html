@@ -6,15 +6,46 @@
 <title>Ikuthu Collections</title>
 <style>
 body{font-family:Arial,sans-serif;background:linear-gradient(to right,#4facfe,#00f2fe);padding:20px;max-width:800px;margin:auto;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px;margin-top:20px}
-.product{border:1px solid #ddd;background:#fff;padding:15px;border-radius:8px;display:flex;gap:15px;align-items:center}
-.product img{width:100px;height:100px;object-fit:cover;border-radius:5px}
-button{padding:10px 20px;background:#ff6600;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold}
-button:active{background:#e65c00}
 nav{margin-bottom:20px}
 nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold}
-h1{margin-bottom:20px}
+h1{margin-bottom:15px}
 .cart-count{background:#ff6600;color:#fff;padding:2px 8px;border-radius:12px;font-size:13px;margin-left:5px}
+
+/* Category filter bar */
+.category-filter {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 0 20px 0;
+  scrollbar-width: none;
+}
+.category-filter::-webkit-scrollbar { display: none; }
+.filter-btn {
+  padding: 8px 16px;
+  border: 1px solid #fff;
+  background: rgba(255,255,255,0.3);
+  border-radius: 20px;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  transition: 0.2s;
+}
+.filter-btn.active {
+  background: #ff6600;
+  color: #fff;
+  border-color: #ff6600;
+}
+
+/* 2 column grid */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-top:10px}
+.product{border:1px solid #ddd;background:#fff;padding:12px;border-radius:8px}
+.product img{width:100%;height:160px;object-fit:cover;border-radius:5px;margin-bottom:8px}
+.product h3{margin:5px 0;font-size:15px}
+.product p{margin:5px 0;font-weight:bold;color:#333}
+button{padding:8px 12px;background:#ff6600;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;width:100%}
+button:active{background:#e65c00}
 
 .toast{
   position:fixed;
@@ -35,6 +66,10 @@ h1{margin-bottom:20px}
   transform:translateX(-50%) translateY(0);
   opacity:1;
 }
+
+@media(min-width: 768px){
+  .grid{grid-template-columns:repeat(4,1fr)}
+}
 </style>
 </head>
 <body>
@@ -45,35 +80,76 @@ h1{margin-bottom:20px}
 </nav>
 
 <h1>Ikuthu Collection</h1>
+
+<div class="category-filter" id="categoryFilter">
+  <button class="filter-btn active" data-cat="all">All</button>
+  <button class="filter-btn" data-cat="shirts">Shirts</button>
+  <button class="filter-btn" data-cat="trousers">Trousers</button>
+  <button class="filter-btn" data-cat="jackets">Jackets</button>
+  <button class="filter-btn" data-cat="shoes">Shoes</button>
+  <button class="filter-btn" data-cat="jersey">Jersey</button>
+</div>
+
 <div class="grid" id="products"></div>
 
 <div class="toast" id="toast">Added to cart!</div>
 
 <script>
 const productsContainer = document.getElementById('products');
+let allProducts = [];
+let currentCategory = 'all';
 
-// Load products from CSV
+// Load products from CSV and assign category
 fetch('/data/products.csv')
   .then(res => res.text())
   .then(csv => {
-    const rows = csv.split('\n').slice(1); // skip header
-    rows.forEach(row => {
-      if (!row.trim()) return;
-      const [id, name, price, image] = row.split(',');
-      
-      productsContainer.innerHTML += `
-        <div class="product">
-          <img src="${image.trim()}">
-          <div>
-            <h3>${name.trim()}</h3>
-            <p>KSh ${price.trim()}</p>
-            <button onclick="addToCart(${id.trim()})">Add to Cart</button>
-          </div>
-        </div>
-      `;
-    });
+    const rows = csv.split('\n').slice(1);
+    allProducts = rows
+      .filter(row => row.trim())
+      .map(row => {
+        const [id, name, price, image] = row.split(',');
+        return {
+          id: id.trim(),
+          name: name.trim(),
+          price: price.trim(),
+          image: image.trim(),
+          category: 'shirts' // All existing products set to shirts
+        }
+      });
+    renderProducts();
   })
   .catch(err => console.log('Error loading products:', err));
+
+// Render products based on category
+function renderProducts(){
+  const filtered = currentCategory === 'all' 
+    ? allProducts 
+    : allProducts.filter(p => p.category === currentCategory);
+  
+  if(filtered.length === 0){
+    productsContainer.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#fff;">No products in this category yet</p>';
+    return;
+  }
+  
+  productsContainer.innerHTML = filtered.map(p => `
+    <div class="product">
+      <img src="${p.image}">
+      <h3>${p.name}</h3>
+      <p>KSh ${p.price}</p>
+      <button onclick="addToCart(${p.id})">Add to Cart</button>
+    </div>
+  `).join('');
+}
+
+// Category filter click
+document.getElementById('categoryFilter').addEventListener('click', (e) => {
+  if(e.target.classList.contains('filter-btn')){
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    e.target.classList.add('active');
+    currentCategory = e.target.dataset.cat;
+    renderProducts();
+  }
+});
 
 // Cart functions
 function updateCartCount(){
