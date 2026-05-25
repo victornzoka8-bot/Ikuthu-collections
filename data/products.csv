@@ -1,5 +1,5 @@
-id,name,price,image,category
-1,White Cotton MX,750,/shirt-01,shirts
+id,name,price,image,category,description
+1,White Cotton MX,750,/shirt-01,shirts,size M to 2xl available 5pics each
 2,Pique cotton pool,850,/shirt-02,shirts
 3,Graphic tee,500,/shirt-03,shirts
 4,Mtx Cotton,600,/shirt-04,shirts
