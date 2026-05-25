@@ -5,80 +5,214 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Payment</title>
 <style>
-body{font-family:Arial,sans-serif;padding:20px;max-width:600px;margin:auto;background:#f5f5f5}
-.container{background:#fff;padding:20px;border-radius:8px}
-h2{margin-bottom:20px}
-.order-box{background:#f9f9f9;padding:15px;border-radius:5px;margin-bottom:20px}
-.btn{width:100%;padding:15px;margin:10px 0;border:none;border-radius:5px;font-size:16px;font-weight:bold;cursor:pointer}
-.btn-cash{background:#4CAF50;color:#fff}
-.btn-mpesa{background:#00B300;color:#fff}
-.back{color:#333;text-decoration:none;display:inline-block;margin-bottom:15px}
-.loading{display:none;text-align:center;padding:20px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#f5f5f5;padding:20px;max-width:600px;margin:auto;}
+nav{margin-bottom:20px;}
+nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold;font-size:15px;}
+.container{background:#fff;padding:20px;border-radius:8px;}
+h2{font-size:26px;font-weight:700;margin-bottom:16px;}
+
+/* Modal Styles */
+.modal-overlay{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+  padding:20px;
+}
+.modal-overlay.show{display:flex;}
+.modal{
+  background:#fff;
+  border-radius:12px;
+  max-width:380px;
+  width:100%;
+  padding:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+  animation:popIn 0.25s ease;
+}
+@keyframes popIn{
+  from{transform:scale(0.95);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+.modal h3{
+  font-size:18px;
+  margin-bottom:12px;
+  font-weight:700;
+}
+.modal p{
+  font-size:15px;
+  line-height:1.5;
+  color:#333;
+  margin-bottom:12px;
+}
+.modal .amount{
+  font-size:24px;
+  font-weight:700;
+  color:#000;
+  margin:10px 0;
+}
+.modal .mpesa-box{
+  background:#f5f5f5;
+  padding:12px;
+  border-radius:8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:14px 0;
+  border:1px solid #e0e0e0;
+}
+.modal .mpesa-box span{
+  font-weight:600;
+  font-size:16px;
+  letter-spacing:0.5px;
+}
+.copy-btn{
+  background:#ff6600;
+  color:#fff;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  font-size:13px;
+  cursor:pointer;
+}
+.copy-btn:active{background:#e55f00;}
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+.modal-btn{
+  flex:1;
+  padding:13px;
+  border:none;
+  border-radius:8px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+}
+.btn-confirm{
+  background:#ff6600;
+  color:#fff;
+}
+.btn-confirm:active{background:#e55f00;}
+.btn-cancel{
+  background:#e0e0e0;
+  color:#333;
+}
+
+/* Toast */
+.toast{
+  position:fixed;
+  bottom:30px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#333;
+  color:#fff;
+  padding:12px 20px;
+  border-radius:6px;
+  font-size:14px;
+  display:none;
+  z-index:1001;
+}
+.toast.show{display:block;animation:fadeInOut 2s ease;}
+@keyframes fadeInOut{
+ 0%,100%{opacity:0;}
+ 10%,90%{opacity:1;}
+}
 </style>
 </head>
 <body>
 
+<nav>
+  <a href="checkout.html">← Back</a>
+</nav>
+
 <div class="container">
-  <a href="checkout.html" class="back">← Back</a>
-  <h2>Select Payment Method</h2>
-
-  <div class="order-box" id="orderSummary"></div>
-
-  <button class="btn btn-cash" onclick="payCash()">Pay on Delivery</button>
-  <button class="btn btn-mpesa" onclick="payMpesa()">Pay with M-Pesa</button>
-
-  <div class="loading" id="loading">Placing your order...</div>
+  <h2>Payment</h2>
+  <p>Complete payment to confirm your order.</p>
 </div>
 
+<!-- Payment Modal -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal">
+    <h3>Complete Payment</h3>
+    <p>Send payment via M-Pesa to:</p>
+    
+    <div class="mpesa-box">
+      <span id="mpesaNumber">0758903057</span>
+      <button class="copy-btn" onclick="copyNumber()">Copy</button>
+    </div>
+    
+    <p>Amount:</p>
+    <div class="amount" id="modalAmount">KSh 0</div>
+    
+    <p><strong>Important:</strong> After paying, click "I've Paid" below. Your order will be confirmed once payment is verified.</p>
+    
+    <div class="modal-actions">
+      <button class="modal-btn btn-cancel" onclick="goBack()">Cancel</button>
+      <button class="modal-btn btn-confirm" onclick="confirmPayment()">I've Paid</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Number copied to clipboard!</div>
+
 <script>
-const orderData = JSON.parse(localStorage.getItem('pendingOrder') || '{}');
+const order = JSON.parse(localStorage.getItem('pendingOrder') || '{}');
+const MPESA_NUMBER = '0758903057';
 
-if(!orderData.total){
-  alert('No order found. Redirecting to cart.');
-  window.location.href = 'cart.html';
+// Auto-show modal when page loads
+window.addEventListener('DOMContentLoaded', () => {
+  if(!order.total){
+    alert('No order found. Redirecting...');
+    window.location.href = 'cart.html';
+    return;
+  }
+  
+  document.getElementById('modalAmount').textContent = `KSh ${order.total.toLocaleString()}`;
+  document.getElementById('mpesaNumber').textContent = MPESA_NUMBER;
+  document.getElementById('payModal').classList.add('show');
+});
+
+function copyNumber(){
+  navigator.clipboard.writeText(MPESA_NUMBER);
+  showToast();
 }
 
-document.getElementById('orderSummary').innerHTML = `
-  <p><strong>Name:</strong> ${orderData.name}</p>
-  <p><strong>Phone:</strong> ${orderData.phone}</p>
-  <p><strong>Delivery:</strong> ${orderData.location}</p>
-  <p style="font-size:18px;margin-top:10px"><strong>Total:</strong> KSh ${orderData.total.toLocaleString()}</p>
-`;
-
-function payCash(){
-  orderData.paymentMethod = 'Cash on Delivery';
-  submitOrder();
+function showToast(){
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
-function payMpesa(){
-  orderData.paymentMethod = 'M-Pesa';
-  alert('Send KSh ' + orderData.total + ' to Mpesa 0758903057\nThen click OK to confirm your order');
-  submitOrder();
+function goBack(){
+  document.getElementById('payModal').classList.remove('show');
+  window.location.href = 'checkout.html';
 }
 
-function submitOrder(){
-  document.getElementById('loading').style.display = 'block';
-
-  fetch('https://formspree.io/f/xqejypvp', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(orderData)
-  })
- .then(response => {
-    if(response.ok){
-      localStorage.removeItem('cart');
-      localStorage.removeItem('pendingOrder');
-      window.location.href = 'confirmation.html';
-    } else {
-      alert('Error placing order. Please try again.');
-      document.getElementById('loading').style.display = 'none';
-    }
-  })
- .catch(() => {
-    alert('Network error. Check your connection and try again.');
-    document.getElementById('loading').style.display = 'none';
-  });
+function confirmPayment(){
+  // Close modal and redirect to success/processing page
+  document.getElementById('payModal').classList.remove('show');
+  
+  // Here you would normally call your backend to verify payment
+  // For now, we'll just mark as pending and go to success page
+  
+  // Optional: Save order status
+  order.status = 'pending_payment';
+  localStorage.setItem('pendingOrder', JSON.stringify(order));
+  
+  window.location.href = 'order-success.html';
 }
+
+// Prevent closing modal by clicking outside
+document.getElementById('payModal').addEventListener('click', (e) => {
+  if(e.target.id === 'payModal'){
+    // Do nothing - force user to use buttons
+  }
+});
 </script>
 
 </body>
