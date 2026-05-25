@@ -54,24 +54,24 @@ id,name,price,image,category,description
 53,Dhdt,980,/trouser-11,trousers
 54,hgdx,1000,/trouser-12,trousers
 55,Dts,960,/trouser-13,trousers
-56,Urban Black Bomber Jacket,850,/jacket-01,jackets,"Classic bomber cut with ribbed cuffs and collar perfect for casual streetwear",S-M-L-XL,Black,Polyester Cotton Blend
-57,Classic Denim Blue Jacket,920,/jacket-02,jackets,"Timeless denim jacket with button front and chest pockets goes with everything",S-M-L-XL,Blue,100% Cotton Denim
-58,Matt Black Puffer Jacket,980,/jacket-03,jackets,"Lightweight puffer with quilted design warm without the bulk",M-L-XL-XXL,Black,Nylon Shell Polyfill
-59,Khaki Utility Jacket,750,/jacket-04,jackets,"Multi pocket utility jacket with adjustable cuffs rugged and functional",S-M-L-XL,Khaki,Twill Cotton
-60,Olive Green Military Jacket,890,/jacket-05,jackets,"Military inspired field jacket with epaulettes and zip front",M-L-XL,Olive Green,Cotton Canvas
-61,Retro Brown Corduroy Jacket,770,/jacket-06,jackets,"Soft corduroy jacket with a vintage feel great for layering",S-M-L,Brown,Corduroy Cotton
-62,Slim Fit Grey Jacket,820,/jacket-07,jackets,"Tailored slim fit jacket for a clean modern look lightweight",S-M-L,Grey,Polyester Viscose Blend
-63,Navy Blue Varsity Jacket,950,/jacket-08,jackets,"Classic varsity jacket with ribbed trims and snap buttons",M-L-XL-XXL,Navy Blue,Wool Blend Polyester
-64,Beige Trench Style Jacket,1000,/jacket-09,jackets,"Minimal trench inspired jacket with belt and storm flap",S-M-L-XL,Beige,Poly Cotton Blend
-65,Red Streetwear Jacket,880,/jacket-10,jackets,"Bold red jacket with oversized fit statement piece for street style",M-L-XL,Red,Polyester
-66,Black Leather Look Jacket,990,/jacket-11,jackets,"Faux leather jacket with zip closure and biker silhouette",S-M-L-XL,Black,PU Leather Polyester
-67,Stone Grey Windbreaker Jacket,720,/jacket-12,jackets,"Wind resistant lightweight jacket with hood ideal for rainy days",S-M-L-XL,Stone Grey,Nylon
-68,Cream Casual Jacket,760,/jacket-13,jackets,"Relaxed fit casual jacket with soft lining easy everyday wear",S-M-L,Cream,Cotton Blend
-69,Forest Green Outdoor Jacket,930,/jacket-14,jackets,"Durable outdoor jacket with water resistant coating",M-L-XL-XXL,Forest Green,Polyester Nylon
-70,Charcoal Zip-Up Jacket,810,/jacket-15,jackets,"Minimal zip up jacket with two side pockets clean and versatile",S-M-L-XL,Charcoal,Polyester
-71,Camel Suede Jacket,970,/jacket-16,jackets,"Soft suede finish jacket with button front premium look without the price",M-L-XL,Camel,Poly Suede
-72,White Minimal Jacket,700,/jacket-17,jackets,"Clean white jacket with minimal branding perfect base layer",S-M-L,White,Cotton Polyester
-73,Dark Blue Denim Jacket,870,/jacket-18,jackets,"Darker wash denim jacket with distressed details",S-M-L-XL,Dark Blue,Cotton Denim
-74,Burgundy Bomber Jacket,840,/jacket-19,jackets,"Bomber jacket in rich burgundy with ribbed trims",M-L-XL,Burgundy,Polyester Cotton
-75,Oversized Black Jacket,920,/jacket-20,jackets,"Oversized fit black jacket for a relaxed streetwear vibe",L-XL-XXL,Black,Poly Cotton Blend
-76,Light Grey Casual Jacket,790,/jacket-21,jackets,"Lightweight casual jacket with soft feel and clean cut",S-M-L,Light Grey,Cotton Blend
+56,Urban Black Bomber Jacket,850,/jacket-01,jackets,"Classic bomber cut with ribbed cuffs and collar perfect for casual streetwear" 
+57,Classic Denim Blue Jacket,920,/jacket-02,jackets,"Timeless denim jacket with button front and chest pockets goes with everything"
+58,Matt Black Puffer Jacket,980,/jacket-03,jackets,"Lightweight puffer with quilted design warm without the bulk"
+59,Khaki Utility Jacket,750,/jacket-04,jackets,"Multi pocket utility jacket with adjustable cuffs rugged and functional"
+60,Olive Green Military Jacket,890,/jacket-05,jackets,"Military inspired field jacket with epaulettes and zip front"
+61,Retro Brown Corduroy Jacket,770,/jacket-06,jackets,"Soft corduroy jacket with a vintage feel great for layering"
+62,Slim Fit Grey Jacket,820,/jacket-07,jackets,"Tailored slim fit jacket for a clean modern look lightweight"
+63,Navy Blue Varsity Jacket,950,/jacket-08,jackets,"Classic varsity jacket with ribbed trims and snap buttons"
+64,Beige Trench Style Jacket,1000,/jacket-09,jackets,"Minimal trench inspired jacket with belt and storm flap"
+65,Red Streetwear Jacket,880,/jacket-10,jackets,"Bold red jacket with oversized fit statement piece for street style"
+66,Black Leather Look Jacket,990,/jacket-11,jackets,"Faux leather jacket with zip closure and biker silhouette"
+67,Stone Grey Windbreaker Jacket,720,/jacket-12,jackets,"Wind resistant lightweight jacket with hood ideal for rainy days"
+68,Cream Casual Jacket,760,/jacket-13,jackets,"Relaxed fit casual jacket with soft lining easy everyday wear"
+69,Forest Green Outdoor Jacket,930,/jacket-14,jackets,"Durable outdoor jacket with water resistant coating"
+70,Charcoal Zip-Up Jacket,810,/jacket-15,jackets,"Minimal zip up jacket with two side pockets clean and versatile"
+71,Camel Suede Jacket,970,/jacket-16,jackets,"Soft suede finish jacket with button front premium look without the price"
+72,White Minimal Jacket,700,/jacket-17,jackets,"Clean white jacket with minimal branding perfect base layer"
+73,Dark Blue Denim Jacket,870,/jacket-18,jackets,"Darker wash denim jacket with distressed details"
+74,Burgundy Bomber Jacket,840,/jacket-19,jackets,"Bomber jacket in rich burgundy with ribbed trims"
+75,Oversized Black Jacket,920,/jacket-20,jackets,"Oversized fit black jacket for a relaxed streetwear vibe"
+76,Light Grey Casual Jacket,790,/jacket-21,jackets,"Lightweight casual jacket with soft feel and clean cut"
