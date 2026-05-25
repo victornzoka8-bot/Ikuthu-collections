@@ -52,14 +52,14 @@ function payCash(){
 
 function payMpesa(){
   orderData.paymentMethod = 'M-Pesa';
-  alert('Send KSh ' + orderData.total + ' to Till 123456\nThen click OK to confirm your order');
+  alert('Send KSh ' + orderData.total + ' to Mpesa 0758903057\nThen click OK to confirm your order');
   submitOrder();
 }
 
 function submitOrder(){
   document.getElementById('loading').style.display = 'block';
 
-  fetch('https://formspree.io/f/YOUR-FORM-ID', {
+  fetch('https://formspree.io/f/xqejypvp', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(orderData)
