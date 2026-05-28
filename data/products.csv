@@ -115,7 +115,6 @@ id,name,price,image,category,description
 114,Leather brash,950,/shoe-38,shoes,Leather brash
 115,Brown open sandal,900,/shoe-39,shoes,Brown open sandal
 116,Paired sport shoes,850,/shoe-40,shoes,Paired sport shoes
-id,name,price,image,category,description
 117,Real Madrid Home Kit,520,/jersey-01,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Fan version, breathable material."
 118,Manchester City Away Kit,540,/jersey-02,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Qatar Airways sponsor."
 119,England Cricket ODI Jersey,550,/jersey-03,jerseys,"Available sizes: S, M, L, XL, 2XL. Moisture-wicking fabric."
