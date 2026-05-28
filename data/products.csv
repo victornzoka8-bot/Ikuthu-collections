@@ -115,43 +115,43 @@ id,name,price,image,category,description
 114,Leather brash,950,/shoe-38,shoes,Leather brash
 115,Brown open sandal,900,/shoe-39,shoes,Brown open sandal
 116,Paired sport shoes,850,/shoe-40,shoes,Paired sport shoes
-117,Real Madrid Home Kit,520,/jersey-01,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Fan version, breathable material."
-118,Manchester City Away Kit,540,/jersey-02,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Qatar Airways sponsor."
-119,England Cricket ODI Jersey,550,/jersey-03,jerseys,"Available sizes: S, M, L, XL, 2XL. Moisture-wicking fabric."
-120,PSG Retro Classic Jersey,500,/jersey-04,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Retro 90s design."
-121,Liverpool Training Jersey,530,/jersey-05,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Lightweight training material."
-122,Liverpool Home Kit,550,/jersey-06,jerseys,"Available sizes: S, M, L, XL, 2XL. Player edition fit."
-123,Wolves Away Kit,510,/jersey-07,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Regular fit."
-124,Liverpool Goalkeeper Kit,540,/jersey-08,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Padded sleeves option."
-125,Arsenal Home Kit,520,/jersey-09,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Classic Gunners design."
-126,Manchester United Home Kit,550,/jersey-10,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Adidas crest."
-127,Arsenal Club Home Jersey,530,/jersey-11,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Fan version."
-128,Quatar Away Kit,540,/jersey-12,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Away kit."
-129,Arsenal Away Kit,520,/jersey-13,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. White with red trim."
-130,Chelsea Home Kit,510,/jersey-14,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Blue home colors."
-131,Real Madrid Training Kit,500,/jersey-15,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Lightweight training wear."
-132,Real Madrid Sleeveless Training Kit,500,/jersey-16,jerseys,"Available sizes: S, M, L, XL, 2XL. Gym and training use."
-133,Real Madrid Away Kit,550,/jersey-17,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Blue away kit."
-134,Real Madrid Third Kit,540,/jersey-18,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Black with gold trim."
-135,Real Madrid Anniversary Kit,530,/jersey-19,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Pink/purple gradient."
-136,Real Madrid UCL Kit,550,/jersey-20,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Champions League version."
-137,Brazil Home Kit,540,/jersey-21,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Yellow iconic kit."
-138,South Africa Away Kit,500,/jersey-22,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Green/black pattern."
-139,Japan Home Kit,530,/jersey-23,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Blue origami design."
-140,Manchester United Away Kit,520,/jersey-24,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Retro Vodafone kit."
-141,England Away Kit,500,/jersey-25,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. 1990 retro."
-142,Portugal Home Kit,530,/jersey-26,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Red home kit."
-143,Zion Team Home Kit,510,/jersey-27,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. FKF official colors."
-144,South Africa GK Away Kit,500,/jersey-28,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Yellow goalkeeper kit."
-145,Turkey Training Kit,500,/jersey-29,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Light blue training wear."
-146,England Away Kit,500,/jersey-30,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. 1982 retro."
-147,Kenya National Team Home Kit,510,/jersey-31,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Green/red trim."
-148,Mexico Away Kit,540,/jersey-32,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Green geometric pattern."
-149,Bafana Special Edition Kit,550,/jersey-33,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Navy abstract design."
-150,Manchester United Training Top,500,/jersey-34,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Academy training top."
-151,Argentina Home Kit,550,/jersey-35,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. World Cup champions kit."
-152,Manchester United Home Kit,550,/jersey-36,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Red home kit."
-153,Manchester united Home Kit,520,/jersey-37,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Retro yellow kit."
-154,America retro home kit,510,/jersey-38,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Navy pre-match kit."
-155,France training kit,500,/jersey-39,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. White with green/gold trim."
-156,South africa away kit,510,/jersey-40,jerseys,"Available sizes: S, M, L, XL, 2XL, 3XL. Nike training drill top."
+117,Real Madrid Home Kit,520,/jersey-01,jerseys,Available sizes: S M L XL 2XL 3XL Fan version breathable material
+118,Manchester City Away Kit,540,/jersey-02,jerseys,Available sizes: S M L XL 2XL 3XL Qatar Airways sponsor
+119,England Cricket ODI Jersey,550,/jersey-03,jerseys,Available sizes: S M L XL 2XL Moisture-wicking fabric
+120,PSG Retro Classic Jersey,500,/jersey-04,jerseys,Available sizes: S M L XL 2XL 3XL Retro 90s design
+121,Liverpool Training Jersey,530,/jersey-05,jerseys,Available sizes: S M L XL 2XL 3XL Lightweight training material
+122,Liverpool Home Kit,550,/jersey-06,jerseys,Available sizes: S M L XL 2XL Player edition fit
+123,Wolves Away Kit,510,/jersey-07,jerseys,Available sizes: S M L XL 2XL 3XL Regular fit
+124,Liverpool Goalkeeper Kit,540,/jersey-08,jerseys,Available sizes: S M L XL 2XL 3XL Padded sleeves option
+125,Arsenal Home Kit,520,/jersey-09,jerseys,Available sizes: S M L XL 2XL 3XL Classic Gunners design
+126,Manchester United Home Kit,550,/jersey-10,jerseys,Available sizes: S M L XL 2XL 3XL Adidas crest
+127,Arsenal Club Home Jersey,530,/jersey-11,jerseys,Available sizes: S M L XL 2XL 3XL Fan version
+128,Quatar Away Kit,540,/jersey-12,jerseys,Available sizes: S M L XL 2XL 3XL Away kit
+129,Arsenal Away Kit,520,/jersey-13,jerseys,Available sizes: S M L XL 2XL 3XL White with red trim
+130,Chelsea Home Kit,510,/jersey-14,jerseys,Available sizes: S M L XL 2XL 3XL Blue home colors
+131,Real Madrid Training Kit,500,/jersey-15,jerseys,Available sizes: S M L XL 2XL 3XL Lightweight training wear
+132,Real Madrid Sleeveless Training Kit,500,/jersey-16,jerseys,Available sizes: S M L XL 2XL Gym and training use
+133,Real Madrid Away Kit,550,/jersey-17,jerseys,Available sizes: S M L XL 2XL 3XL Blue away kit
+134,Real Madrid Third Kit,540,/jersey-18,jerseys,Available sizes: S M L XL 2XL 3XL Black with gold trim
+135,Real Madrid Anniversary Kit,530,/jersey-19,jerseys,Available sizes: S M L XL 2XL 3XL Pink/purple gradient
+136,Real Madrid UCL Kit,550,/jersey-20,jerseys,Available sizes: S M L XL 2XL 3XL Champions League version
+137,Brazil Home Kit,540,/jersey-21,jerseys,Available sizes: S M L XL 2XL 3XL Yellow iconic kit
+138,South Africa Away Kit,500,/jersey-22,jerseys,Available sizes: S M L XL 2XL 3XL Green/black pattern
+139,Japan Home Kit,530,/jersey-23,jerseys,Available sizes: S M L XL 2XL 3XL Blue origami design
+140,Manchester United Away Kit,520,/jersey-24,jerseys,Available sizes: S M L XL 2XL 3XL Retro Vodafone kit
+141,England Away Kit,500,/jersey-25,jerseys,Available sizes: S M L XL 2XL 3XL 1990 retro
+142,Portugal Home Kit,530,/jersey-26,jerseys,Available sizes: S M L XL 2XL 3XL Red home kit
+143,Zion Team Home Kit,510,/jersey-27,jerseys,Available sizes: S M L XL 2XL 3XL FKF official colors
+144,South Africa GK Away Kit,500,/jersey-28,jerseys,Available sizes: S M L XL 2XL 3XL Yellow goalkeeper kit
+145,Turkey Training Kit,500,/jersey-29,jerseys,Available sizes: S M L XL 2XL 3XL Light blue training wear
+146,England Away Kit,500,/jersey-30,jerseys,Available sizes: S M L XL 2XL 3XL 1982 retro
+147,Kenya National Team Home Kit,510,/jersey-31,jerseys,Available sizes: S M L XL 2XL 3XL Green/red trim
+148,Mexico Away Kit,540,/jersey-32,jerseys,Available sizes: S M L XL 2XL 3XL Green geometric pattern
+149,Bafana Special Edition Kit,550,/jersey-33,jerseys,Available sizes: S M L XL 2XL 3XL Navy abstract design
+150,Manchester United Training Top,500,/jersey-34,jerseys,Available sizes: S M L XL 2XL 3XL Academy training top
+151,Argentina Home Kit,550,/jersey-35,jerseys,Available sizes: S M L XL 2XL 3XL World Cup champions kit
+152,Manchester United Home Kit,550,/jersey-36,jerseys,Available sizes: S M L XL 2XL 3XL Red home kit
+153,Manchester united Home Kit,520,/jersey-37,jerseys,Available sizes: S M L XL 2XL 3XL Retro yellow kit
+154,America retro home kit,510,/jersey-38,jerseys,Available sizes: S M L XL 2XL 3XL Navy pre-match kit
+155,France training kit,500,/jersey-39,jerseys,Available sizes: S M L XL 2XL 3XL White with green/gold trim
+156,South africa away kit,510,/jersey-40,jerseys,Available sizes: S M L XL 2XL 3XL Nike training drill top
