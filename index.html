@@ -232,6 +232,15 @@ button:active{background:#e65c00}
   opacity:1;
 }
 
+/* Added for contact section */
+#contact a {
+  color: #ff6600;
+  text-decoration: none;
+}
+#contact a:hover {
+  text-decoration: underline;
+}
+
 @media(min-width: 768px){
   .grid{grid-template-columns:repeat(4,1fr)}
 }
@@ -241,12 +250,13 @@ button:active{background:#e65c00}
 
 <nav>
   <a href="index.html">Home</a>
+  <a href="#contact">Contact Us</a>
   <a href="cart.html">Cart <span class="cart-count" id="cartCount">0</span></a>
 </nav>
 
 <h1>Ikuthu Collections</h1>
 
-<!-- Added search bar -->
+<!-- Search bar -->
 <div class="search-bar">
   <input type="text" id="searchInput" placeholder="Search products...">
 </div>
@@ -278,11 +288,31 @@ button:active{background:#e65c00}
 
 <div class="toast" id="toast">Added to cart!</div>
 
+<!-- Added Contact Us section -->
+<section id="contact" style="background:#fff; padding:20px; border-radius:8px; margin-top:30px;">
+  <h2 style="margin-top:0;">Contact Us</h2>
+  <p>Have a question or need help with an order? Reach out to us:</p>
+  
+  <div style="margin:15px 0;">
+    <p><strong>📞 WhatsApp:</strong> <a href="https://wa.me/254758903057" target="_blank">0758 903 057</a></p>
+    <p><strong>📧 Email:</strong> <a href="mailto:victornzoka8@gmail.com">victornzoka8@gmail.com</a></p>
+    <p><strong>📍 Location:</strong> Nairobi, Kenya</p>
+  </div>
+
+  <!-- Simple contact form using Formspree -->
+  <form action="https://formspree.io/f/your-form-id" method="POST" style="display:flex; flex-direction:column; gap:10px;">
+    <input type="text" name="name" placeholder="Your Name" required style="padding:10px; border:1px solid #ddd; border-radius:5px;">
+    <input type="email" name="email" placeholder="Your Email" required style="padding:10px; border:1px solid #ddd; border-radius:5px;">
+    <textarea name="message" placeholder="Your Message" rows="4" required style="padding:10px; border:1px solid #ddd; border-radius:5px;"></textarea>
+    <button type="submit" style="width:auto; padding:10px 20px;">Send Message</button>
+  </form>
+</section>
+
 <script>
 const productsContainer = document.getElementById('products');
 let allProducts = [];
 let currentCategory = 'all';
-let searchQuery = ''; // Added for search
+let searchQuery = '';
 
 // Load products from CSV - now reads 7th column 'images'
 fetch('/data/products.csv')
@@ -310,7 +340,7 @@ fetch('/data/products.csv')
     productsContainer.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#fff;">Failed to load products</p>';
   });
 
-// Added search listener
+// Search listener
 document.getElementById('searchInput').addEventListener('input', (e) => {
   searchQuery = e.target.value.toLowerCase().trim();
   renderProducts();
@@ -320,7 +350,7 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 function renderProducts(){
   let filtered = allProducts;
 
-  // Added search filter
+  // Search filter
   if(searchQuery){
     filtered = filtered.filter(p => 
       p.name.toLowerCase().includes(searchQuery) ||
@@ -329,7 +359,7 @@ function renderProducts(){
     );
   }
   
-  // Existing category filter
+  // Category filter
   filtered = currentCategory === 'all' 
     ? filtered 
     : filtered.filter(p => p.category === currentCategory);
@@ -383,7 +413,6 @@ function openModal(id){
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
   
-  // Close only when clicking the dark background
   modal.onclick = (e) => {
     if(e.target.id === 'productModal'){
       closeModal(e);
