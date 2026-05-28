@@ -75,46 +75,46 @@ id,name,price,image,category,description
 74,Burgundy Bomber Jacket,840,/jacket-19,jackets,"Bomber jacket in rich burgundy with ribbed trims"
 75,Oversized Black Jacket,920,/jacket-20,jackets,"Oversized fit black jacket for a relaxed streetwear vibe"
 76,Light Grey Casual Jacket,790,/jacket-21,jackets,"Lightweight casual jacket with soft feel and clean cut"
-77,Classic Sneaker,2500,/shoe-01,shoes
-78,Running Pro,3200,/shoe-02,shoes
-79,Casual Loafers,1800,/shoe-03,shoes
-80,Canvas Slip-On,1500,/shoe-04,shoes
-81,Leather Oxford,4200,/shoe-05,shoes
-82,Sport Trainer,2800,/shoe-06,shoes
-83,High Top Sneaker,3000,/shoe-07,shoes
-84,Street Style Kicks,2600,/shoe-08,shoes
-85,Comfort Sandals,1200,/shoe-09,shoes
-86,Formal Derby,4500,/shoe-10,shoes
-87,Urban Sneaker,2700,/shoe-11,shoes
-88,Trail Runner,3400,/shoe-12,shoes
-89,Slip-On Moccasin,2000,/shoe-13,shoes
-90,Low Cut Sneaker,2300,/shoe-14,shoes
-91,Canvas Classic,1600,/shoe-15,shoes
-92,Leather Brogue,4100,/shoe-16,shoes
-93,Gym Trainer,2900,/shoe-17,shoes
-94,Skate Sneaker,2400,/shoe-18,shoes
-95,Loafer Elite,3800,/shoe-19,shoes
-96,Mesh Runner,3100,/shoe-20,shoes
-97,Classic Oxford,4300,/shoe-21,shoes
-98,Casual Slip-On,1700,/shoe-22,shoes
-99,High Performance Sneaker,3500,/shoe-23,shoes
-100,Leather Chelsea,4700,/shoe-24,shoes
-101,Everyday Sneaker,2200,/shoe-25,shoes
-102,Lightweight Runner,2600,/shoe-26,shoes
-103,Canvas Low Top,1900,/shoe-27,shoes
-104,Formal Monk Strap,4600,/shoe-28,shoes
-105,Street Walker,2800,/shoe-29,shoes
-106,Comfort Slide,1300,/shoe-30,shoes
-107,Pro Basketball Shoe,5000,/shoe-31,shoes
-108,Leather Derby,4000,/shoe-32,shoes
-109,Casual Canvas,1550,/shoe-33,shoes
-110,Trail Hiker,3600,/shoe-34,shoes
-111,Urban Loafer,3900,/shoe-35,shoes
-112,Running Lite,2400,/shoe-36,shoes
-113,Classic Sneaker V2,2100,/shoe-37,shoes
-114,Leather Boot Shoe,4800,/shoe-38,shoes
-115,Slip-On Trainer,2500,/shoe-39,shoes
-116,Mesh Sport Shoe,2700,/shoe-40,shoes
+77,Brown leather sandals,600,/shoe-01,shoes,Brown leather sandals
+78,Dark brown leather Tx,950,/shoe-02,shoes,Dark brown leather Tx
+79,Marron patent block heels,750,/shoe-03,shoes,Marron patent block heels
+80,Black golden buckle brogue,950,/shoe-04,shoes,Black golden buckle brogue
+81,Nude pink block heels,750,/shoe-05,shoes,Nude pink block heels
+82,Black leather sneaker,900,/shoe-06,shoes,Black leather sneaker
+83,Brown mesh runner,750,/shoe-07,shoes,Brown mesh runner
+84,Multi pastel sneaker,1000,/shoe-08,shoes,Multi pastel sneaker
+85,Black leather slip on,700,/shoe-09,shoes,Black leather slip on
+86,Leopard print,950,/shoe-10,shoes,Leopard print
+87,Off marron block heel,600,/shoe-11,shoes,Off marron block heel
+88,Off gray canvas,950,/shoe-12,shoes,Off gray canvas
+89,Multi color Darby,700,/shoe-13,shoes,Multi color Darby
+90,Black sneaker,750,/shoe-14,shoes,Black sneaker
+91,Leather pink heels,800,/shoe-15,shoes,Leather pink heels
+92,Golden strappy loafer,1050,/shoe-16,shoes,Golden strappy loafer
+93,White flat heel,800,/shoe-17,shoes,White flat heel
+94,Brown loafer,900,/shoe-18,shoes,Brown loafer
+95,Pink strappy heel,850,/shoe-19,shoes,Pink strappy heel
+96,Camo hiking,950,/shoe-20,shoes,Camo hiking
+97,White strappy heel,850,/shoe-21,shoes,White strappy heel
+98,Black leather opens,450,/shoe-22,shoes,Black leather opens
+99,Mock leopard sandals,500,/shoe-23,shoes,Mock leopard sandals
+100,Black leather loafer,1000,/shoe-24,shoes,Black leather loafer
+101,Slip on heel,800,/shoe-25,shoes,Slip on heel
+102,Sport airforce,1100,/shoe-26,shoes,Sport airforce
+103,Light runner sport,1000,/shoe-27,shoes,Light runner sport
+104,Black leather mock,1150,/shoe-28,shoes,Black leather mock
+105,Off grey sneaker,950,/shoe-29,shoes,Off grey sneaker
+106,Stuffy open sandal,550,/shoe-30,shoes,Stuffy open sandal
+107,Cream sandals,450,/shoe-31,shoes,Cream sandals
+108,Black leather polisher,950,/shoe-32,shoes,Black leather polisher
+109,White&black striped airforce,1050,/shoe-33,shoes,White&black striped airforce
+110,Nike grey airforce,1050,/shoe-34,shoes,Nike grey airforce
+111,White Nike airforce,1050,/shoe-35,shoes,White Nike airforce
+112,Black sport shoe,1000,/shoe-36,shoes,Black sport shoe
+113,Paired sandals,600,/shoe-37,shoes,Paired sandals
+114,Leather brash,950,/shoe-38,shoes,Leather brash
+115,Brown open sandal,900,/shoe-39,shoes,Brown open sandal
+116,Paired sport shoes,850,/shoe-40,shoes,Paired sport shoes
 117,Home Kit Jersey,2800,/jersey-01,jerseys
 118,Away Kit Jersey,2800,/jersey-02,jerseys
 119,Third Kit Jersey,2800,/jersey-03,jerseys
