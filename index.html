@@ -37,7 +37,7 @@ h1{margin-bottom:15px}
   margin-left:5px
 }
 
-/* Search bar */
+/* Added for search bar */
 .search-bar {
   margin-bottom: 15px;
 }
@@ -246,9 +246,9 @@ button:active{background:#e65c00}
 
 <h1>Ikuthu Collections</h1>
 
-<!-- Search bar -->
+<!-- Added search bar -->
 <div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search shirts, jerseys, shoes...">
+  <input type="text" id="searchInput" placeholder="Search products...">
 </div>
 
 <div class="category-filter" id="categoryFilter">
@@ -282,9 +282,9 @@ button:active{background:#e65c00}
 const productsContainer = document.getElementById('products');
 let allProducts = [];
 let currentCategory = 'all';
-let searchQuery = '';
+let searchQuery = ''; // Added for search
 
-// Load products from CSV - fixed parser handles commas in description
+// Load products from CSV - now reads 7th column 'images'
 fetch('/data/products.csv')
   .then(res => res.text())
   .then(csv => {
@@ -292,26 +292,17 @@ fetch('/data/products.csv')
     allProducts = rows
       .filter(row => row.trim())
       .map(row => {
-        // Split only on first 6 commas to keep description intact
-        const match = row.match(/^([^,]*),([^,]*),([^,]*),([^,]*),([^,]*),(.*)$/);
-        if (!match) return null;
-        
-        const [_, id, name, price, image, category, rest] = match;
-        const lastComma = rest.lastIndexOf(',');
-        const description = rest.substring(0, lastComma).trim().replace(/^"|"$/g, '');
-        const images = rest.substring(lastComma + 1).trim() || image.trim();
-        
+        const [id, name, price, image, category, description, images] = row.split(',');
         return {
           id: id.trim(),
           name: name.trim(),
           price: price.trim(),
           image: image.trim(),
           category: category ? category.trim() : 'shirts',
-          description: description,
-          images: images
+          description: description ? description.trim() : '',
+          images: images ? images.trim() : image.trim()
         }
-      })
-      .filter(p => p !== null);
+      });
     renderProducts();
   })
   .catch(err => {
@@ -319,26 +310,26 @@ fetch('/data/products.csv')
     productsContainer.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#fff;">Failed to load products</p>';
   });
 
-// Search input listener
+// Added search listener
 document.getElementById('searchInput').addEventListener('input', (e) => {
   searchQuery = e.target.value.toLowerCase().trim();
   renderProducts();
 });
 
-// Render products based on search + category
+// Render products based on category + search
 function renderProducts(){
   let filtered = allProducts;
 
-  // Filter by search query
+  // Added search filter
   if(searchQuery){
-    filtered = filtered.filter(p =>
+    filtered = filtered.filter(p => 
       p.name.toLowerCase().includes(searchQuery) ||
       p.description.toLowerCase().includes(searchQuery) ||
       p.category.toLowerCase().includes(searchQuery)
     );
   }
-
-  // Filter by category
+  
+  // Existing category filter
   filtered = currentCategory === 'all' 
     ? filtered 
     : filtered.filter(p => p.category === currentCategory);
@@ -392,6 +383,7 @@ function openModal(id){
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
   
+  // Close only when clicking the dark background
   modal.onclick = (e) => {
     if(e.target.id === 'productModal'){
       closeModal(e);
