@@ -1,46 +1,46 @@
 id,name,price,image,category,description
-01,Henley Polo,750,/shirt-01,Shirts,Classic henley style polo with soft fabric
-02,Cream Cotton Polo,750,/shirt-02,Shirts,Cream cotton polo for casual wear
-03,Taupe Fabric Polo,750,/shirt-03,Shirts,Taupe color polo with premium fabric
-04,Black Pique Polo,750,/shirt-04,Shirts,Black pique polo with breathable texture
-05,Olive Gray Polo,750,/shirt-05,Shirts,Olive gray polo shirt for everyday use
-06,Brown Striped Shirt,550,/shirt-06,Shirts,Brown striped casual shirt
-07,Beige Striped Tee,550,/shirt-07,Shirts,Beige striped tee shirt
-08,White Long Sleeve Tee,650,/shirt-08,Shirts,White long sleeve tee shirt
-09,Grey Long Sleeve Tee,650,/shirt-09,Shirts,Grey long sleeve tee shirt
-10,Light Blue Long Sleeve Tee,650,/shirt-10,Shirts,Light blue long sleeve tee shirt
-11,White Leaf Print Shirt,800,/shirt-11,Shirts,White shirt with leaf print design
-12,Cream Abstract Print Shirt,800,/shirt-12,Shirts,Cream shirt with abstract print
-13,Gray Monogram Print Shirt,800,/shirt-13,Shirts,Gray shirt with monogram print
-14,Dusty Blue Floral Shirt,800,/shirt-14,Shirts,Dusty blue shirt with floral pattern
-15,Sage Green Polo,650,/shirt-15,Shirts,Sage green polo shirt
-16,White Polo,650,/shirt-16,Shirts,Classic white polo shirt
-17,Off White Polo,650,/shirt-17,Shirts,Off white polo shirt
-18,Tan And Navy Tone Khaki,850,/shirt-18,Shirts,Tan and navy color block khaki shirt
-19,Dark Blue & White Tee,850,/shirt-19,Shirts,Dark blue and white color block tee
-20,Red Black Two-Tone Shirt,850,/shirt-20,Shirts,Red and black two-tone shirt
-21,Mustard Polo,700,/shirt-21,Shirts,Mustard yellow polo shirt
-22,Maroon Polo,700,/shirt-22,Shirts,Maroon polo shirt
-23,Black Polo,700,/shirt-23,Shirts,Classic black polo shirt
-24,Light Blue Polo,700,/shirt-24,Shirts,Light blue polo shirt
-25,White Polo,650,/shirt-25,Shirts,Plain white polo shirt
-26,Black Graphic Tee,650,/shirt-26,Shirts,Black tee with graphic print
-27,Blacksmith Tee,650,/shirt-27,Shirts,Blacksmith graphic tee shirt
-28,Beige Graphic Tee,650,/shirt-28,Shirts,Beige tee with graphic print
-29,White Striped Tee,850,/shirt-29,Shirts,White shirt with black stripes
-30,Red Striped Shirt,850,/shirt-30,Shirts,Red shirt with black stripes
-31,White Graphic Print Shirt,1050,/shirt-31,Shirts,White shirt with graphic print
-32,Gray Pattern Shirt,650,/shirt-32,Shirts,Gray shirt with pattern design
-33,Light Gray Printed Shirt,650,/shirt-33,Shirts,Light gray shirt with print
-34,Lime Green Shirt,650,/shirt-34,Shirts,Lime green casual shirt
-35,Pale Yellow Shirt,650,/shirt-35,Shirts,Pale yellow casual shirt
-36,White Navy Trim Shirt,650,/shirt-36,Shirts,White shirt with navy trim
-37,Sky Blue Navy Shirt,1050,/shirt-37,Shirts,Sky blue shirt with navy details
-38,Baby Pink Navy Shirt,1050,/shirt-38,Shirts,Baby pink shirt with navy details
-39,Lilac Purple Navy Shirt,1050,/shirt-39,Shirts,Lilac purple shirt with navy details
-40,Olive Green Navy Shirt,1050,/shirt-40,Shirts,Olive green shirt with navy details
-41,White Black Trim Cuffs Shirt,1050,/shirt-41,Shirts,White shirt with black trim on cuffs
-42,Pink Vertical Stripe Shirt,1050,/shirt-42,Shirts,Pink shirt with vertical stripes
+01,Henley Polo,750,/shirt-01,shirts,Classic henley style polo with soft fabric
+02,Cream Cotton Polo,750,/shirt-02,shirts,Cream cotton polo for casual wear
+03,Taupe Fabric Polo,750,/shirt-03,shirts,Taupe color polo with premium fabric
+04,Black Pique Polo,750,/shirt-04,shirts,Black pique polo with breathable texture
+05,Olive Gray Polo,750,/shirt-05,shirts,Olive gray polo shirt for everyday use
+06,Brown Striped Shirt,550,/shirt-06,shirts,Brown striped casual shirt
+07,Beige Striped Tee,550,/shirt-07,shirts,Beige striped tee shirt
+08,White Long Sleeve Tee,650,/shirt-08,shirts,White long sleeve tee shirt
+09,Grey Long Sleeve Tee,650,/shirt-09,shirts,Grey long sleeve tee shirt
+10,Light Blue Long Sleeve Tee,650,/shirt-10,shirts,Light blue long sleeve tee shirt
+11,White Leaf Print Shirt,800,/shirt-11,shirts,White shirt with leaf print design
+12,Cream Abstract Print Shirt,800,/shirt-12,shirts,Cream shirt with abstract print
+13,Gray Monogram Print Shirt,800,/shirt-13,shirts,Gray shirt with monogram print
+14,Dusty Blue Floral Shirt,800,/shirt-14,shirts,Dusty blue shirt with floral pattern
+15,Sage Green Polo,650,/shirt-15,shirts,Sage green polo shirt
+16,White Polo,650,/shirt-16,shirts,Classic white polo shirt
+17,Off White Polo,650,/shirt-17,shirts,Off white polo shirt
+18,Tan And Navy Tone Khaki,850,/shirt-18,shirts,Tan and navy color block khaki shirt
+19,Dark Blue & White Tee,850,/shirt-19,shirts,Dark blue and white color block tee
+20,Red Black Two-Tone Shirt,850,/shirt-20,shirts,Red and black two-tone shirt
+21,Mustard Polo,700,/shirt-21,shirts,Mustard yellow polo shirt
+22,Maroon Polo,700,/shirt-22,shirts,Maroon polo shirt
+23,Black Polo,700,/shirt-23,shirts,Classic black polo shirt
+24,Light Blue Polo,700,/shirt-24,shirts,Light blue polo shirt
+25,White Polo,650,/shirt-25,shirts,Plain white polo shirt
+26,Black Graphic Tee,650,/shirt-26,shirts,Black tee with graphic print
+27,Blacksmith Tee,650,/shirt-27,shirts,Blacksmith graphic tee shirt
+28,Beige Graphic Tee,650,/shirt-28,shirts,Beige tee with graphic print
+29,White Striped Tee,850,/shirt-29,shirts,White shirt with black stripes
+30,Red Striped Shirt,850,/shirt-30,shirts,Red shirt with black stripes
+31,White Graphic Print Shirt,1050,/shirt-31,shirts,White shirt with graphic print
+32,Gray Pattern Shirt,650,/shirt-32,shirts,Gray shirt with pattern design
+33,Light Gray Printed Shirt,650,/shirt-33,shirts,Light gray shirt with print
+34,Lime Green Shirt,650,/shirt-34,shirts,Lime green casual shirt
+35,Pale Yellow Shirt,650,/shirt-35,shirts,Pale yellow casual shirt
+36,White Navy Trim Shirt,650,/shirt-36,shirts,White shirt with navy trim
+37,Sky Blue Navy Shirt,1050,/shirt-37,shirts,Sky blue shirt with navy details
+38,Baby Pink Navy Shirt,1050,/shirt-38,shirts,Baby pink shirt with navy details
+39,Lilac Purple Navy Shirt,1050,/shirt-39,shirts,Lilac purple shirt with navy details
+40,Olive Green Navy Shirt,1050,/shirt-40,shirts,Olive green shirt with navy details
+41,White Black Trim Cuffs Shirt,1050,/shirt-41,shirts,White shirt with black trim on cuffs
+42,Pink Vertical Stripe Shirt,1050,/shirt-42,shirts,Pink shirt with vertical stripes
 43,DTN,960,/trouser-01,trousers
 44,Fhfd,900,/trouser-02,trousers
 45,Chkr,1100,/trouser-03,trousers
