@@ -18,6 +18,9 @@
 <link rel="canonical" href="https://ikuthu-collections.pages.dev/">
 
 <style>
+html {
+  scroll-behavior: smooth; /* smooth scroll instead of jump */
+}
 body{
   font-family:Arial,sans-serif;
   background:linear-gradient(to right,#4facfe,#00f2fe);
@@ -275,11 +278,11 @@ button:active{background:#e65c00}
 }
 
 /* Contact section */
-#contact a {
+#contact-section a {
   color: #ff6600;
   text-decoration: none;
 }
-#contact a:hover {
+#contact-section a:hover {
   text-decoration: underline;
 }
 
@@ -387,7 +390,7 @@ button:active{background:#e65c00}
 
 <nav>
   <a href="index.html">Home</a>
-  <a href="#contact">Contact Us</a>
+  <a href="#contact-section">Contact Us</a>
   <a href="cart.html">Cart <span class="cart-count" id="cartCount">0</span></a>
 </nav>
 
@@ -426,8 +429,8 @@ button:active{background:#e65c00}
 
 <div class="toast" id="toast">Added to cart!</div>
 
-<!-- Contact Us section -->
-<section id="contact" style="background:#fff; padding:20px; border-radius:8px; margin-top:30px;">
+<!-- Contact Us section - ID CHANGED TO contact-section -->
+<section id="contact-section" style="background:#fff; padding:20px; border-radius:8px; margin-top:30px;">
   <h2 style="margin-top:0;">Contact Us</h2>
   <p>Have a question or need help with an order? Reach out to us:</p>
 
