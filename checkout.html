@@ -11,10 +11,37 @@ nav{margin-bottom:20px;}
 nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold;font-size:15px;}
 .container{background:#fff;padding:20px;border-radius:8px;}
 h2{font-size:26px;font-weight:700;margin-bottom:16px;}
-.order-summary{background:#f9f9f9;padding:15px;border-radius:5px;margin:15px 0;}
-.order-summary h4{margin-bottom:12px;font-size:16px;}
-.order-summary p{margin:6px 0;font-size:14px;}
-.order-summary hr{border:none;border-top:1px solid #ddd;margin:10px 0;}
+
+.order-summary{
+  background: linear-gradient(135deg, #ff6600 0%, #ff944d 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 15px 0;
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+}
+.order-summary h4{
+  margin-bottom: 12px;
+  font-size: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  padding-bottom: 10px;
+}
+.order-summary p{
+  margin: 8px 0;
+  font-size: 15px;
+}
+.order-summary hr{
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  margin: 12px 0;
+}
+.total-line{
+  font-size: 20px;
+  font-weight: 700;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 2px solid rgba(255,255,255,0.4);
+}
 
 .field{margin-bottom:16px;}
 .field label{display:block;font-size:13px;color:#666;margin-bottom:6px;font-weight:500;}
@@ -27,7 +54,7 @@ input,textarea,select{
   box-sizing:border-box;
   outline:none;
 }
-input:focus,textarea:focus,select:focus{border-color:#000;}
+input:focus,textarea:focus,select:focus{border-color:#ff6600;}
 textarea{resize:none;font-family:inherit;}
 
 .error{color:#d32f2f;font-size:13px;margin-top:6px;display:none;}
@@ -111,7 +138,6 @@ const products = [
   {id:10,name:"Fsg Hds",price:750}
 ];
 
-// Delivery towns from your screenshot
 const deliveryTowns = [
   {name:"Kitui Town", fee:180},
   {name:"Nairobi CBD", fee:300},
@@ -140,15 +166,13 @@ let total = subtotal + deliveryFee;
 summaryHTML += `<hr>
 <p><strong>Subtotal:</strong> KSh ${subtotal.toLocaleString()}</p>
 <p id="deliveryLine"><strong>Delivery to ${deliveryTown}:</strong> KSh ${deliveryFee}</p>
-<p style="font-size:18px" id="totalLine"><strong>Total:</strong> KSh ${total.toLocaleString()}</p>`;
+<p class="total-line" id="totalLine">Total: KSh ${total.toLocaleString()}</p>`;
 
 document.getElementById('orderSummary').innerHTML = summaryHTML;
 
-// Set default town in dropdown
 const townSelect = document.getElementById('town');
 townSelect.value = deliveryTown;
 
-// Update fees when town changes
 townSelect.addEventListener('change', () => {
   const selected = deliveryTowns.find(t => t.name === townSelect.value);
   if(selected){
@@ -157,11 +181,10 @@ townSelect.addEventListener('change', () => {
     total = subtotal + deliveryFee;
     
     document.getElementById('deliveryLine').innerHTML = `<strong>Delivery to ${deliveryTown}:</strong> KSh ${deliveryFee}`;
-    document.getElementById('totalLine').innerHTML = `<strong>Total:</strong> KSh ${total.toLocaleString()}`;
+    document.getElementById('totalLine').innerHTML = `Total: KSh ${total.toLocaleString()}`;
   }
 });
 
-// Form validation
 document.getElementById('order-form').addEventListener('submit', (e) => {
   e.preventDefault();
   
@@ -190,7 +213,6 @@ document.getElementById('order-form').addEventListener('submit', (e) => {
   
   if(!valid) return;
   
-  // Format phone to 254 format for M-Pesa
   const mpesaPhone = phone.startsWith('0') ? '254' + phone.slice(1) : phone;
   const fullAddress = `${landmark}, ${area}, ${town}`;
   
