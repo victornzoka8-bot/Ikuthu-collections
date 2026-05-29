@@ -37,7 +37,7 @@ h1{margin-bottom:15px}
   margin-left:5px
 }
 
-/* Added for search bar */
+/* Search bar */
 .search-bar {
   margin-bottom: 15px;
 }
@@ -111,16 +111,21 @@ h1{margin-bottom:15px}
   margin:5px 0 3px 0;
   font-size:15px
 }
-.product .desc{
+.product.desc{
   font-size:13px;
   color:#666;
   margin:0 0 8px 0;
   line-height:1.3;
 }
-.product .price{
+.product.price{
   margin:5px 0;
   font-weight:bold;
   color:#333
+}
+.product.view-count{
+  font-size:11px;
+  color:#888;
+  margin:3px 0 0 0;
 }
 button{
   padding:8px 12px;
@@ -162,8 +167,8 @@ button:active{background:#e65c00}
   font-weight:bold;
   transition:bottom 0.3s ease;
 }
-.product:active .size-overlay,
-.product:hover .size-overlay{
+.product:active.size-overlay,
+.product:hover.size-overlay{
   bottom:0;
 }
 
@@ -267,7 +272,7 @@ button:active{background:#e65c00}
   opacity:1;
 }
 
-/* Added for contact section */
+/* Contact section */
 #contact a {
   color: #ff6600;
   text-decoration: none;
@@ -349,26 +354,26 @@ button:active{background:#e65c00}
 }
 
 @media(min-width: 768px){
-  .grid{grid-template-columns:repeat(4,1fr)}
+ .grid{grid-template-columns:repeat(4,1fr)}
 }
 
 @media screen and (max-width: 600px){
-  .whatsapp-float{
+ .whatsapp-float{
     width: 55px;
     height: 55px;
     bottom: 15px;
     right: 15px;
   }
-  .whatsapp-float svg{
+ .whatsapp-float svg{
     width: 28px;
     height: 28px;
   }
-  .online-dot{
+ .online-dot{
     width: 14px;
     height: 14px;
     border: 2px solid white;
   }
-  .whatsapp-tooltip{
+ .whatsapp-tooltip{
     right: 65px;
     font-size: 12px;
     padding: 6px 10px;
@@ -419,18 +424,17 @@ button:active{background:#e65c00}
 
 <div class="toast" id="toast">Added to cart!</div>
 
-<!-- Added Contact Us section -->
+<!-- Contact Us section -->
 <section id="contact" style="background:#fff; padding:20px; border-radius:8px; margin-top:30px;">
   <h2 style="margin-top:0;">Contact Us</h2>
   <p>Have a question or need help with an order? Reach out to us:</p>
-  
+
   <div style="margin:15px 0;">
     <p><strong>📞 WhatsApp:</strong> <a href="https://wa.me/254758903057" target="_blank">0758 903 057</a></p>
     <p><strong>📧 Email:</strong> <a href="mailto:victornzoka8@gmail.com">victornzoka8@gmail.com</a></p>
     <p><strong>📍 Location:</strong> Nairobi, Kenya</p>
   </div>
 
-  <!-- Simple contact form using Formspree -->
   <form action="https://formspree.io/f/xqejypvp" method="POST" style="display:flex; flex-direction:column; gap:10px;">
     <input type="text" name="name" placeholder="Your Name" required style="padding:10px; border:1px solid #ddd; border-radius:5px;">
     <input type="email" name="email" placeholder="Your Email" required style="padding:10px; border:1px solid #ddd; border-radius:5px;">
@@ -440,10 +444,10 @@ button:active{background:#e65c00}
 </section>
 
 <!-- WhatsApp Floating Button + Online Dot + Tooltip -->
-<a href="https://wa.me/254758903057?text=Hi%20Ikuthu%20Collections,%20I%20have%20a%20question%20about%20your%20products" 
+<a href="https://wa.me/254758903057?text=Hi%20Ikuthu%20Collections,%20I%20have%20a%20question%20about%20your%20products"
    class="whatsapp-float" target="_blank" id="whatsappBtn">
   <svg width="32" height="32" viewBox="0 0 32 32" fill="white">
-    <path d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.7-1.7c1.9 1 4 1.7 6.3 1.7 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 24c-2 0-3.9-.5-5.6-1.5l-.4-.2-4 1 1-3.9-.3-.4C5.5 19.9 5 18 5 16c0-6.1 4.9-11 11-11s11 4.9 11 11-4.9 11-11 11zm6-8.4c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0-1.3-.5-2.5-1.6c-.9-.8-1.5-1.8-1.7-2.1s0-.5.2-.7c.2-.2.4-.5.6-.7s.3-.4.4-.7.1-.5 0-.7-.7-1.7-1-2.3-.5-.5-1.1-.4-1.5-.4h-1.3c-.4 0-1.1.2-1.7.8s-2.3 2.2-2.3 5.4 2.3 6.3 2.6 6.7.4.1 4.6 2c2 .7 2.6.9 3.3 1.1.9.3 1.7.2 2.3.1.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.5.2-1.7s-.3-.3-.6-.5z"/>
+    <path d="M16 3C8.8 3 3 8.8 3 16c0 2.3.6 4.5 1.7 6.4L3 29l6.7-1.7c1.9 1 4 1.7 6.3 1.7 7.2 0 13-5.8 13-13S23.2 3 16 3zm0 24c-2 0-3.9-.5-5.6-1.5l-.4-.2-4 1 1-3.9-.3-.4C5.5 19.9 5 18 5 16c0-6.1 4.9-11 11-11s11 4.9 11 11-4.9 11-11 11zm6-8.4c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0-1.3-.5-2.5-1.6c-.9-.8-1.5-1.8-1.7-2.1s0-.5.2-.7c.2-.2.4-.5.6-.7s.3-.4.4-.7.1-.5 0-.7-.7-1.7-1-2.3-.5-.5-1.1-.4-1.5-.4h-1.3c-.4 0-1.1.2-1.7.8s-2.3 2.2-2.3 5.4 2.3 6.3 2.6 6.7.4.1 4.6 2c2.7 2.6.9 3.3 1.1.9.3 1.7.2 2.3.1.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.5.2-1.7s-.3-.3-.6-.5z"/>
   </svg>
   <span class="online-dot"></span>
   <span class="whatsapp-tooltip" id="whatsappTooltip">Chat with us 👋<br><small>We reply instantly</small></span>
@@ -455,30 +459,31 @@ let allProducts = [];
 let currentCategory = 'all';
 let searchQuery = '';
 
-// Load products from CSV - now reads 9th column 'sizes' and 'stock'
+// Load products from CSV
 fetch('/data/products.csv')
-  .then(res => res.text())
-  .then(csv => {
+ .then(res => res.text())
+ .then(csv => {
     const rows = csv.split('\n').slice(1);
     allProducts = rows
-      .filter(row => row.trim())
-      .map(row => {
+     .filter(row => row.trim())
+     .map(row => {
         const [id, name, price, image, category, description, images, sizes, stock] = row.split(',');
         return {
           id: id.trim(),
           name: name.trim(),
           price: price.trim(),
           image: image.trim(),
-          category: category ? category.trim() : 'shirts',
-          description: description ? description.trim() : '',
-          images: images ? images.trim() : image.trim(),
-          sizes: sizes ? sizes.trim() : 'S|M|L|XL|XXL',
-          stock: stock ? stock.trim() : 'In Stock'
+          category: category? category.trim() : 'shirts',
+          description: description? description.trim() : '',
+          images: images? images.trim() : image.trim(),
+          sizes: sizes? sizes.trim() : 'S|M|L|XL|XXL',
+          stock: stock? stock.trim() : 'In Stock'
         }
       });
     renderProducts();
+    setViewCounts();
   })
-  .catch(err => {
+ .catch(err => {
     console.log('Error loading products:', err);
     productsContainer.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#fff;">Failed to load products</p>';
   });
@@ -487,31 +492,30 @@ fetch('/data/products.csv')
 document.getElementById('searchInput').addEventListener('input', (e) => {
   searchQuery = e.target.value.toLowerCase().trim();
   renderProducts();
+  setViewCounts();
 });
 
-// Render products based on category + search
+// Render products
 function renderProducts(){
   let filtered = allProducts;
 
-  // Search filter
   if(searchQuery){
-    filtered = filtered.filter(p => 
+    filtered = filtered.filter(p =>
       p.name.toLowerCase().includes(searchQuery) ||
       p.description.toLowerCase().includes(searchQuery) ||
       p.category.toLowerCase().includes(searchQuery)
     );
   }
-  
-  // Category filter
-  filtered = currentCategory === 'all' 
-    ? filtered 
+
+  filtered = currentCategory === 'all'
+   ? filtered
     : filtered.filter(p => p.category === currentCategory);
-  
+
   if(filtered.length === 0){
     productsContainer.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#fff;">No products found</p>';
     return;
   }
-  
+
   productsContainer.innerHTML = filtered.map(p => `
     <div class="product" onclick="openModal(${p.id})">
       <span class="stock-badge">${p.stock}</span>
@@ -519,6 +523,7 @@ function renderProducts(){
       <h3>${p.name}</h3>
       <p class="desc">${p.description}</p>
       <p class="price">KSh ${p.price}</p>
+      <p class="view-count">👁️ <span id="views-${p.id}">0</span> viewed today</p>
       <div class="size-overlay">Sizes: ${p.sizes.replace(/\|/g, ' • ')}</div>
       <button onclick="event.stopPropagation(); openModal(${p.id})">Select Size</button>
     </div>
@@ -532,20 +537,49 @@ document.getElementById('categoryFilter').addEventListener('click', (e) => {
     e.target.classList.add('active');
     currentCategory = e.target.dataset.cat;
     renderProducts();
+    setViewCounts();
   }
 });
+
+// View count social proof
+function setViewCounts() {
+  allProducts.forEach(p => {
+    const key = `views_${p.id}`;
+    let views = parseInt(localStorage.getItem(key));
+
+    if(!views) {
+      // First visit: set base random views 12-67 using ID as seed
+      const seed = parseInt(p.id) * 9301 + 49297;
+      const random = (seed % 100) / 100;
+      views = Math.floor(12 + random * 55);
+      localStorage.setItem(key, views);
+    }
+
+    const el = document.getElementById(`views-${p.id}`);
+    if(el) el.textContent = views;
+
+    // Increase by 1 every 10 sec if user stays on page
+    if(!window.viewIntervals) window.viewIntervals = {};
+    if(!window.viewIntervals[p.id]) {
+      window.viewIntervals[p.id] = setInterval(() => {
+        views += 1;
+        localStorage.setItem(key, views);
+        if(el) el.textContent = views;
+      }, 10000);
+    }
+  });
+}
 
 // Modal functions
 function openModal(id){
   const product = allProducts.find(p => p.id == id);
   const images = product.images.split('|').filter(i => i.trim());
-  
+
   document.getElementById('modalMainImg').src = images[0];
   document.getElementById('modalName').textContent = product.name;
   document.getElementById('modalDesc').textContent = product.description;
   document.getElementById('modalPrice').textContent = `KSh ${product.price}`;
-  
-  // Add stock status + size selector
+
   document.getElementById('modalSizeContainer').innerHTML = `
     <p style="font-size:12px; color:#25D366; margin:5px 0;">✓ ${product.stock}</p>
     <label style="font-size:13px; font-weight:bold;">Select Size:</label>
@@ -553,21 +587,21 @@ function openModal(id){
       ${product.sizes.split('|').map(s => `<option value="${s}">${s}</option>`).join('')}
     </select>
   `;
-  
+
   document.getElementById('modalAddBtn').onclick = (e) => {
     e.stopPropagation();
     addToCart(product.id);
     closeModal(e);
   };
-  
-  document.getElementById('modalThumbs').innerHTML = images.map((img, i) => 
+
+  document.getElementById('modalThumbs').innerHTML = images.map((img, i) =>
     `<img src="${img}" class="${i===0?'active':''}" onclick="event.stopPropagation(); switchModalImg(this,'${img}')">`
   ).join('');
-  
+
   const modal = document.getElementById('productModal');
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
-  
+
   modal.onclick = (e) => {
     if(e.target.id === 'productModal'){
       closeModal(e);
@@ -603,10 +637,10 @@ function showToast(message){
 }
 
 function addToCart(id){
-  let size = document.getElementById('sizeSelect') ? document.getElementById('sizeSelect').value : 'M';
+  let size = document.getElementById('sizeSelect')? document.getElementById('sizeSelect').value : 'M';
   let cart = JSON.parse(localStorage.getItem('cart') || '[]');
   let item = cart.find(i => i.id === parseInt(id) && i.size === size);
-  
+
   if(item) {
     item.qty += 1;
     showToast(`Updated ${size} quantity!`);
@@ -614,32 +648,32 @@ function addToCart(id){
     cart.push({id:parseInt(id), size:size, qty:1});
     showToast(`Added Size ${size} to cart!`);
   }
-  
+
   localStorage.setItem('cart', JSON.stringify(cart));
   updateCartCount();
 }
 
 updateCartCount();
 
-// Show WhatsApp tooltip only once
+// WhatsApp tooltip
 window.addEventListener('load', () => {
   const tooltip = document.getElementById('whatsappTooltip');
   const shown = localStorage.getItem('whatsappTooltipShown');
-  
+
   if(!shown){
     setTimeout(() => {
       tooltip.style.opacity = '1';
       tooltip.style.transform = 'translateX(0)';
     }, 1000);
-    
+
     setTimeout(() => {
       tooltip.style.opacity = '0';
       tooltip.style.transform = 'translateX(10px)';
     }, 5000);
-    
+
     localStorage.setItem('whatsappTooltipShown', 'true');
   }
-  
+
   document.getElementById('whatsappBtn').addEventListener('click', () => {
     tooltip.style.display = 'none';
   });
