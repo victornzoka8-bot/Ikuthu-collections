@@ -96,6 +96,8 @@ h1{margin-bottom:15px}
   border-radius:8px;
   cursor:pointer;
   transition:transform 0.1s;
+  position:relative;
+  overflow:hidden;
 }
 .product:active{transform:scale(0.98)}
 .product img{
@@ -131,6 +133,39 @@ button{
   width:100%
 }
 button:active{background:#e65c00}
+
+/* Stock badge */
+.stock-badge{
+  position:absolute;
+  top:8px;
+  right:8px;
+  background:#25D366;
+  color:white;
+  padding:3px 7px;
+  font-size:10px;
+  font-weight:bold;
+  border-radius:4px;
+  z-index:5;
+}
+
+/* Size overlay on hover/tap */
+.size-overlay{
+  position:absolute;
+  bottom:-40px;
+  left:0;
+  right:0;
+  background:rgba(0,0,0,0.85);
+  color:white;
+  padding:8px;
+  text-align:center;
+  font-size:12px;
+  font-weight:bold;
+  transition:bottom 0.3s ease;
+}
+.product:active .size-overlay,
+.product:hover .size-overlay{
+  bottom:0;
+}
 
 /* Modal for product gallery */
 .modal{
@@ -375,6 +410,7 @@ button:active{background:#e65c00}
     <div class="thumbnails" id="modalThumbs"></div>
     <h3 id="modalName" style="margin:15px 0 5px 0;"></h3>
     <p id="modalDesc" style="color:#666;font-size:14px;"></p>
+    <div id="modalSizeContainer"></div>
     <p id="modalPrice" style="font-weight:bold;font-size:18px;margin:10px 0;"></p>
     <button id="modalAddBtn">Add to Cart</button>
     <button class="modal-close-btn" onclick="closeModal(event)">Close</button>
@@ -419,7 +455,7 @@ let allProducts = [];
 let currentCategory = 'all';
 let searchQuery = '';
 
-// Load products from CSV - now reads 7th column 'images'
+// Load products from CSV - now reads 9th column 'sizes' and 'stock'
 fetch('/data/products.csv')
   .then(res => res.text())
   .then(csv => {
@@ -427,7 +463,7 @@ fetch('/data/products.csv')
     allProducts = rows
       .filter(row => row.trim())
       .map(row => {
-        const [id, name, price, image, category, description, images] = row.split(',');
+        const [id, name, price, image, category, description, images, sizes, stock] = row.split(',');
         return {
           id: id.trim(),
           name: name.trim(),
@@ -435,7 +471,9 @@ fetch('/data/products.csv')
           image: image.trim(),
           category: category ? category.trim() : 'shirts',
           description: description ? description.trim() : '',
-          images: images ? images.trim() : image.trim()
+          images: images ? images.trim() : image.trim(),
+          sizes: sizes ? sizes.trim() : 'S|M|L|XL|XXL',
+          stock: stock ? stock.trim() : 'In Stock'
         }
       });
     renderProducts();
@@ -476,11 +514,13 @@ function renderProducts(){
   
   productsContainer.innerHTML = filtered.map(p => `
     <div class="product" onclick="openModal(${p.id})">
+      <span class="stock-badge">${p.stock}</span>
       <img src="${p.image}" alt="${p.name}">
       <h3>${p.name}</h3>
       <p class="desc">${p.description}</p>
       <p class="price">KSh ${p.price}</p>
-      <button onclick="event.stopPropagation(); addToCart(${p.id})">Add to Cart</button>
+      <div class="size-overlay">Sizes: ${p.sizes.replace(/\|/g, ' • ')}</div>
+      <button onclick="event.stopPropagation(); openModal(${p.id})">Select Size</button>
     </div>
   `).join('');
 }
@@ -504,6 +544,16 @@ function openModal(id){
   document.getElementById('modalName').textContent = product.name;
   document.getElementById('modalDesc').textContent = product.description;
   document.getElementById('modalPrice').textContent = `KSh ${product.price}`;
+  
+  // Add stock status + size selector
+  document.getElementById('modalSizeContainer').innerHTML = `
+    <p style="font-size:12px; color:#25D366; margin:5px 0;">✓ ${product.stock}</p>
+    <label style="font-size:13px; font-weight:bold;">Select Size:</label>
+    <select id="sizeSelect" style="width:100%; padding:10px; margin:8px 0 15px 0; border-radius:5px; border:1px solid #ddd; font-size:14px;">
+      ${product.sizes.split('|').map(s => `<option value="${s}">${s}</option>`).join('')}
+    </select>
+  `;
+  
   document.getElementById('modalAddBtn').onclick = (e) => {
     e.stopPropagation();
     addToCart(product.id);
@@ -553,15 +603,16 @@ function showToast(message){
 }
 
 function addToCart(id){
+  let size = document.getElementById('sizeSelect') ? document.getElementById('sizeSelect').value : 'M';
   let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  let item = cart.find(i => i.id === parseInt(id));
+  let item = cart.find(i => i.id === parseInt(id) && i.size === size);
   
   if(item) {
     item.qty += 1;
-    showToast('Item quantity updated!');
+    showToast(`Updated ${size} quantity!`);
   } else {
-    cart.push({id:parseInt(id), qty:1});
-    showToast('Added to cart!');
+    cart.push({id:parseInt(id), size:size, qty:1});
+    showToast(`Added Size ${size} to cart!`);
   }
   
   localStorage.setItem('cart', JSON.stringify(cart));
