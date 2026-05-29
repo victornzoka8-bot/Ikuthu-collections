@@ -542,14 +542,24 @@ document.getElementById('categoryFilter').addEventListener('click', (e) => {
   }
 });
 
-// View count social proof - FIXED VERSION
+// View count social proof - DAILY RESET VERSION
 function setViewCounts() {
+  const today = new Date().toDateString();
+  const savedDate = localStorage.getItem('views_date');
+  
+  // If it's a new day, clear all view counts
+  if(savedDate !== today) {
+    allProducts.forEach(p => localStorage.removeItem(`views_${p.id}`));
+    localStorage.setItem('views_date', today);
+    console.log('View counts reset for new day:', today);
+  }
+
   allProducts.forEach(p => {
     const key = `views_${p.id}`;
     let views = parseInt(localStorage.getItem(key));
 
     if(!views) {
-      // First visit: set base random views 12-67 using ID as seed
+      // First visit today: set base random views 12-67 using ID as seed
       const seed = parseInt(p.id) * 9301 + 49297;
       const random = (seed % 100) / 100;
       views = Math.floor(12 + random * 55);
