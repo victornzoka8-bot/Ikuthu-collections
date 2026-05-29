@@ -292,15 +292,6 @@ button:active{background:#e65c00}
   opacity:1;
 }
 
-/* Contact section */
-#contact-section a {
-  color: #ff6600;
-  text-decoration: none;
-}
-#contact-section a:hover {
-  text-decoration: underline;
-}
-
 /* Footer */
 footer {
   text-align:center; 
@@ -419,7 +410,7 @@ footer a {
 
 <nav>
   <a href="index.html">Home</a>
-  <a href="#contact-section">Contact Us</a>
+  <a href="contact us.html">Contact Us</a>
   <a href="cart.html" class="cart-icon-link">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="9" cy="21" r="1"></circle>
@@ -459,7 +450,7 @@ footer a {
     <p id="modalPrice" style="font-weight:bold;font-size:18px;margin:10px 0;"></p>
     <button id="modalAddBtn">Add to Cart</button>
     <p style="font-size:11px; color:#666; text-align:center; margin:8px 0 0 0;">
-      Not the right size? <a href="#" onclick="openReturnsModal(); return false;" style="color:#ff6600;">Easy 7-day returns</a>
+      Not the right size? <a href="contact us.html" style="color:#ff6600;">Easy 7-day returns</a>
     </p>
     <button class="modal-close-btn" onclick="closeModal(event)">Close</button>
   </div>
@@ -467,74 +458,13 @@ footer a {
 
 <div class="toast" id="toast">Added to cart!</div>
 
-<!-- Contact Us section -->
-<section id="contact-section" style="background:#fff; padding:20px; border-radius:8px; margin-top:30px;">
-  <h2 style="margin-top:0;">Contact Us</h2>
-  <p>Have a question or need help with an order? Reach out to us:</p>
-
-  <div style="margin:15px 0;">
-    <p><strong>📞 WhatsApp:</strong> <a href="https://wa.me/254758903057" target="_blank">0758 903 057</a></p>
-    <p><strong>📧 Email:</strong> <a href="mailto:victornzoka8@gmail.com">victornzoka8@gmail.com</a></p>
-    <p><strong>📍 Location:</strong> Nairobi & Kitui, Kenya</p>
-  </div>
-
-  <form action="https://formspree.io/f/xqejypvp" method="POST" style="display:flex; flex-direction:column; gap:10px;">
-    <input type="text" name="name" placeholder="Your Name" required style="padding:10px; border:1px solid #ddd; border-radius:5px;">
-    <input type="email" name="email" placeholder="Your Email" required style="padding:10px; border:1px solid #ddd; border-radius:5px;">
-    <textarea name="message" placeholder="Your Message" rows="4" required style="padding:10px; border:1px solid #ddd; border-radius:5px;"></textarea>
-    <button type="submit" style="width:auto; padding:10px 20px;">Send Message</button>
-  </form>
-
-  <button onclick="openReturnsModal()" style="width:100%; margin-top:15px; background:#555; font-size:13px;">📦 View Returns & Refunds Policy</button>
-</section>
-
-<!-- Returns Policy Modal -->
-<div class="modal" id="returnsModal">
-  <div class="modal-content">
-    <span class="modal-close" onclick="closeReturnsModal()">×</span>
-    <h2 style="margin-top:0; color:#333;">Returns & Refunds Policy</h2>
-    <div style="font-size:14px; line-height:1.7; color:#555;">
-      <p><strong>1. 7-Day Return Window</strong><br>
-      Return or exchange items within 7 days of delivery if defective, wrong size, or wrong item sent.</p>
-      
-      <p><strong>2. Condition Requirements</strong><br>
-      Item must be unworn, unwashed, with original tags and packaging intact. Used items cannot be returned.</p>
-      
-      <p><strong>3. How to Return - 1 Click</strong><br>
-      Click below to start return request on WhatsApp. Send order details + photos of the issue.</p>
-
-      <a href="https://wa.me/254758903057?text=Hi%20Ikuthu%20Collections,%20I%20want%20to%20return%20an%20item.%0A%0AOrder%20Details:%20%0AProduct%20Name:%20%0AOrder%20Date:%20%0ALocation:%20Nairobi/Kitui%20%0AReason%20for%20return:%20%0A%0AI%20have%20attached%20photos." 
-         target="_blank" 
-         style="display:block; background:#25D366; color:white; text-align:center; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold; margin:12px 0;">
-        📱 Request Return on WhatsApp
-      </a>
-      
-      <p><strong>4. Pickup & Return Shipping</strong><br>
-      Free pickup for Nairobi & Kitui customers. We’ll schedule pickup 2-5pm next day after approval.<br>
-      For other towns: Customer pays return shipping to our Nairobi address.</p>
-      
-      <p><strong>5. Refunds & Exchanges</strong><br>
-      M-Pesa refund processed within 24 hours after we receive and inspect the returned item. 
-      Exchanges subject to stock availability.</p>
-      
-      <p><strong>6. Non-Returnable Items</strong><br>
-      Sale/clearance items, custom/personalized orders, undergarments, and items showing signs of wear.</p>
-      
-      <p style="background:#fff3cd; padding:10px; border-radius:5px; margin-top:15px; font-size:13px;">
-        <strong>Note:</strong> For size issues, WhatsApp us before ordering. We’ll guide you to the right size to avoid returns.
-      </p>
-    </div>
-    <button class="modal-close-btn" onclick="closeReturnsModal()">Close</button>
-  </div>
-</div>
-
 <!-- Footer -->
 <footer>
   <p>© 2026 Ikuthu Collections. All Rights Reserved.</p>
   <p>
-    <a href="#" onclick="openReturnsModal(); return false;">Returns Policy</a> | 
-    <a href="#contact-section">Privacy Policy</a> | 
-    <a href="#contact-section">Terms of Service</a>
+    <a href="contact us.html">Returns Policy</a> | 
+    <a href="contact us.html">Privacy Policy</a> | 
+    <a href="contact us.html">Terms of Service</a>
   </p>
 </footer>
 
@@ -725,16 +655,6 @@ function switchModalImg(el, src){
 function closeModal(e){
   if(e) e.preventDefault();
   document.getElementById('productModal').style.display = 'none';
-  document.body.style.overflow = 'auto';
-}
-
-// Returns Policy Modal
-function openReturnsModal(){
-  document.getElementById('returnsModal').style.display = 'block';
-  document.body.style.overflow = 'hidden';
-}
-function closeReturnsModal(){
-  document.getElementById('returnsModal').style.display = 'none';
   document.body.style.overflow = 'auto';
 }
 
