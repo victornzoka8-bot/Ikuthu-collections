@@ -86,13 +86,13 @@ h1{margin-bottom:15px}
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:12px; /* was 15px */
+  gap:12px;
   margin-top:10px
 }
 .product{
   border:1px solid #ddd;
   background:#fff;
-  padding:8px; /* was 12px */
+  padding:8px;
   border-radius:8px;
   cursor:pointer;
   transition:transform 0.1s;
@@ -102,34 +102,34 @@ h1{margin-bottom:15px}
 .product:active{transform:scale(0.98)}
 .product img{
   width:100%;
-  height:130px; /* was 160px */
+  height:130px;
   object-fit:cover;
   border-radius:5px;
-  margin-bottom:6px /* was 8px */
+  margin-bottom:6px
 }
 .product h3{
-  margin:3px 0 2px 0; /* was 5px 0 3px */
-  font-size:13px; /* was 15px */
+  margin:3px 0 2px 0;
+  font-size:13px;
   line-height:1.2;
-  height:32px; /* force 2 lines max */
+  height:32px;
   overflow:hidden;
 }
 .product.desc{
-  display:none; /* hide description on card, show only in modal */
+  display:none;
 }
 .product.price{
-  margin:3px 0; /* was 5px 0 */
+  margin:3px 0;
   font-weight:bold;
   color:#333;
-  font-size:14px; /* was default */
+  font-size:14px;
 }
 .product.view-count{
-  font-size:10px; /* was 11px */
+  font-size:10px;
   color:#888;
   margin:2px 0 0 0;
 }
 button{
-  padding:6px 10px; /* was 8px 12px */
+  padding:6px 10px;
   background:#ff6600;
   color:#fff;
   border:none;
@@ -137,19 +137,19 @@ button{
   cursor:pointer;
   font-weight:bold;
   width:100%;
-  font-size:13px /* add this */
+  font-size:13px
 }
 button:active{background:#e65c00}
 
 /* Stock badge - COMPACT */
 .stock-badge{
   position:absolute;
-  top:6px; /* was 8px */
-  right:6px; /* was 8px */
+  top:6px;
+  right:6px;
   background:#25D366;
   color:white;
-  padding:2px 5px; /* was 3px 7px */
-  font-size:9px; /* was 10px */
+  padding:2px 5px;
+  font-size:9px;
   font-weight:bold;
   border-radius:4px;
   z-index:5;
@@ -356,26 +356,26 @@ button:active{background:#e65c00}
 }
 
 @media(min-width: 768px){
- .grid{grid-template-columns:repeat(4,1fr)}
+.grid{grid-template-columns:repeat(4,1fr)}
 }
 
 @media screen and (max-width: 600px){
- .whatsapp-float{
+.whatsapp-float{
     width: 55px;
     height: 55px;
     bottom: 15px;
     right: 15px;
   }
- .whatsapp-float svg{
+.whatsapp-float svg{
     width: 28px;
     height: 28px;
   }
- .online-dot{
+.online-dot{
     width: 14px;
     height: 14px;
     border: 2px solid white;
   }
- .whatsapp-tooltip{
+.whatsapp-tooltip{
     right: 65px;
     font-size: 12px;
     padding: 6px 10px;
@@ -463,12 +463,12 @@ let searchQuery = '';
 
 // Load products from CSV
 fetch('/data/products.csv')
- .then(res => res.text())
- .then(csv => {
+.then(res => res.text())
+.then(csv => {
     const rows = csv.split('\n').slice(1);
     allProducts = rows
-     .filter(row => row.trim())
-     .map(row => {
+    .filter(row => row.trim())
+    .map(row => {
         const [id, name, price, image, category, description, images, sizes, stock] = row.split(',');
         return {
           id: id.trim(),
@@ -485,7 +485,7 @@ fetch('/data/products.csv')
     renderProducts();
     setViewCounts();
   })
- .catch(err => {
+.catch(err => {
     console.log('Error loading products:', err);
     productsContainer.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#fff;">Failed to load products</p>';
   });
@@ -510,7 +510,7 @@ function renderProducts(){
   }
 
   filtered = currentCategory === 'all'
-   ? filtered
+  ? filtered
     : filtered.filter(p => p.category === currentCategory);
 
   if(filtered.length === 0){
@@ -542,28 +542,33 @@ document.getElementById('categoryFilter').addEventListener('click', (e) => {
   }
 });
 
-// View count social proof
+// View count social proof - FIXED VERSION
 function setViewCounts() {
   allProducts.forEach(p => {
     const key = `views_${p.id}`;
     let views = parseInt(localStorage.getItem(key));
 
     if(!views) {
+      // First visit: set base random views 12-67 using ID as seed
       const seed = parseInt(p.id) * 9301 + 49297;
       const random = (seed % 100) / 100;
       views = Math.floor(12 + random * 55);
       localStorage.setItem(key, views);
     }
 
+    // Set initial value
     const el = document.getElementById(`views-${p.id}`);
     if(el) el.textContent = views;
 
+    // Increase by 1 every 10 sec - QUERY ELEMENT FRESH EACH TIME
     if(!window.viewIntervals) window.viewIntervals = {};
     if(!window.viewIntervals[p.id]) {
       window.viewIntervals[p.id] = setInterval(() => {
         views += 1;
         localStorage.setItem(key, views);
-        if(el) el.textContent = views;
+        // Important: get element again every 10sec because DOM gets recreated
+        const freshEl = document.getElementById(`views-${p.id}`);
+        if(freshEl) freshEl.textContent = views;
       }, 10000);
     }
   });
