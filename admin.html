@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin - Ikuthu</title>
+<style>
+body{font-family:Arial;background:#f5f5f5;padding:20px}
+.box{background:#fff;padding:20px;border-radius:12px;max-width:600px;margin:auto;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+input,textarea{width:100%;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+button{background:#000;color:#fff;padding:12px 20px;border:none;border-radius:8px;cursor:pointer;width:100%;margin-top:10px}
+button:disabled{opacity:.5}
+#list{margin-top:30px}
+.item{display:flex;justify-content:space-between;align-items:center;background:#fafafa;padding:10px;margin:5px 0;border-radius:8px}
+.item button{width:auto;background:red;padding:5px 10px;margin:0}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>Add Product</h2>
+<input id="name" placeholder="Product Name">
+<input id="price" type="number" placeholder="Price (e.g 2500)">
+<input id="image" placeholder="Main Image URL">
+<input id="category" placeholder="Category e.g Dresses">
+<input id="sizes" placeholder="Sizes e.g S,M,L,XL">
+<textarea id="description" placeholder="Description"></textarea>
+<button id="addBtn" onclick="addProduct()">Add Product</button>
+
+<div id="list"><h3>Existing Products</h3><div id="products">Loading...</div></div>
+</div>
+
+<script>
+async function load(){
+ const r = await fetch('/api/products');
+ const d = await r.json();
+ const c = document.getElementById('products');
+ c.innerHTML = d.map(p=>`<div class="item"><span>${p.name} - KSh ${p.price}</span><button onclick="del(${p.id})">Delete</button></div>`).join('');
+}
+async function addProduct(){
+ const btn=document.getElementById('addBtn'); btn.disabled=true; btn.innerText='Adding...';
+ const body={
+  name:document.getElementById('name').value,
+  price:Number(document.getElementById('price').value),
+  image:document.getElementById('image').value,
+  category:document.getElementById('category').value,
+  description:document.getElementById('description').value,
+  sizes:document.getElementById('sizes').value
+ };
+ if(!body.name || !body.price){alert('Name and Price required'); btn.disabled=false; btn.innerText='Add Product'; return;}
+ await fetch('/api/add-product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+ alert('Added!');
+ document.querySelectorAll('input,textarea').forEach(i=>i.value='');
+ btn.disabled=false; btn.innerText='Add Product';
+ load();
+}
+async function del(id){
+ if(!confirm('Delete?')) return;
+ await fetch('/api/delete-product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});
+ load();
+}
+load();
+</script>
+</body>
+</html>
