@@ -181,9 +181,19 @@ async function finalizeOrder(method,status,stkPhone,checkoutId){
 }
 async function sendToFormspree(order){
   const fd=new FormData();
-  fd.append('name',order.name||''); fd.append('phone',order.phone||order.mpesaPhone||''); fd.append('address',order.address||'');
-  fd.append('payment_method',order.paymentMethod); fd.append('status',order.status); fd.append('mpesa_phone',order.mpesaPhone||''); fd.append('checkout_id',order.checkoutRequestId||'');
-  fd.append('total',`KSh ${order.total}`); fd.append('items', (order.cart||[]).map(i=>`${i.qty}x ${i.name||i.id}`).join(', '));
+  fd.append('name',order.name||'');
+  fd.append('email',order.email||'');
+  fd.append('_replyto',order.email||'');
+  fd.append('Customer Email',order.email||'');
+  fd.append('phone',order.phone||order.mpesaPhone||'');
+  fd.append('address',order.address||'');
+  fd.append('payment_method',order.paymentMethod);
+  fd.append('status',order.status);
+  fd.append('mpesa_phone',order.mpesaPhone||'');
+  fd.append('checkout_id',order.checkoutRequestId||'');
+  fd.append('total',`KSh ${order.total}`);
+  fd.append('order_details', order.order_details || `Customer Email: ${order.email}\nName: ${order.name}\nPhone: ${order.phone}\nAddress: ${order.address}\nTotal: KSh ${order.total}`);
+  fd.append('items', (order.cart||[]).map(i=>`${i.qty}x ${i.name||i.id}`).join(', '));
   if(order.screenshot){ try{const b=await fetch(order.screenshot).then(r=>r.blob()); fd.append('screenshot',b,'mpesa.png');}catch(e){} }
   try{ await fetch(`https://formspree.io/f/${FORMPSREE_ID}`,{method:'POST',body:fd,headers:{Accept:'application/json'}});}catch(e){}
 }
