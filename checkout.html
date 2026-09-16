@@ -11,384 +11,146 @@ nav{margin-bottom:20px;}
 nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold;font-size:15px;}
 .container{background:#fff;padding:20px;border-radius:8px;}
 h2{font-size:26px;font-weight:700;margin-bottom:16px;}
-
-.order-summary{
-  background: linear-gradient(135deg, #ff6600 0%, #ff944d 100%);
-  color: white;
-  padding: 20px;
-  border-radius: 12px;
-  margin: 15px 0;
-  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
-}
-.order-summary h4{
-  margin-bottom: 12px;
-  font-size: 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
-  padding-bottom: 10px;
-}
-.order-summary p{
-  margin: 8px 0;
-  font-size: 15px;
-}
-.order-summary hr{
-  border: none;
-  border-top: 1px solid rgba(255,255,255,0.3);
-  margin: 12px 0;
-}
-.total-line{
-  font-size: 20px;
-  font-weight: 700;
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 2px solid rgba(255,255,255,0.4);
-}
-
+.order-summary{background:linear-gradient(135deg,#ff6600 0%,#ff944d 100%);color:white;padding:20px;border-radius:12px;margin:15px 0;box-shadow:0 4px 12px rgba(255,102,0,0.3);}
+.order-summary h4{margin-bottom:12px;font-size:18px;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:10px;}
+.order-summary p{margin:8px 0;font-size:15px;}
+.order-summary hr{border:none;border-top:1px solid rgba(255,255,255,0.3);margin:12px 0;}
+.total-line{font-size:20px;font-weight:700;margin-top:12px;padding-top:12px;border-top:2px solid rgba(255,255,255,0.4);}
 .field{margin-bottom:16px;}
 .field label{display:block;font-size:13px;color:#666;margin-bottom:6px;font-weight:500;}
-input,textarea,select{
-  width:100%;
-  padding:12px;
-  border:1px solid #ddd;
-  border-radius:5px;
-  font-size:14px;
-  box-sizing:border-box;
-  outline:none;
-}
+input,textarea,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:5px;font-size:14px;box-sizing:border-box;outline:none;}
 input:focus,textarea:focus,select:focus{border-color:#ff6600;}
-textarea{resize:none;font-family:inherit;}
-
 .error{color:#d32f2f;font-size:13px;margin-top:6px;display:none;}
-.field.invalid input,
-.field.invalid textarea,
-.field.invalid select{border-color:#d32f2f;}
-.field.invalid .error{display:block;}
-
+.field.invalid input,.field.invalid textarea,.field.invalid select{border-color:#d32f2f;}
+.field.invalid.error{display:block;}
 button{width:100%;padding:15px;background:#ff6600;color:#fff;border:none;border-radius:5px;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer;}
-button:active{background:#e55f00;}
 </style>
 </head>
 <body>
-
-<nav>
-  <a href="index.html">Home</a>
-  <a href="cart.html">Cart</a>
-</nav>
-
+<nav><a href="index.html">Home</a><a href="cart.html">Cart</a></nav>
 <div class="container">
-  <h2>Checkout</h2>
-  <div class="order-summary" id="orderSummary">Loading order...</div>
-
-  <form id="order-form" novalidate>
-    <div class="field" id="nameField">
-      <label>Full Name</label>
-      <input type="text" id="name" placeholder="John Doe">
-      <div class="error">Enter your full name</div>
-    </div>
-    
-    <div class="field" id="phoneField">
-      <label>Phone Number</label>
-      <input type="tel" id="phone" placeholder="0712345678">
-      <div class="error">Enter a valid Kenyan number</div>
-    </div>
-    
-    <div class="field" id="townField">
-      <label>Town</label>
-      <select id="town">
-        <option value="">Select your town</option>
-        <option value="Kitui Town" data-fee="180">Kitui Town - KSh 180</option>
-        <option value="Nairobi CBD" data-fee="300">Nairobi CBD - KSh 300</option>
-        <option value="Mombasa" data-fee="350">Mombasa - KSh 350</option>
-        <option value="Nakuru" data-fee="250">Nakuru - KSh 250</option>
-        <option value="Kisumu" data-fee="280">Kisumu - KSh 280</option>
-        <option value="Other Locations" data-fee="400">Other Locations - KSh 400</option>
-      </select>
-      <div class="error">Select a town</div>
-    </div>
-    
-    <div class="field" id="areaField">
-      <label>Area / Estate</label>
-      <input type="text" id="area" placeholder="Kwa Mutua, Westlands, Mwembe Tayari">
-      <div class="error">Enter your area or estate</div>
-    </div>
-    
-    <div class="field" id="landmarkField">
-      <label>Landmark / House No.</label>
-      <input type="text" id="landmark" placeholder="Opposite Mall, House 12B">
-      <div class="error">Enter a landmark or house number</div>
-    </div>
-    
-    <button type="submit">Place Order</button>
-  </form>
+<h2>Checkout</h2>
+<div class="order-summary" id="orderSummary">Loading order...</div>
+<form id="order-form" novalidate>
+<div class="field" id="nameField"><label>Full Name</label><input type="text" id="name" placeholder="John Doe"><div class="error">Enter your full name</div></div>
+<div class="field" id="phoneField"><label>Phone Number</label><input type="tel" id="phone" placeholder="0712345678"><div class="error">Enter a valid Kenyan number</div></div>
+<div class="field" id="townField"><label>Town</label><select id="town"><option value="">Select your town</option><option value="Kitui Town" data-fee="180">Kitui Town - KSh 180</option><option value="Nairobi CBD" data-fee="300">Nairobi CBD - KSh 300</option><option value="Mombasa" data-fee="350">Mombasa - KSh 350</option><option value="Nakuru" data-fee="250">Nakuru - KSh 250</option><option value="Kisumu" data-fee="280">Kisumu - KSh 280</option><option value="Other Locations" data-fee="400">Other Locations - KSh 400</option></select><div class="error">Select a town</div></div>
+<div class="field" id="areaField"><label>Area / Estate</label><input type="text" id="area" placeholder="Kwa Mutua, Westlands"><div class="error">Enter your area or estate</div></div>
+<div class="field" id="landmarkField"><label>Landmark / House No.</label><input type="text" id="landmark" placeholder="Opposite Mall, House 12B"><div class="error">Enter a landmark</div></div>
+<button type="submit">Place Order</button>
+</form>
 </div>
-
 <script>
-const cart = JSON.parse(localStorage.getItem('cart') || '[]');
 const selectedLoc = JSON.parse(localStorage.getItem('selectedLocation') || '{"name":"Kitui Town","fee":180}');
-
-const products = [
-{id:1,name:"Henley Polo",price:750},
-{id:2,name:"Cream Cotton Polo",price:750},
-{id:3,name:"Taupe Fabric Polo",price:750},
-{id:4,name:"Black Pique Polo",price:750},
-{id:5,name:"Olive Gray Polo",price:750},
-{id:6,name:"Brown Striped Shirt",price:550},
-{id:7,name:"Beige Striped Tee",price:550},
-{id:8,name:"White Long Sleeve Tee",price:650},
-{id:9,name:"Grey Long Sleeve Tee",price:650},
-{id:10,name:"Light Blue Long Sleeve Tee",price:650},
-{id:11,name:"White Leaf Print Shirt",price:800},
-{id:12,name:"Cream Abstract Print Shirt",price:800},
-{id:13,name:"Gray Monogram Print Shirt",price:800},
-{id:14,name:"Dusty Blue Floral Shirt",price:800},
-{id:15,name:"Sage Green Polo",price:650},
-{id:16,name:"White Polo",price:650},
-{id:17,name:"Off White Polo",price:650},
-{id:18,name:"Tan And Navy Tone Khaki",price:850},
-{id:19,name:"Dark Blue & White Tee",price:850},
-{id:20,name:"Red Black Two-Tone Shirt",price:850},
-{id:21,name:"Mustard Polo",price:700},
-{id:22,name:"Maroon Polo",price:700},
-{id:23,name:"Black Polo",price:700},
-{id:24,name:"Light Blue Polo",price:700},
-{id:25,name:"White Polo",price:650},
-{id:26,name:"Black Graphic Tee",price:650},
-{id:27,name:"Blacksmith Tee",price:650},
-{id:28,name:"Beige Graphic Tee",price:650},
-{id:29,name:"White Striped Tee",price:850},
-{id:30,name:"Red Striped Shirt",price:850},
-{id:31,name:"White Graphic Print Shirt",price:1050},
-{id:32,name:"Gray Pattern Shirt",price:650},
-{id:33,name:"Light Gray Printed Shirt",price:650},
-{id:34,name:"Lime Green Shirt",price:650},
-{id:35,name:"Pale Yellow Shirt",price:650},
-{id:36,name:"White Navy Trim Shirt",price:650},
-{id:37,name:"Sky Blue Navy Shirt",price:1050},
-{id:38,name:"Baby Pink Navy Shirt",price:1050},
-{id:39,name:"Lilac Purple Navy Shirt",price:1050},
-{id:40,name:"Olive Green Navy Shirt",price:1050},
-{id:41,name:"White Black Trim Cuffs Shirt",price:1050},
-{id:42,name:"Pink Vertical Stripe Shirt",price:1050},
-{id:43,name:"Chocolate Brown Chinos",price:950},
-{id:44,name:"3-Pack Neutral Chinos",price:800},
-{id:45,name:"Black Slim Fit Jeans",price:100},
-{id:46,name:"Multi-Wash Denim Pack",price:800},
-{id:47,name:"Black Straight Fit Trousers",price:950},
-{id:48,name:"Beige Khaki Chinos",price:800},
-{id:49,name:"Indigo Skinny Jeans",price:950},
-{id:50,name:"Navy Blue Denim Jeans",price:950},
-{id:51,name:"Dark Wash Embroidered Jeans",price:950},
-{id:52,name:"Black Casual Trousers",price:800},
-{id:53,name:"Charcoal Gray Chinos",price:950},
-{id:54,name:"Olive Green Cargo Trousers",price:800},
-{id:55,name:"Sand Beige Chinos",price:800},
-{id:56,name:"Urban Black Bomber Jacket",price:850},
-{id:57,name:"Classic Denim Blue Jacket",price:920},
-{id:58,name:"Matt Black Puffer Jacket",price:980},
-{id:59,name:"Khaki Utility Jacket",price:750},
-{id:60,name:"Olive Green Military Jacket",price:890},
-{id:61,name:"Retro Brown Corduroy Jacket",price:770},
-{id:62,name:"Slim Fit Grey Jacket",price:820},
-{id:63,name:"Navy Blue Varsity Jacket",price:950},
-{id:64,name:"Beige Trench Style Jacket",price:1000},
-{id:65,name:"Red Streetwear Jacket",price:880},
-{id:66,name:"Black Leather Look Jacket",price:990},
-{id:67,name:"Stone Grey Windbreaker Jacket",price:720},
-{id:68,name:"Cream Casual Jacket",price:760},
-{id:69,name:"Forest Green Outdoor Jacket",price:930},
-{id:70,name:"Charcoal Zip-Up Jacket",price:810},
-{id:71,name:"Camel Suede Jacket",price:970},
-{id:72,name:"White Minimal Jacket",price:700},
-{id:73,name:"Dark Blue Denim Jacket",price:870},
-{id:74,name:"Burgundy Bomber Jacket",price:840},
-{id:75,name:"Oversized Black Jacket",price:920},
-{id:76,name:"Light Grey Casual Jacket",price:790},
-{id:77,name:"Brown leather sandals",price:600},
-{id:78,name:"Dark brown leather Tx",price:950},
-{id:79,name:"Marron patent block heels",price:750},
-{id:80,name:"Black golden buckle brogue",price:950},
-{id:81,name:"Nude pink block heels",price:750},
-{id:82,name:"Black leather sneaker",price:900},
-{id:83,name:"Brown mesh runner",price:750},
-{id:84,name:"Multi pastel sneaker",price:1000},
-{id:85,name:"Black leather slip on",price:700},
-{id:86,name:"Leopard print",price:950},
-{id:87,name:"Off marron block heel",price:600},
-{id:88,name:"Off gray canvas",price:950},
-{id:89,name:"Multi color Darby",price:700},
-{id:90,name:"Black sneaker",price:750},
-{id:91,name:"Leather pink heels",price:800},
-{id:92,name:"Golden strappy loafer",price:1050},
-{id:93,name:"White flat heel",price:800},
-{id:94,name:"Brown loafer",price:900},
-{id:95,name:"Pink strappy heel",price:850},
-{id:96,name:"Camo hiking",price:950},
-{id:97,name:"White strappy heel",price:850},
-{id:98,name:"Black leather opens",price:450},
-{id:99,name:"Mock leopard sandals",price:500},
-{id:100,name:"Black leather loafer",price:1000},
-{id:101,name:"Slip on heel",price:800},
-{id:102,name:"Sport airforce",price:1100},
-{id:103,name:"Light runner sport",price:1000},
-{id:104,name:"Black leather mock",price:1150},
-{id:105,name:"Off grey sneaker",price:950},
-{id:106,name:"Stuffy open sandal",price:550},
-{id:107,name:"Cream sandals",price:450},
-{id:108,name:"Black leather polisher",price:950},
-{id:109,name:"White&black striped airforce",price:1050},
-{id:110,name:"Nike grey airforce",price:1050},
-{id:111,name:"White Nike airforce",price:1050},
-{id:112,name:"Black sport shoe",price:1000},
-{id:113,name:"Paired sandals",price:600},
-{id:114,name:"Leather brash",price:950},
-{id:115,name:"Brown open sandal",price:900},
-{id:116,name:"Paired sport shoes",price:850},
-{id:117,name:"Real Madrid Home Kit",price:520},
-{id:118,name:"Manchester City Away Kit",price:540},
-{id:119,name:"England Cricket ODI Jersey",price:550},
-{id:120,name:"PSG Retro Classic Jersey",price:500},
-{id:121,name:"Liverpool Training Jersey",price:530},
-{id:122,name:"Liverpool Home Kit",price:550},
-{id:123,name:"Wolves Away Kit",price:510},
-{id:124,name:"Liverpool Goalkeeper Kit",price:540},
-{id:125,name:"Arsenal Home Kit",price:520},
-{id:126,name:"Manchester United Home Kit",price:550},
-{id:127,name:"Arsenal Club Home Jersey",price:530},
-{id:128,name:"Quatar Away Kit",price:540},
-{id:129,name:"Arsenal Away Kit",price:520},
-{id:130,name:"Chelsea Home Kit",price:510},
-{id:131,name:"Real Madrid Training Kit",price:500},
-{id:132,name:"Real Madrid Sleeveless Training Kit",price:500},
-{id:133,name:"Real Madrid Away Kit",price:550},
-{id:134,name:"Real Madrid Third Kit",price:540},
-{id:135,name:"Real Madrid Anniversary Kit",price:530},
-{id:136,name:"Real Madrid UCL Kit",price:550},
-{id:137,name:"Brazil Home Kit",price:540},
-{id:138,name:"South Africa Away Kit",price:500},
-{id:139,name:"Japan Home Kit",price:530},
-{id:140,name:"Manchester United Away Kit",price:520},
-{id:141,name:"England Away Kit",price:500},
-{id:142,name:"Portugal Home Kit",price:530},
-{id:143,name:"Zion Team Home Kit",price:510},
-{id:144,name:"South Africa GK Away Kit",price:500},
-{id:145,name:"Turkey Training Kit",price:500},
-{id:146,name:"England Away Kit",price:500},
-{id:147,name:"Kenya National Team Home Kit",price:510},
-{id:148,name:"Mexico Away Kit",price:540},
-{id:149,name:"Bafana Special Edition Kit",price:550},
-{id:150,name:"Manchester United Training Top",price:500},
-{id:151,name:"Argentina Home Kit",price:550},
-{id:152,name:"Manchester United Home Kit",price:550},
-{id:153,name:"Manchester united Home Kit",price:520},
-{id:154,name:"America retro home kit",price:510},
-{id:155,name:"France training kit",price:500},
-{id:156,name:"South africa away kit",price:510}
-];
 const deliveryTowns = [
-  {name:"Kitui Town", fee:180},
-  {name:"Nairobi CBD", fee:300},
-  {name:"Mombasa", fee:350},
-  {name:"Nakuru", fee:250},
-  {name:"Kisumu", fee:280},
-  {name:"Other Locations", fee:400}
+{name:"Kitui Town", fee:180},{name:"Nairobi CBD", fee:300},{name:"Mombasa", fee:350},
+{name:"Nakuru", fee:250},{name:"Kisumu", fee:280},{name:"Other Locations", fee:400}
 ];
 
+let allProducts = [];
+let cart = [];
 let subtotal = 0;
-let summaryHTML = '<h4>Order Summary</h4>';
-
-cart.forEach(item => {
-  const prod = products.find(p => p.id === item.id);
-  if(prod){
-    const itemTotal = prod.price * item.qty;
-    subtotal += itemTotal;
-    summaryHTML += `<p>${prod.name} x${item.qty} - KSh ${itemTotal.toLocaleString()}</p>`;
-  }
-});
-
 let deliveryFee = selectedLoc.fee;
 let deliveryTown = selectedLoc.name;
-let total = subtotal + deliveryFee;
 
-summaryHTML += `<hr>
-<p><strong>Subtotal:</strong> KSh ${subtotal.toLocaleString()}</p>
-<p id="deliveryLine"><strong>Delivery to ${deliveryTown}:</strong> KSh ${deliveryFee}</p>
-<p class="total-line" id="totalLine">Total: KSh ${total.toLocaleString()}</p>`;
+function normalizeProduct(p){
+  return {
+    id: parseInt(p.id),
+    name: p.name || 'No Name',
+    price: parseInt(p.price) || 0
+  };
+}
 
-document.getElementById('orderSummary').innerHTML = summaryHTML;
+function loadProducts(){
+  return fetch('/api/products').then(r=>r.json()).then(data=>{
+    if(Array.isArray(data) && data.length>0) return data.map(normalizeProduct);
+    throw new Error('empty DB');
+  }).catch(()=>{
+    return fetch('/data/products.csv').then(r=>r.text()).then(csv=>{
+      const rows = csv.split('\n').slice(1);
+      return rows.filter(r=>r.trim()).map(r=>{
+        const parts = r.split(',');
+        return normalizeProduct({id:parts[0], name:parts[1], price:parts[2]});
+      });
+    });
+  });
+}
 
-const townSelect = document.getElementById('town');
-townSelect.value = deliveryTown;
+function renderSummary(){
+  cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  let html = '<h4>Order Summary</h4>';
+  subtotal = 0;
 
-townSelect.addEventListener('change', () => {
-  const selected = deliveryTowns.find(t => t.name === townSelect.value);
-  if(selected){
-    deliveryFee = selected.fee;
-    deliveryTown = selected.name;
-    total = subtotal + deliveryFee;
-    
+  if(cart.length===0){
+    html += '<p>Cart is empty</p>';
+    document.getElementById('orderSummary').innerHTML = html;
+    return;
+  }
+
+  cart.forEach(item=>{
+    const prod = allProducts.find(p=>p.id===item.id);
+    if(prod){
+      const itemTotal = prod.price * item.qty;
+      subtotal += itemTotal;
+      html += `<p>${prod.name} - ${item.size} x${item.qty} - KSh ${itemTotal.toLocaleString()}</p>`;
+    } else {
+      html += `<p>Product ID ${item.id} - ${item.size} x${item.qty} (not found)</p>`;
+    }
+  });
+
+  let total = subtotal + deliveryFee;
+  html += `<hr><p><strong>Subtotal:</strong> KSh ${subtotal.toLocaleString()}</p>
+  <p id="deliveryLine"><strong>Delivery to ${deliveryTown}:</strong> KSh ${deliveryFee}</p>
+  <p class="total-line" id="totalLine">Total: KSh ${total.toLocaleString()}</p>`;
+
+  document.getElementById('orderSummary').innerHTML = html;
+  document.getElementById('town').value = deliveryTown;
+}
+
+loadProducts().then(products=>{
+  allProducts = products;
+  renderSummary();
+});
+
+document.getElementById('town').addEventListener('change', (e)=>{
+  const sel = deliveryTowns.find(t=>t.name===e.target.value);
+  if(sel){
+    deliveryFee = sel.fee;
+    deliveryTown = sel.name;
+    let total = subtotal + deliveryFee;
     document.getElementById('deliveryLine').innerHTML = `<strong>Delivery to ${deliveryTown}:</strong> KSh ${deliveryFee}`;
     document.getElementById('totalLine').innerHTML = `Total: KSh ${total.toLocaleString()}`;
   }
 });
 
-document.getElementById('order-form').addEventListener('submit', (e) => {
+document.getElementById('order-form').addEventListener('submit', (e)=>{
   e.preventDefault();
-  
-  const name = getVal('name');
-  const phone = getVal('phone').replace(/[\s\-]/g,'');
-  const town = townSelect.value;
-  const area = getVal('area');
-  const landmark = getVal('landmark');
-  
+  const name = document.getElementById('name').value.trim();
+  const phoneRaw = document.getElementById('phone').value.trim().replace(/[\s\-]/g,'');
+  const town = document.getElementById('town').value;
+  const area = document.getElementById('area').value.trim();
+  const landmark = document.getElementById('landmark').value.trim();
   let valid = true;
-  
-  if(!name) valid = setError('nameField', true);
-  else setError('nameField', false);
-  
-  if(!/^0(7|1)\d{8}$|^254(7|1)\d{8}$/.test(phone)) valid = setError('phoneField', true);
-  else setError('phoneField', false);
-  
-  if(!town) valid = setError('townField', true);
-  else setError('townField', false);
-  
-  if(!area) valid = setError('areaField', true);
-  else setError('areaField', false);
-  
-  if(!landmark || landmark.length < 5) valid = setError('landmarkField', true);
-  else setError('landmarkField', false);
-  
+  valid = setError('nameField',!name) && valid;
+  valid = setError('phoneField',!/^0(7|1)\d{8}$|^254(7|1)\d{8}$/.test(phoneRaw)) && valid;
+  valid = setError('townField',!town) && valid;
+  valid = setError('areaField',!area) && valid;
+  valid = setError('landmarkField',!landmark || landmark.length<5) && valid;
   if(!valid) return;
-  
-  const mpesaPhone = phone.startsWith('0') ? '254' + phone.slice(1) : phone;
-  const fullAddress = `${landmark}, ${area}, ${town}`;
-  
-  const orderData = {
-    name: name,
-    phone: mpesaPhone,
-    address: fullAddress,
-    town: town,
-    area: area,
-    landmark: landmark,
-    cart: cart,
-    subtotal: subtotal,
-    delivery: deliveryFee,
-    location: town,
-    total: total
-  };
 
+  const mpesaPhone = phoneRaw.startsWith('0')? '254'+phoneRaw.slice(1) : phoneRaw;
+  const orderData = {
+    name, phone: mpesaPhone, address: `${landmark}, ${area}, ${town}`,
+    town, area, landmark, cart, subtotal, delivery: deliveryFee, location: town, total: subtotal+deliveryFee
+  };
   localStorage.setItem('pendingOrder', JSON.stringify(orderData));
   window.location.href = 'payment.html';
 });
 
-function getVal(id){
-  return document.getElementById(id).value.trim();
-}
-
 function setError(fieldId, show){
-  const field = document.getElementById(fieldId);
-  field.classList.toggle('invalid', show);
-  return !show;
+  document.getElementById(fieldId).classList.toggle('invalid', show);
+  return!show;
 }
 </script>
-
 </body>
 </html>
