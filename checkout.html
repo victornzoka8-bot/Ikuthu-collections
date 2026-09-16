@@ -3,154 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checkout</title>
+<title>Checkout - Ikuthu Collections</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:#f5f5f5;padding:20px;max-width:600px;margin:auto;}
-nav{margin-bottom:20px;}
-nav a{margin-right:15px;text-decoration:none;color:#333;font-weight:bold;font-size:15px;}
-.container{background:#fff;padding:20px;border-radius:8px;}
-h2{font-size:26px;font-weight:700;margin-bottom:16px;}
-.order-summary{background:linear-gradient(135deg,#ff6600 0%,#ff944d 100%);color:white;padding:20px;border-radius:12px;margin:15px 0;box-shadow:0 4px 12px rgba(255,102,0,0.3);}
-.order-summary h4{margin-bottom:12px;font-size:18px;border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:10px;}
-.order-summary p{margin:8px 0;font-size:15px;}
-.order-summary hr{border:none;border-top:1px solid rgba(255,255,255,0.3);margin:12px 0;}
-.total-line{font-size:20px;font-weight:700;margin-top:12px;padding-top:12px;border-top:2px solid rgba(255,255,255,0.4);}
-.field{margin-bottom:16px;}
-.field label{display:block;font-size:13px;color:#666;margin-bottom:6px;font-weight:500;}
-input,textarea,select{width:100%;padding:12px;border:1px solid #ddd;border-radius:5px;font-size:14px;box-sizing:border-box;outline:none;}
-input:focus,textarea:focus,select:focus{border-color:#ff6600;}
-.error{color:#d32f2f;font-size:13px;margin-top:6px;display:none;}
-.field.invalid input,.field.invalid textarea,.field.invalid select{border-color:#d32f2f;}
-.field.invalid.error{display:block;}
-button{width:100%;padding:15px;background:#ff6600;color:#fff;border:none;border-radius:5px;font-size:16px;font-weight:bold;margin-top:10px;cursor:pointer;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f1f3f6;padding:0;max-width:900px;margin:auto;}
+.top-bar{background:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,0.06);position:sticky;top:0;z-index:10}
+.top-bar a{color:#333;text-decoration:none;font-weight:600;font-size:14px}
+.secure{display:flex;align-items:center;gap:6px;color:#25D366;font-weight:700;font-size:13px}
+.steps{display:flex;gap:8px;padding:15px 20px;background:#fff;margin-bottom:12px}
+.step{flex:1;height:4px;background:#e0e0e0;border-radius:2px}.step.active{background:#ff6600}
+.container{display:grid;grid-template-columns:1fr;gap:12px;padding:12px}
+@media(min-width:768px){.container{grid-template-columns:1.2fr 0.8fr}}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.card h3{font-size:16px;margin-bottom:15px;display:flex;align-items:center;gap:8px}
+.order-item{display:flex;gap:12px;margin-bottom:12px;align-items:center;border-bottom:1px solid #f0f0f0;padding-bottom:12px}
+.order-item img{width:55px;height:55px;object-fit:cover;border-radius:8px;background:#f5f5f5}
+.order-item-info{flex:1}.order-item-info b{font-size:14px}.order-item-info p{font-size:12px;color:#666}
+.total-box{background:linear-gradient(135deg,#ff6600 0%,#ff8533 100%);color:#fff;border-radius:12px;padding:18px;margin-top:15px}
+.total-row{display:flex;justify-content:space-between;margin:6px 0;font-size:14px}
+.total-row.grand{font-size:18px;font-weight:800;border-top:1px solid rgba(255,255,255,0.3);padding-top:10px;margin-top:10px}
+.field{margin-bottom:14px;position:relative}
+.field label{font-size:12px;font-weight:600;color:#444;margin-bottom:6px;display:block}
+.field input,.field select{width:100%;padding:13px 13px 13px 38px;border:1.5px solid #e5e5e5;border-radius:10px;font-size:14px;outline:none;transition:0.2s;background:#fafafa}
+.field input:focus,.field select:focus{border-color:#ff6600;background:#fff;box-shadow:0 0 0 3px rgba(255,102,0,0.1)}
+.field.icon{position:absolute;left:12px;bottom:13px;font-size:16px;opacity:0.6}
+.error{color:#d32f2f;font-size:11px;margin-top:4px;display:none}
+.field.invalid input,.field.invalid select{border-color:#d32f2f}.field.invalid.error{display:block}
+.pay-btn{width:100%;padding:16px;background:#ff6600;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(255,102,0,0.3);transition:0.2s;margin-top:8px}
+.pay-btn:active{transform:scale(0.98)}
+.trust{display:flex;gap:10px;margin-top:15px;flex-wrap:wrap}
+.trust span{font-size:11px;background:#f5f5f5;padding:6px 10px;border-radius:20px;font-weight:600}
 </style>
 </head>
 <body>
-<nav><a href="index.html">Home</a><a href="cart.html">Cart</a></nav>
+
+<div class="top-bar">
+<a href="index.html">← Continue Shopping</a>
+<div class="secure">🔒 Secure Checkout</div>
+</div>
+
+<div class="steps"><div class="step active"></div><div class="step"></div></div>
+
 <div class="container">
-<h2>Checkout</h2>
-<div class="order-summary" id="orderSummary">Loading order...</div>
+<div class="card">
+<h3>📍 Delivery Details</h3>
 <form id="order-form" novalidate>
-<div class="field" id="nameField"><label>Full Name</label><input type="text" id="name" placeholder="John Doe"><div class="error">Enter your full name</div></div>
-<div class="field" id="phoneField"><label>Phone Number</label><input type="tel" id="phone" placeholder="0712345678"><div class="error">Enter a valid Kenyan number</div></div>
-<div class="field" id="townField"><label>Town</label><select id="town"><option value="">Select your town</option><option value="Kitui Town" data-fee="180">Kitui Town - KSh 180</option><option value="Nairobi CBD" data-fee="300">Nairobi CBD - KSh 300</option><option value="Mombasa" data-fee="350">Mombasa - KSh 350</option><option value="Nakuru" data-fee="250">Nakuru - KSh 250</option><option value="Kisumu" data-fee="280">Kisumu - KSh 280</option><option value="Other Locations" data-fee="400">Other Locations - KSh 400</option></select><div class="error">Select a town</div></div>
-<div class="field" id="areaField"><label>Area / Estate</label><input type="text" id="area" placeholder="Kwa Mutua, Westlands"><div class="error">Enter your area or estate</div></div>
-<div class="field" id="landmarkField"><label>Landmark / House No.</label><input type="text" id="landmark" placeholder="Opposite Mall, House 12B"><div class="error">Enter a landmark</div></div>
-<button type="submit">Place Order</button>
+<div class="field" id="nameField"><label>Full Name</label><span class="icon">👤</span><input type="text" id="name" placeholder="John Doe"><div class="error">Enter full name</div></div>
+<div class="field" id="phoneField"><label>M-Pesa Phone Number</label><span class="icon">📱</span><input type="tel" id="phone" placeholder="0712345678"><div class="error">Enter valid 07.. number</div></div>
+<div class="field" id="emailField"><label>Email for Receipt (auto-response)</label><span class="icon">✉️</span><input type="email" id="email" placeholder="john@gmail.com"><div class="error">Enter valid email</div></div>
+<div class="field" id="townField"><label>Town</label><span class="icon">🏙️</span><select id="town"><option value="">Select Town</option><option value="Kitui Town" data-fee="180">Kitui Town - KSh 180</option><option value="Nairobi CBD" data-fee="300">Nairobi CBD - KSh 300</option><option value="Mombasa" data-fee="350">Mombasa - KSh 350</option><option value="Nakuru" data-fee="250">Nakuru - KSh 250</option><option value="Kisumu" data-fee="280">Kisumu - KSh 280</option><option value="Other Locations" data-fee="400">Other Locations - KSh 400</option></select><div class="error">Select town</div></div>
+<div class="field" id="areaField"><label>Area / Estate</label><span class="icon">📍</span><input type="text" id="area" placeholder="e.g Westlands, Kwa Mutua"><div class="error">Enter area</div></div>
+<div class="field" id="landmarkField"><label>Landmark / House No.</label><span class="icon">🏠</span><input type="text" id="landmark" placeholder="Opposite Naivas, House 12B"><div class="error">Enter landmark</div></div>
+<button type="submit" class="pay-btn" id="submitBtn">Pay Now →</button>
+<div class="trust"><span>🚚 Fast Delivery</span><span>💰 Pay on Delivery</span><span>🔄 7-Day Returns</span><span>🔒 M-Pesa Secure</span></div>
 </form>
 </div>
+
+<div class="card">
+<h3>🛒 Order Summary</h3>
+<div id="orderSummary">Loading...</div>
+</div>
+</div>
+
 <script>
+const FORMSPREE_URL = "https://formspree.io/f/YOUR_ID_HERE";
 const selectedLoc = JSON.parse(localStorage.getItem('selectedLocation') || '{"name":"Kitui Town","fee":180}');
-const deliveryTowns = [
-{name:"Kitui Town", fee:180},{name:"Nairobi CBD", fee:300},{name:"Mombasa", fee:350},
-{name:"Nakuru", fee:250},{name:"Kisumu", fee:280},{name:"Other Locations", fee:400}
-];
+const deliveryTowns = [{name:"Kitui Town", fee:180},{name:"Nairobi CBD", fee:300},{name:"Mombasa", fee:350},{name:"Nakuru", fee:250},{name:"Kisumu", fee:280},{name:"Other Locations", fee:400}];
+let allProducts=[]; let cart=[]; let subtotal=0; let deliveryFee=selectedLoc.fee; let deliveryTown=selectedLoc.name;
 
-let allProducts = [];
-let cart = [];
-let subtotal = 0;
-let deliveryFee = selectedLoc.fee;
-let deliveryTown = selectedLoc.name;
-
-function normalizeProduct(p){
-  return {
-    id: parseInt(p.id),
-    name: p.name || 'No Name',
-    price: parseInt(p.price) || 0
-  };
-}
-
-function loadProducts(){
-  return fetch('/api/products').then(r=>r.json()).then(data=>{
-    if(Array.isArray(data) && data.length>0) return data.map(normalizeProduct);
-    throw new Error('empty DB');
-  }).catch(()=>{
-    return fetch('/data/products.csv').then(r=>r.text()).then(csv=>{
-      const rows = csv.split('\n').slice(1);
-      return rows.filter(r=>r.trim()).map(r=>{
-        const parts = r.split(',');
-        return normalizeProduct({id:parts[0], name:parts[1], price:parts[2]});
-      });
-    });
-  });
-}
+function normalizeProduct(p){return {id:parseInt(p.id), name:p.name||'No Name', price:parseInt(p.price)||0, image:p.image||p.image_url||''};}
+function loadProducts(){return fetch('/api/products').then(r=>r.json()).then(d=>{if(Array.isArray(d)&&d.length>0)return d.map(normalizeProduct); throw 0}).catch(()=>fetch('/data/products.csv').then(r=>r.text()).then(csv=>{const rows=csv.split('\n').slice(1);return rows.filter(r=>r.trim()).map(r=>{const c=r.split(',');return normalizeProduct({id:c[0],name:c[1],price:c[2],image:c[3]})})}))}
 
 function renderSummary(){
-  cart = JSON.parse(localStorage.getItem('cart') || '[]');
-  let html = '<h4>Order Summary</h4>';
-  subtotal = 0;
-
-  if(cart.length===0){
-    html += '<p>Cart is empty</p>';
-    document.getElementById('orderSummary').innerHTML = html;
-    return;
-  }
-
-  cart.forEach(item=>{
-    const prod = allProducts.find(p=>p.id===item.id);
-    if(prod){
-      const itemTotal = prod.price * item.qty;
-      subtotal += itemTotal;
-      html += `<p>${prod.name} - ${item.size} x${item.qty} - KSh ${itemTotal.toLocaleString()}</p>`;
-    } else {
-      html += `<p>Product ID ${item.id} - ${item.size} x${item.qty} (not found)</p>`;
+  cart=JSON.parse(localStorage.getItem('cart')||'[]');
+  if(cart.length===0){document.getElementById('orderSummary').innerHTML='<p>Cart empty <a href="index.html">Shop now</a></p>'; return}
+  let html=''; subtotal=0;
+  cart.forEach(i=>{
+    const p=allProducts.find(x=>x.id===i.id);
+    if(p){
+      const tot=p.price*i.qty; subtotal+=tot;
+      html+=`<div class="order-item"><img src="${p.image}" onerror="this.src='https://via.placeholder.com/100'"><div class="order-item-info"><b>${p.name}</b><p>Size ${i.size} x${i.qty}</p></div><b>KSh ${tot.toLocaleString()}</b></div>`;
     }
   });
-
-  let total = subtotal + deliveryFee;
-  html += `<hr><p><strong>Subtotal:</strong> KSh ${subtotal.toLocaleString()}</p>
-  <p id="deliveryLine"><strong>Delivery to ${deliveryTown}:</strong> KSh ${deliveryFee}</p>
-  <p class="total-line" id="totalLine">Total: KSh ${total.toLocaleString()}</p>`;
-
-  document.getElementById('orderSummary').innerHTML = html;
-  document.getElementById('town').value = deliveryTown;
+  html+=`<div class="total-box"><div class="total-row"><span>Subtotal</span><span>KSh ${subtotal.toLocaleString()}</span></div><div class="total-row" id="deliveryLine"><span>Delivery (${deliveryTown})</span><span>KSh ${deliveryFee}</span></div><div class="total-row grand" id="totalLine"><span>Total</span><span>KSh ${(subtotal+deliveryFee).toLocaleString()}</span></div></div>`;
+  document.getElementById('orderSummary').innerHTML=html;
+  document.getElementById('town').value=deliveryTown;
 }
-
-loadProducts().then(products=>{
-  allProducts = products;
-  renderSummary();
+loadProducts().then(p=>{allProducts=p; renderSummary()});
+document.getElementById('town').addEventListener('change',e=>{
+  const s=deliveryTowns.find(t=>t.name===e.target.value); if(s){deliveryFee=s.fee; deliveryTown=s.name; document.getElementById('deliveryLine').innerHTML=`<span>Delivery (${deliveryTown})</span><span>KSh ${deliveryFee}</span>`; document.getElementById('totalLine').innerHTML=`<span>Total</span><span>KSh ${(subtotal+deliveryFee).toLocaleString()}</span>`}
 });
 
-document.getElementById('town').addEventListener('change', (e)=>{
-  const sel = deliveryTowns.find(t=>t.name===e.target.value);
-  if(sel){
-    deliveryFee = sel.fee;
-    deliveryTown = sel.name;
-    let total = subtotal + deliveryFee;
-    document.getElementById('deliveryLine').innerHTML = `<strong>Delivery to ${deliveryTown}:</strong> KSh ${deliveryFee}`;
-    document.getElementById('totalLine').innerHTML = `Total: KSh ${total.toLocaleString()}`;
-  }
-});
-
-document.getElementById('order-form').addEventListener('submit', (e)=>{
+document.getElementById('order-form').addEventListener('submit', async e=>{
   e.preventDefault();
-  const name = document.getElementById('name').value.trim();
-  const phoneRaw = document.getElementById('phone').value.trim().replace(/[\s\-]/g,'');
-  const town = document.getElementById('town').value;
-  const area = document.getElementById('area').value.trim();
-  const landmark = document.getElementById('landmark').value.trim();
-  let valid = true;
-  valid = setError('nameField',!name) && valid;
-  valid = setError('phoneField',!/^0(7|1)\d{8}$|^254(7|1)\d{8}$/.test(phoneRaw)) && valid;
-  valid = setError('townField',!town) && valid;
-  valid = setError('areaField',!area) && valid;
-  valid = setError('landmarkField',!landmark || landmark.length<5) && valid;
-  if(!valid) return;
-
-  const mpesaPhone = phoneRaw.startsWith('0')? '254'+phoneRaw.slice(1) : phoneRaw;
-  const orderData = {
-    name, phone: mpesaPhone, address: `${landmark}, ${area}, ${town}`,
-    town, area, landmark, cart, subtotal, delivery: deliveryFee, location: town, total: subtotal+deliveryFee
-  };
-  localStorage.setItem('pendingOrder', JSON.stringify(orderData));
-  window.location.href = 'payment.html';
+  const name=document.getElementById('name').value.trim();
+  const phoneRaw=document.getElementById('phone').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const town=document.getElementById('town').value;
+  const area=document.getElementById('area').value.trim();
+  const landmark=document.getElementById('landmark').value.trim();
+  let v=true; v=setError('nameField',!name)&&v; v=setError('phoneField',!/^0(7|1)\d{8}$/.test(phoneRaw))&&v; v=setError('emailField',!/^\S+@\S+\.\S+$/.test(email))&&v; v=setError('townField',!town)&&v; v=setError('areaField',!area)&&v; v=setError('landmarkField',landmark.length<3)&&v; if(!v)return;
+  const mpesa=phoneRaw.startsWith('0')?'254'+phoneRaw.slice(1):phoneRaw;
+  let cartText=''; cart.forEach(it=>{const p=allProducts.find(x=>x.id===it.id); if(p) cartText+=`${p.name} - ${it.size} x${it.qty} = KSh ${p.price*it.qty}\n`});
+  const payload={_subject:`NEW ORDER ${name} KSh ${subtotal+deliveryFee}`, name, email, _replyto:email, phone:mpesa, town, area, landmark, address:`${landmark}, ${area}, ${town}`, order_details:cartText, subtotal, delivery:deliveryFee, total:subtotal+deliveryFee, cart};
+  localStorage.setItem('pendingOrder', JSON.stringify(payload));
+  const btn=document.getElementById('submitBtn'); btn.textContent='Processing...'; btn.disabled=true;
+  try{await fetch(FORMSPREE_URL,{method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(payload)})}catch{}
+  window.location.href='payment.html';
 });
-
-function setError(fieldId, show){
-  document.getElementById(fieldId).classList.toggle('invalid', show);
-  return!show;
-}
+function setError(id,show){document.getElementById(id).classList.toggle('invalid',show); return!show}
 </script>
 </body>
 </html>
