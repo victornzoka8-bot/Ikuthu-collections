@@ -30,70 +30,46 @@ body{background:#f1f3f6;padding:0;max-width:900px;margin:auto;}
 .error{color:#d32f2f;font-size:11px;margin-top:4px;display:none}
 .field.invalid input,.field.invalid select{border-color:#d32f2f}.field.invalid.error{display:block}
 .pay-btn{width:100%;padding:16px;background:#ff6600;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(255,102,0,0.3);transition:0.2s;margin-top:8px}
-.pay-btn:active{transform:scale(0.98)}
 .trust{display:flex;gap:10px;margin-top:15px;flex-wrap:wrap}
 .trust span{font-size:11px;background:#f5f5f5;padding:6px 10px;border-radius:20px;font-weight:600}
 </style>
 </head>
 <body>
-
-<div class="top-bar">
-<a href="index.html">← Continue Shopping</a>
-<div class="secure">🔒 Secure Checkout</div>
-</div>
-
+<div class="top-bar"><a href="index.html">← Continue Shopping</a><div class="secure">🔒 Secure Checkout</div></div>
 <div class="steps"><div class="step active"></div><div class="step"></div></div>
-
 <div class="container">
 <div class="card">
 <h3>📍 Delivery Details</h3>
 <form id="order-form" novalidate>
-<div class="field" id="nameField"><label>Full Name</label><span class="icon">👤</span><input type="text" id="name" placeholder="John Doe"><div class="error">Enter full name</div></div>
-<div class="field" id="phoneField"><label>M-Pesa Phone Number</label><span class="icon">📱</span><input type="tel" id="phone" placeholder="0712345678"><div class="error">Enter valid 07.. number</div></div>
-<div class="field" id="emailField"><label>Email for Receipt (auto-response)</label><span class="icon">✉️</span><input type="email" id="email" placeholder="john@gmail.com"><div class="error">Enter valid email</div></div>
-<div class="field" id="townField"><label>Town</label><span class="icon">🏙️</span><select id="town"><option value="">Select Town</option><option value="Kitui Town" data-fee="180">Kitui Town - KSh 180</option><option value="Nairobi CBD" data-fee="300">Nairobi CBD - KSh 300</option><option value="Mombasa" data-fee="350">Mombasa - KSh 350</option><option value="Nakuru" data-fee="250">Nakuru - KSh 250</option><option value="Kisumu" data-fee="280">Kisumu - KSh 280</option><option value="Other Locations" data-fee="400">Other Locations - KSh 400</option></select><div class="error">Select town</div></div>
-<div class="field" id="areaField"><label>Area / Estate</label><span class="icon">📍</span><input type="text" id="area" placeholder="e.g Westlands, Kwa Mutua"><div class="error">Enter area</div></div>
-<div class="field" id="landmarkField"><label>Landmark / House No.</label><span class="icon">🏠</span><input type="text" id="landmark" placeholder="Opposite Naivas, House 12B"><div class="error">Enter landmark</div></div>
+<div class="field" id="nameField"><label>Full Name</label><span class="icon">👤</span><input type="text" id="name" name="name" placeholder="John Doe"><div class="error">Enter full name</div></div>
+<div class="field" id="phoneField"><label>M-Pesa Phone Number</label><span class="icon">📱</span><input type="tel" id="phone" name="phone" placeholder="0712345678"><div class="error">Enter valid 07.. number</div></div>
+<div class="field" id="emailField"><label>Email for Receipt (auto-response)</label><span class="icon">✉️</span><input type="email" id="email" name="email" placeholder="john@gmail.com"><div class="error">Enter valid email</div></div>
+<div class="field" id="townField"><label>Town</label><span class="icon">🏙️</span><select id="town" name="town"><option value="">Select Town</option><option value="Kitui Town" data-fee="180">Kitui Town - KSh 180</option><option value="Nairobi CBD" data-fee="300">Nairobi CBD - KSh 300</option><option value="Mombasa" data-fee="350">Mombasa - KSh 350</option><option value="Nakuru" data-fee="250">Nakuru - KSh 250</option><option value="Kisumu" data-fee="280">Kisumu - KSh 280</option><option value="Other Locations" data-fee="400">Other Locations - KSh 400</option></select><div class="error">Select town</div></div>
+<div class="field" id="areaField"><label>Area / Estate</label><span class="icon">📍</span><input type="text" id="area" name="area" placeholder="e.g Westlands, Kwa Mutua"><div class="error">Enter area</div></div>
+<div class="field" id="landmarkField"><label>Landmark / House No.</label><span class="icon">🏠</span><input type="text" id="landmark" name="landmark" placeholder="Opposite Naivas, House 12B"><div class="error">Enter landmark</div></div>
 <button type="submit" class="pay-btn" id="submitBtn">Pay Now →</button>
 <div class="trust"><span>🚚 Fast Delivery</span><span>💰 Pay on Delivery</span><span>🔄 7-Day Returns</span><span>🔒 M-Pesa Secure</span></div>
 </form>
 </div>
-
-<div class="card">
-<h3>🛒 Order Summary</h3>
-<div id="orderSummary">Loading...</div>
+<div class="card"><h3>🛒 Order Summary</h3><div id="orderSummary">Loading...</div></div>
 </div>
-</div>
-
 <script>
-const FORMSPREE_URL = "https://formspree.io/f/YOUR_ID_HERE";
+const FORMSPREE_URL = "https://formspree.io/f/mvgbdldp"; // CHANGE TO YOUR REAL ID
 const selectedLoc = JSON.parse(localStorage.getItem('selectedLocation') || '{"name":"Kitui Town","fee":180}');
 const deliveryTowns = [{name:"Kitui Town", fee:180},{name:"Nairobi CBD", fee:300},{name:"Mombasa", fee:350},{name:"Nakuru", fee:250},{name:"Kisumu", fee:280},{name:"Other Locations", fee:400}];
 let allProducts=[]; let cart=[]; let subtotal=0; let deliveryFee=selectedLoc.fee; let deliveryTown=selectedLoc.name;
-
 function normalizeProduct(p){return {id:parseInt(p.id), name:p.name||'No Name', price:parseInt(p.price)||0, image:p.image||p.image_url||''};}
 function loadProducts(){return fetch('/api/products').then(r=>r.json()).then(d=>{if(Array.isArray(d)&&d.length>0)return d.map(normalizeProduct); throw 0}).catch(()=>fetch('/data/products.csv').then(r=>r.text()).then(csv=>{const rows=csv.split('\n').slice(1);return rows.filter(r=>r.trim()).map(r=>{const c=r.split(',');return normalizeProduct({id:c[0],name:c[1],price:c[2],image:c[3]})})}))}
-
 function renderSummary(){
   cart=JSON.parse(localStorage.getItem('cart')||'[]');
   if(cart.length===0){document.getElementById('orderSummary').innerHTML='<p>Cart empty <a href="index.html">Shop now</a></p>'; return}
   let html=''; subtotal=0;
-  cart.forEach(i=>{
-    const p=allProducts.find(x=>x.id===i.id);
-    if(p){
-      const tot=p.price*i.qty; subtotal+=tot;
-      html+=`<div class="order-item"><img src="${p.image}" onerror="this.src='https://via.placeholder.com/100'"><div class="order-item-info"><b>${p.name}</b><p>Size ${i.size} x${i.qty}</p></div><b>KSh ${tot.toLocaleString()}</b></div>`;
-    }
-  });
+  cart.forEach(i=>{const p=allProducts.find(x=>x.id===i.id); if(p){const tot=p.price*i.qty; subtotal+=tot; html+=`<div class="order-item"><img src="${p.image}" onerror="this.src='https://via.placeholder.com/100'"><div class="order-item-info"><b>${p.name}</b><p>Size ${i.size} x${i.qty}</p></div><b>KSh ${tot.toLocaleString()}</b></div>`;}});
   html+=`<div class="total-box"><div class="total-row"><span>Subtotal</span><span>KSh ${subtotal.toLocaleString()}</span></div><div class="total-row" id="deliveryLine"><span>Delivery (${deliveryTown})</span><span>KSh ${deliveryFee}</span></div><div class="total-row grand" id="totalLine"><span>Total</span><span>KSh ${(subtotal+deliveryFee).toLocaleString()}</span></div></div>`;
-  document.getElementById('orderSummary').innerHTML=html;
-  document.getElementById('town').value=deliveryTown;
+  document.getElementById('orderSummary').innerHTML=html; document.getElementById('town').value=deliveryTown;
 }
 loadProducts().then(p=>{allProducts=p; renderSummary()});
-document.getElementById('town').addEventListener('change',e=>{
-  const s=deliveryTowns.find(t=>t.name===e.target.value); if(s){deliveryFee=s.fee; deliveryTown=s.name; document.getElementById('deliveryLine').innerHTML=`<span>Delivery (${deliveryTown})</span><span>KSh ${deliveryFee}</span>`; document.getElementById('totalLine').innerHTML=`<span>Total</span><span>KSh ${(subtotal+deliveryFee).toLocaleString()}</span>`}
-});
-
+document.getElementById('town').addEventListener('change',e=>{const s=deliveryTowns.find(t=>t.name===e.target.value); if(s){deliveryFee=s.fee; deliveryTown=s.name; document.getElementById('deliveryLine').innerHTML=`<span>Delivery (${deliveryTown})</span><span>KSh ${deliveryFee}</span>`; document.getElementById('totalLine').innerHTML=`<span>Total</span><span>KSh ${(subtotal+deliveryFee).toLocaleString()}</span>`}});
 document.getElementById('order-form').addEventListener('submit', async e=>{
   e.preventDefault();
   const name=document.getElementById('name').value.trim();
@@ -102,16 +78,18 @@ document.getElementById('order-form').addEventListener('submit', async e=>{
   const town=document.getElementById('town').value;
   const area=document.getElementById('area').value.trim();
   const landmark=document.getElementById('landmark').value.trim();
-  let v=true; v=setError('nameField',!name)&&v; v=setError('phoneField',!/^0(7|1)\d{8}$/.test(phoneRaw))&&v; v=setError('emailField',!/^\S+@\S+\.\S+$/.test(email))&&v; v=setError('townField',!town)&&v; v=setError('areaField',!area)&&v; v=setError('landmarkField',landmark.length<3)&&v; if(!v)return;
+  let v=true; const check=(id,cond)=>{const ok=setError(id,cond); if(!ok) v=false; return ok;}
+  check('nameField',!name); check('phoneField',!/^0(7|1)\d{8}$/.test(phoneRaw)); check('emailField',!/^\S+@\S+\.\S+$/.test(email)); check('townField',!town); check('areaField',!area); check('landmarkField',landmark.length<3); if(!v) return;
   const mpesa=phoneRaw.startsWith('0')?'254'+phoneRaw.slice(1):phoneRaw;
-  let cartText=''; cart.forEach(it=>{const p=allProducts.find(x=>x.id===it.id); if(p) cartText+=`${p.name} - ${it.size} x${it.qty} = KSh ${p.price*it.qty}\n`});
-  const payload={_subject:`NEW ORDER ${name} KSh ${subtotal+deliveryFee}`, name, email, _replyto:email, phone:mpesa, town, area, landmark, address:`${landmark}, ${area}, ${town}`, order_details:cartText, subtotal, delivery:deliveryFee, total:subtotal+deliveryFee, cart};
+  let cartText=''; cart.forEach(it=>{const p=allProducts.find(x=>x.id===it.id); if(p) cartText+=`${p.name} - Size ${it.size} x${it.qty} = KSh ${p.price*it.qty}\n`;});
+  const fullOrderDetails = `CUSTOMER DETAILS:\n-----------------\nFull Name: ${name}\nM-Pesa Phone: ${phoneRaw} (254: ${mpesa})\nCustomer Email: ${email}\nTown: ${town}\nArea: ${area}\nLandmark: ${landmark}\nFull Address: ${landmark}, ${area}, ${town}\n\nORDER ITEMS:\n-----------------\n${cartText}\nPAYMENT:\n-----------------\nSubtotal: KSh ${subtotal}\nDelivery: KSh ${deliveryFee}\nTOTAL: KSh ${subtotal+deliveryFee}\n`;
+  const payload={_subject:`NEW ORDER ${name} - KSh ${subtotal+deliveryFee}`, name, email, _replyto:email, "Customer Email":email, "Customer Email for Receipt":email, phone:phoneRaw, "M-Pesa Formatted":mpesa, town, area, landmark, address:`${landmark}, ${area}, ${town}`, order_details:fullOrderDetails, cart_details:cartText, subtotal, delivery:deliveryFee, total:subtotal+deliveryFee, cart:JSON.stringify(cart)};
   localStorage.setItem('pendingOrder', JSON.stringify(payload));
   const btn=document.getElementById('submitBtn'); btn.textContent='Processing...'; btn.disabled=true;
   try{await fetch(FORMSPREE_URL,{method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(payload)})}catch{}
   window.location.href='payment.html';
 });
-function setError(id,show){document.getElementById(id).classList.toggle('invalid',show); return!show}
+function setError(id,show){const el=document.getElementById(id); if(!el) return!show; el.classList.toggle('invalid',show); return!show}
 </script>
 </body>
 </html>
