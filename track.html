@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Track Order - Ikuthu Collections</title>
+<style>
+body{font-family:Arial;padding:20px;max-width:500px;margin:auto}
+input{width:100%;padding:12px;margin:10px 0;border:1px solid #ccc;border-radius:8px}
+button{width:100%;padding:12px;background:black;color:white;border:0;border-radius:8px}
+.card{border:1px solid #eee;padding:15px;border-radius:10px;margin-top:20px}
+</style>
+</head>
+<body>
+<h2>Track Your Order</h2>
+<input id="orderId" placeholder="Enter Order ID e.g IKUTHU-1234">
+<button onclick="track()">Track Order</button>
+<div id="result"></div>
+
+<script>
+async function track(){
+  const id=document.getElementById('orderId').value.trim();
+  if(!id) return alert('Enter Order ID');
+  document.getElementById('result').innerHTML='Searching...';
+  const r=await fetch(`/api/track-order?id=${id}`);
+  const data=await r.json();
+  if(!data || data.length===0){
+    document.getElementById('result').innerHTML='<p style=color:red>Order not found</p>';
+    return;
+  }
+  const o=data[0];
+  document.getElementById('result').innerHTML=`
+    <div class=card>
+      <h3>${o.id}</h3>
+      <p><b>Status:</b> ${o.status||'Processing'}</p>
+      <p><b>Customer:</b> ${o.customer_name||''}</p>
+      <p><b>Phone:</b> ${o.phone||''}</p>
+      <p><b>Total:</b> KES ${o.total||''}</p>
+      <p><b>Date:</b> ${o.created_at||''}</p>
+    </div>`;
+}
+</script>
+</body>
+</html>
