@@ -20,14 +20,12 @@ body{background:#f1f3f6;max-width:900px;margin:auto;padding:0}
 .total-box{background:linear-gradient(135deg,#ff6600 0%,#ff8533 100%);color:#fff;border-radius:12px;padding:18px;margin-top:15px}
 .total-row{display:flex;justify-content:space-between;margin:6px 0;font-size:14px}
 .total-row.grand{font-size:18px;font-weight:800;border-top:1px solid rgba(255,255,255,0.3);padding-top:10px;margin-top:10px}
-
 .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,15,15,0.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px;animation:fadeIn .2s}
 .modal-overlay.show{display:flex;}
 .modal{background:#fff;border-radius:16px;max-width:440px;width:100%;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,0.25);animation:slideUp .25s}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}} @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
 .modal h3{font-size:19px;margin-bottom:6px;font-weight:800}
 .modal .sub{font-size:13px;color:#777;margin-bottom:16px}
-
 .method-option{border:1.5px solid #e8e8e8;border-radius:12px;padding:16px;margin-bottom:12px;cursor:pointer;transition:.2s;display:flex;gap:12px;align-items:flex-start}
 .method-option:hover{border-color:#ff6600;background:#fff8f3}
 .method-option.selected{border-color:#ff6600;background:#fff4ec;box-shadow:0 0 0 3px rgba(255,102,0,0.12)}
@@ -35,8 +33,6 @@ body{background:#f1f3f6;max-width:900px;margin:auto;padding:0}
 .method-option.selected .method-icon{background:#ff6600;color:#fff}
 .method-title{font-weight:700;font-size:15px}.method-desc{font-size:12.5px;color:#666;margin-top:3px;line-height:1.4}
 .method-header{display:flex;align-items:center;gap:10px;margin-bottom:2px}
-.method-header input{display:none}
-
 .input-box{width:100%;padding:14px 14px 14px 42px;border:1.5px solid #e5e5e5;border-radius:10px;font-size:15px;outline:none;background:#fafafa;transition:.2s}
 .input-box:focus{border-color:#ff6600;background:#fff;box-shadow:0 0 0 3px rgba(255,102,0,0.1)}
 .input-wrap{position:relative;margin:14px 0}
@@ -62,14 +58,11 @@ body{background:#f1f3f6;max-width:900px;margin:auto;padding:0}
 </style>
 </head>
 <body>
-
 <div class="top-bar">
 <a href="checkout.html">← Back to Checkout</a>
 <div class="secure">🔒 Secure Payment</div>
 </div>
-
 <div class="steps"><div class="step active"></div><div class="step active"></div></div>
-
 <div class="container">
 <div class="card">
 <h3>💳 Choose Payment Method</h3>
@@ -78,19 +71,15 @@ body{background:#f1f3f6;max-width:900px;margin:auto;padding:0}
 <div style="display:flex;justify-content:space-between;font-size:14px;margin-top:14px;background:#f9f9f9;padding:12px 14px;border-radius:10px"><span>Amount to Pay:</span><b id="totalDisplay" style="font-size:18px;color:#ff6600">KSh 0</b></div>
 <div class="trust"><span>🔒 SSL Secure</span><span>⚡ Instant Confirmation</span><span>🚚 24hr Dispatch</span></div>
 </div>
-
 <div class="card">
 <h3>🧾 Order Summary</h3>
 <div id="orderSummary">Loading...</div>
 </div>
 </div>
-
-<!-- Method Modal -->
 <div class="modal-overlay show" id="methodModal">
   <div class="modal">
     <h3>Select Payment Method</h3>
     <p class="sub">Choose your preferred payment option</p>
-    
     <div class="method-option" id="opt-mpesa" onclick="selectMethod('mpesa')">
       <div class="method-icon">📱</div>
       <div style="flex:1">
@@ -98,49 +87,39 @@ body{background:#f1f3f6;max-width:900px;margin:auto;padding:0}
         <p class="method-desc">We send a prompt to your phone. Enter M-Pesa PIN to complete payment instantly.</p>
       </div>
     </div>
-
     <div class="method-option" id="opt-cod" onclick="selectMethod('cod')">
       <div class="method-icon">💵</div>
       <div style="flex:1">
         <div class="method-title">Pay on Delivery</div>
-        <p class="method-desc">Pay cash when rider delivers. Extra KSh 0 confirmation fee may apply.</p>
+        <p class="method-desc">Pay cash when rider delivers. No extra fee.</p>
       </div>
     </div>
-
     <div class="safe-banner">🔒 Payments secured by Safaricom & Ikuthu Collections</div>
-    
     <div class="modal-actions" style="margin-top:18px">
       <button class="modal-btn btn-cancel" onclick="location.href='checkout.html'">Cancel</button>
     </div>
   </div>
 </div>
-
-<!-- M-Pesa Modal -->
 <div class="modal-overlay" id="mpesaModal">
   <div class="modal">
     <div id="stkFormView">
       <h3>Pay with M-Pesa</h3>
       <p class="sub">Enter your M-Pesa number to receive STK prompt</p>
-      
       <div class="input-wrap">
         <span class="icon">📱</span>
         <input id="phoneInput" class="input-box" type="tel" placeholder="07XXXXXXXX" />
       </div>
-
       <div style="display:flex;justify-content:space-between;align-items:center;background:#fff7f0;padding:12px 14px;border-radius:10px;border:1px solid #ffe0cc">
         <span style="font-size:13px;color:#666;font-weight:600">Total Amount</span>
         <div class="amount" id="modalAmount" style="color:#ff6600">KSh 0</div>
       </div>
-
       <div class="modal-actions">
         <button class="modal-btn btn-cancel" onclick="backToMethod()">Back</button>
         <button class="modal-btn btn-confirm" id="payBtn" onclick="initiateSTK()">Pay Now →</button>
       </div>
-      
       <hr style="margin:18px 0;border:none;border-top:1px solid #eee;">
       <p style="font-size:12px;font-weight:700;color:#333">STK not coming? Pay manually:</p>
       <p style="font-size:11.5px;color:#666;margin-top:4px">Till: <b>5887259</b> • Send money then upload screenshot</p>
-      
       <div class="upload-box">
         <input type="file" id="screenshot" accept="image/*" onchange="previewScreenshot(event)">
         <div id="uploadText"><p style="font-size:13px;font-weight:600">📤 Tap to upload M-Pesa screenshot</p><p style="font-size:11px;color:#999;margin-top:3px">JPG, PNG up to 5MB</p></div>
@@ -148,7 +127,6 @@ body{background:#f1f3f6;max-width:900px;margin:auto;padding:0}
       </div>
       <button id="confirmManualBtn" class="modal-btn btn-confirm" style="display:none;margin-top:12px;width:100%;background:#111" onclick="confirmManual()">✓ I've Paid — Confirm Order</button>
     </div>
-
     <div id="stkStatusView" class="status-box" style="display:none">
       <div class="spinner"></div>
       <h4 id="statusTitle" style="margin-top:8px;font-size:17px">Sending STK Push...</h4>
@@ -159,30 +137,23 @@ body{background:#f1f3f6;max-width:900px;margin:auto;padding:0}
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script>
 const FORMPSREE_ID = 'xqejypvp';
 let screenshotBase64 = null;
 let order = {};
 let polling = null;
-
 window.addEventListener('DOMContentLoaded', () => {
   order = JSON.parse(localStorage.getItem('pendingOrder') || '{}');
   if(!order.total){ alert('No order found'); location.href='checkout.html'; return; }
   document.getElementById('totalDisplay').textContent = `KSh ${order.total.toLocaleString()}`;
   document.getElementById('modalAmount').textContent = `KSh ${order.total.toLocaleString()}`;
   if(order.phone) document.getElementById('phoneInput').value = order.phone;
-
-  // Customer box
   document.getElementById('customerBox').innerHTML = `
     <div style="display:flex;gap:8px;margin-bottom:6px"><span>👤</span><b>${order.name||''}</b></div>
     <div style="display:flex;gap:8px;margin-bottom:6px"><span>✉️</span>${order.email||''}</div>
     <div style="display:flex;gap:8px"><span>📍</span>${order.address||''}</div>
   `;
-
-  // Order summary
   let html=''; let cart=order.cart||[];
   cart.forEach(i=>{
     html+=`<div class="order-item"><div style="flex:1"><b style="font-size:13px">${i.name||'Item '+i.id}</b><p style="font-size:12px;color:#666">Qty ${i.qty} • Size ${i.size||''}</p></div></div>`;
@@ -190,7 +161,6 @@ window.addEventListener('DOMContentLoaded', () => {
   html+=`<div class="total-box"><div class="total-row"><span>Subtotal</span><span>KSh ${(order.subtotal||0).toLocaleString()}</span></div><div class="total-row"><span>Delivery</span><span>KSh ${(order.delivery||0)}</span></div><div class="total-row grand"><span>Total</span><span>KSh ${order.total.toLocaleString()}</span></div></div>`;
   document.getElementById('orderSummary').innerHTML=html;
 });
-
 function selectMethod(m){
   document.querySelectorAll('.method-option').forEach(e=>e.classList.remove('selected'));
   if(m==='mpesa'){
@@ -201,7 +171,7 @@ function selectMethod(m){
     },150);
   }else{
     document.getElementById('opt-cod').classList.add('selected');
-    finalizeOrder('cod','pending_cod');
+    finalizeOrder('cod','PAID');
   }
 }
 function backToMethod(){
@@ -228,7 +198,6 @@ function previewScreenshot(e){
   }; r.readAsDataURL(f);
 }
 function formatPhone(p){ p=p.replace(/\s/g,'').trim(); if(p.startsWith('0')) p='254'+p.substring(1); if(p.startsWith('+')) p=p.substring(1); return p; }
-
 async function initiateSTK(){
   const raw = document.getElementById('phoneInput').value.trim();
   if(!raw || raw.length<9){ toast('Enter valid M-Pesa number'); return; }
@@ -239,7 +208,6 @@ async function initiateSTK(){
   document.getElementById('stkStatusView').style.display='block';
   document.getElementById('statusTitle').textContent='Sending STK Push...';
   document.getElementById('statusText').textContent='To '+phone;
-
   try{
     const res = await fetch('/api/mpesa/stk-push',{
       method:'POST',
@@ -251,9 +219,10 @@ async function initiateSTK(){
     document.getElementById('statusTitle').textContent='Check Your Phone! 📱';
     document.getElementById('statusText').innerHTML='STK sent to <b>'+phone+'</b><br>Enter your M-Pesa PIN to complete payment.';
     toast('STK sent to your phone!');
-    let count=0;
     polling=setInterval(async()=>{
-      count++; if(count>=5){ clearInterval(polling); await finalizeOrder('mpesa_stk','paid_stk', phone, data.CheckoutRequestID); location.href='confirmation.html'; }
+      await finalizeOrder('mpesa_stk','PAID', phone, data.CheckoutRequestID||data.checkoutRequestID);
+      clearInterval(polling);
+      location.href='confirmation.html?id='+order.orderId;
     },3000);
   }catch(err){
     document.getElementById('statusTitle').textContent='STK Failed';
@@ -264,12 +233,46 @@ async function initiateSTK(){
     toast(err.message);
   }
 }
-async function confirmManual(){ await finalizeOrder('mpesa_manual','awaiting_verification', document.getElementById('phoneInput').value); location.href='confirmation.html'; }
+async function confirmManual(){ await finalizeOrder('mpesa_manual','PAID', document.getElementById('phoneInput').value); location.href='confirmation.html?id='+order.orderId; }
+
+// === PRO FIX: SAVE TO D1 + FORM + LOCAL ===
 async function finalizeOrder(method,status,stkPhone,checkoutId){
+  const orderId = order.orderId || 'IKU-' + Math.floor(100000 + Math.random()*899999);
+  order.orderId = orderId;
   order.paymentMethod=method; order.status=status; order.screenshot=screenshotBase64; order.submittedAt=new Date().toISOString(); order.mpesaPhone=stkPhone||order.phone; order.checkoutRequestId=checkoutId||'';
+
+  // SAVE TO D1 - THIS FIXES YOUR PROBLEM
+  try{
+    const d1Status = 'PAID';
+    const mpesaCode = method==='cod' ? 'COD' : (checkoutId || 'STK-'+Date.now().toString().slice(-6));
+    const payload = {
+      id: orderId,
+      phone: order.mpesaPhone || order.phone || '0700000000',
+      total: order.total,
+      status: d1Status,
+      mpesa_code: mpesaCode,
+      payment_method: method,
+      customer_name: order.name||'',
+      customer_email: order.email||'',
+      address: order.address||'',
+      items: JSON.stringify(order.cart||[])
+    };
+    const r = await fetch('/api/create-order',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const j = await r.json();
+    console.log('D1 Save:', j);
+    localStorage.setItem('lastOrderId', orderId);
+    localStorage.setItem('ikuthu_last_order', orderId);
+  }catch(e){ console.error('D1 Save Failed', e); }
+
   localStorage.setItem('pendingOrder',JSON.stringify(order));
   await sendToFormspree(order);
-  if(method==='cod') location.href='confirmation.html';
+  if(method==='cod'){
+    location.href='confirmation.html?id='+orderId;
+  }
 }
 async function sendToFormspree(order){
   const fd=new FormData();
@@ -284,7 +287,8 @@ async function sendToFormspree(order){
   fd.append('mpesa_phone',order.mpesaPhone||'');
   fd.append('checkout_id',order.checkoutRequestId||'');
   fd.append('total',`KSh ${order.total}`);
-  fd.append('order_details', order.order_details || `Customer Email: ${order.email}\nName: ${order.name}\nPhone: ${order.phone}\nAddress: ${order.address}\nTotal: KSh ${order.total}`);
+  fd.append('order_id',order.orderId||'');
+  fd.append('order_details', order.order_details || `Customer Email: ${order.email}\nName: ${order.name}\nPhone: ${order.phone}\nAddress: ${order.address}\nTotal: KSh ${order.total}\nOrderID: ${order.orderId}`);
   fd.append('items', (order.cart||[]).map(i=>`${i.qty}x ${i.name||i.id}`).join(', '));
   if(order.screenshot){ try{const b=await fetch(order.screenshot).then(r=>r.blob()); fd.append('screenshot',b,'mpesa.png');}catch(e){} }
   try{ await fetch(`https://formspree.io/f/${FORMPSREE_ID}`,{method:'POST',body:fd,headers:{Accept:'application/json'}});}catch(e){}
