@@ -1,173 +1,106 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin - Ikuthu</title>
 <style>
-body{font-family:Arial;background:#f5f5f5;padding:20px}
-.box{background:#fff;padding:20px;border-radius:12px;max-width:600px;margin:auto;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-input,textarea{width:100%;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
+body{font-family:Arial;background:#f5f5f5;padding:10px;margin:0}
+.box{background:#fff;padding:20px;border-radius:12px;max-width:700px;margin:auto;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.tabs{display:flex;gap:8px;margin-bottom:20px}
+.tab{flex:1;padding:12px;text-align:center;background:#eee;border-radius:8px;cursor:pointer;font-weight:bold}
+.tab.active{background:#000;color:#fff}
+.section{display:none}.section.active{display:block}
+input,textarea,select{width:100%;padding:10px;margin:8px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}
 button{background:#000;color:#fff;padding:12px 20px;border:none;border-radius:8px;cursor:pointer;width:100%;margin-top:10px}
-button:disabled{opacity:.5}
-#list{margin-top:30px}
 .item{display:flex;justify-content:space-between;align-items:center;background:#fafafa;padding:10px;margin:5px 0;border-radius:8px}
-.item button{width:auto;background:red;padding:5px 10px;margin:0}
+.item button{width:auto;background:red;padding:5px 10px}
+.order{border:1px solid #eee;padding:12px;border-radius:10px;margin-bottom:12px;background:#fafafa}
+.order button{width:auto;display:inline-block;margin:4px}
 .upload-area{border:2px dashed #ff6600;padding:15px;border-radius:10px;text-align:center;background:#fff7f0;margin:8px 0}
-.upload-area input{display:none}
 .upload-label{background:#ff6600;color:#fff;padding:10px 15px;border-radius:20px;cursor:pointer;display:inline-block;font-weight:bold}
 #preview{width:100%;max-height:250px;object-fit:contain;border-radius:8px;margin-top:10px;display:none;border:1px solid #ddd}
-.preview-wrap{position:relative}
-.remove-img{position:absolute;top:5px;right:5px;background:red;color:#fff;border:none;border-radius:50%;width:30px;height:30px;cursor:pointer}
-.or-divider{text-align:center;margin:10px 0;color:#888;font-size:12px}
-</style>
-</head>
-<body>
+</style></head><body>
 <div class="box">
-<h2>Add Product</h2>
-<input id="name" placeholder="Product Name e.g CALUS Green Phone">
-<input id="price" type="number" placeholder="Price e.g 2500">
-
-<!-- NEW UPLOAD FROM GALLERY -->
-<div class="upload-area">
-  <label for="imageFile" class="upload-label">📷 Choose from Phone Gallery</label>
-  <input type="file" id="imageFile" accept="image/*" onchange="handleFile(this)">
-  <div class="preview-wrap">
-    <img id="preview">
-    <button id="removeBtn" class="remove-img" style="display:none" onclick="removeImage()">×</button>
-  </div>
-  <p style="font-size:11px;color:#666;margin:5px 0 0 0">Select photo from your phone like your CALUS phone</p>
+<h2>Ikuthu Admin Panel</h2>
+<div class="tabs">
+ <div class="tab active" onclick="showTab('products')">📦 Products</div>
+ <div class="tab" onclick="showTab('orders')">🛒 Orders</div>
 </div>
 
-<div class="or-divider">— OR paste Image Link —</div>
-
-<input id="image" placeholder="Main Image URL (auto-filled when you choose from phone)">
-<input id="category" placeholder="Category e.g Phones, Dresses, Shoes">
-<input id="sizes" placeholder="Sizes e.g S,M,L,XL or for phone: 64GB,128GB">
+<!-- PRODUCTS TAB -->
+<div id="productsTab" class="section active">
+<h3>Add Product</h3>
+<div class="upload-area">
+  <label for="imageFile" class="upload-label">📷 Choose from Phone</label>
+  <input type="file" id="imageFile" accept="image/*" style="display:none" onchange="handleFile(this)">
+  <img id="preview">
+</div>
+<input id="name" placeholder="Product Name">
+<input id="price" type="number" placeholder="Price e.g 2500">
+<input id="image" placeholder="Image URL (auto-filled)">
+<input id="category" placeholder="Category">
+<input id="sizes" placeholder="Sizes">
 <textarea id="description" placeholder="Description"></textarea>
 <button id="addBtn" onclick="addProduct()">Add Product</button>
-
 <div id="list"><h3>Existing Products</h3><div id="products">Loading...</div></div>
 </div>
 
+<!-- ORDERS TAB -->
+<div id="ordersTab" class="section">
+<h3>Orders - Update Status</h3>
+<div id="ordersList">Loading orders...</div>
+<button onclick="loadOrders()" style="background:#666">🔄 Refresh Orders</button>
+</div>
+
+</div>
 <script>
-let uploadedImageData = "";
-
+function showTab(t){
+ document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+ if(t==='products'){document.querySelectorAll('.tab')[0].classList.add('active');document.getElementById('productsTab').classList.add('active'); load();}
+ else{document.querySelectorAll('.tab')[1].classList.add('active');document.getElementById('ordersTab').classList.add('active'); loadOrders();}
+}
+let uploadedImageData="";
 function handleFile(input){
-  const file = input.files[0];
-  if(!file) return;
-
-  if(file.size > 2 * 1024 * 1024){
-    alert('Image too big! Please choose image less than 2MB. Try taking screenshot or compress.');
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = function(e){
-    uploadedImageData = e.target.result; // base64 data URL
-    document.getElementById('image').value = uploadedImageData;
-    const preview = document.getElementById('preview');
-    preview.src = uploadedImageData;
-    preview.style.display = 'block';
-    document.getElementById('removeBtn').style.display = 'block';
-  };
-  reader.readAsDataURL(file);
+ const file=input.files[0]; if(!file) return;
+ const reader=new FileReader();
+ reader.onload=e=>{
+  uploadedImageData=e.target.result;
+  document.getElementById('image').value=uploadedImageData;
+  const p=document.getElementById('preview'); p.src=uploadedImageData; p.style.display='block';
+ };
+ reader.readAsDataURL(file);
 }
-
-function removeImage(){
-  uploadedImageData = "";
-  document.getElementById('image').value = "";
-  document.getElementById('imageFile').value = "";
-  document.getElementById('preview').style.display = 'none';
-  document.getElementById('removeBtn').style.display = 'none';
-}
-
 async function load(){
  try{
-  const r = await fetch('/api/products');
-  const d = await r.json();
-  const c = document.getElementById('products');
-  if(!Array.isArray(d) || d.length===0){
-    c.innerHTML = '<p>No products yet</p>';
-    return;
-  }
-  c.innerHTML = d.map(p=>`<div class="item"><span><img src="${p.image||p.image_url}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;vertical-align:middle;margin-right:8px">${p.name} - KSh ${p.price}</span><button onclick="del(${p.id})">Delete</button></div>`).join('');
- }catch(e){
-  document.getElementById('products').innerHTML = '<p>Failed to load: '+e.message+'</p>';
- }
+  const r=await fetch('/api/products'); const d=await r.json();
+  const c=document.getElementById('products');
+  if(!d.length){c.innerHTML='<p>No products</p>';return;}
+  c.innerHTML=d.map(p=>`<div class="item"><span><img src="${p.image||p.image_url}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;margin-right:8px;vertical-align:middle">${p.name} - ${p.price}</span><button onclick="del(${p.id})">Delete</button></div>`).join('');
+ }catch(e){document.getElementById('products').innerHTML='Failed: '+e.message;}
 }
-
 async function addProduct(){
- const btn=document.getElementById('addBtn');
- btn.disabled=true; btn.innerText='Adding...';
-
- const imageVal = document.getElementById('image').value.trim();
-
- const body={
-  name:document.getElementById('name').value.trim(),
-  price:document.getElementById('price').value.trim(),
-  image:imageVal,
-  image_url:imageVal,
-  images:imageVal,
-  category:document.getElementById('category').value.trim() || 'general',
-  description:document.getElementById('description').value.trim(),
-  sizes:document.getElementById('sizes').value.trim() || 'M'
- };
-
- if(!body.name ||!body.price){
-   alert('Name and Price required');
-   btn.disabled=false; btn.innerText='Add Product';
-   return;
- }
- if(!body.image){
-   alert('Please choose image from gallery or paste Image URL');
-   btn.disabled=false; btn.innerText='Add Product';
-   return;
- }
-
+ const btn=document.getElementById('addBtn'); btn.disabled=true; btn.innerText='Adding...';
+ const imageVal=document.getElementById('image').value.trim();
+ const body={name:document.getElementById('name').value.trim(),price:document.getElementById('price').value.trim(),image:imageVal,image_url:imageVal,images:imageVal,category:document.getElementById('category').value.trim()||'general',description:document.getElementById('description').value.trim(),sizes:document.getElementById('sizes').value.trim()||'M'};
+ if(!body.name||!body.price){alert('Name & Price required');btn.disabled=false;btn.innerText='Add Product';return;}
  try{
-   // Try new endpoint first
-   let res = await fetch('/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-   if(!res.ok){
-     // Fallback to old endpoint
-     res = await fetch('/api/add-product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-   }
-   const result = await res.json();
-   if(result.error) throw new Error(result.error);
-
-   alert('Product Added! ✅');
-   document.querySelectorAll('input,textarea').forEach(i=>i.value='');
-   removeImage();
-   btn.disabled=false; btn.innerText='Add Product';
-   load();
- }catch(e){
-   alert('Failed: '+e.message);
-   btn.disabled=false; btn.innerText='Add Product';
- }
+  let res=await fetch('/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!res.ok) res=await fetch('/api/add-product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const result=await res.json(); if(result.error) throw new Error(result.error);
+  alert('Added ✅'); document.querySelectorAll('#productsTab input,#productsTab textarea').forEach(i=>i.value=''); document.getElementById('preview').style.display='none'; btn.disabled=false; btn.innerText='Add Product'; load();
+ }catch(e){alert('Failed: '+e.message); btn.disabled=false; btn.innerText='Add Product';}
 }
-
-async function del(id){
- if(!confirm('Delete this product?')) return;
- try{
-   await fetch('/api/delete-product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});
-   // Also try DELETE on /api/products
-   await fetch('/api/products',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});
-   load();
- }catch(e){ alert(e.message); }
+async function del(id){ if(!confirm('Delete?'))return; await fetch('/api/delete-product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})}); load(); }
+async function loadOrders(){
+ const el=document.getElementById('ordersList'); el.innerHTML='Loading...';
+ const r=await fetch('/api/orders'); const list=await r.json();
+ if(!list.length){el.innerHTML='No orders yet';return;}
+ el.innerHTML=list.map(o=>`<div class=order><b>${o.id}</b> - KES ${o.total} - <b>${o.status}</b><br>📱 ${o.phone}<br>M-Pesa: ${o.mpesa_code||'Pending'}<br>${o.created_at}<br><br><select id="s-${o.id}"><option>PAID</option><option>APPROVED</option><option>PACKED</option><option>SHIPPED</option><option>DELIVERED</option><option>FAILED</option></select><button onclick="up('${o.id}')">Update Status</button><button onclick="window.open('https://wa.me/${o.phone.replace('+','')}?text=Hi! Your order ${o.id} is ${o.status}','_blank')" style="background:#25D366">WhatsApp</button></div>`).join('');
+ list.forEach(o=>document.getElementById('s-'+o.id).value=o.status);
+}
+async function up(id){
+ const status=document.getElementById('s-'+id).value;
+ await fetch('/api/update-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status})});
+ alert('Updated to '+status); loadOrders();
 }
 load();
-
-// Also allow pasting URL to show preview
-document.getElementById('image').addEventListener('input', function(e){
-  const url = e.target.value.trim();
-  if(url.startsWith('http') || url.startsWith('data:image')){
-    const preview = document.getElementById('preview');
-    preview.src = url;
-    preview.style.display = 'block';
-    document.getElementById('removeBtn').style.display = 'block';
-    uploadedImageData = url;
-  }
-});
-</script>
-</body>
-</html>
+</script></body></html>
