@@ -27,96 +27,55 @@ h1{font-size:26px;font-weight:800;color:#111;margin-bottom:8px}
 .row:last-child{border:none}
 .row span:first-child{color:#777;font-weight:600}
 .row span:last-child{color:#111;font-weight:700}
-.row.total{background:linear-gradient(135deg,#ff6600 0%,#ff8533 100%);color:#fff;margin:10px -8px -8px;padding:12px 16px;border-radius:0 0 10px 10px;display:flex;justify-content:space-between}
+.row.total{background:linear-gradient(135deg,#111 0%,#333 100%);color:#fff;margin:10px -8px -8px;padding:14px 16px;border-radius:0 0 10px 10px;display:flex;justify-content:space-between}
 .row.total span{color:#fff!important;font-size:15px}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:12px}
 .badge.success{background:#e8f5e9;color:#2e7d32}
 .badge.pending{background:#fff3e0;color:#e65100}
-.btn{width:100%;background:#ff6600;color:#fff;padding:15px 30px;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;text-decoration:none;display:block;box-shadow:0 4px 14px rgba(255,102,0,0.3);transition:.2s;margin-top:8px}
+.btn{width:100%;background:#ff6600;color:#fff;padding:15px 30px;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;text-decoration:none;display:block;box-shadow:0 4px 14px rgba(255,102,0,0.3);transition:.2s;margin-top:10px}
 .btn:active{transform:scale(0.98)}
-.btn.sec{background:#111;color:#fff;box-shadow:none;margin-top:10px}
+.btn.sec{background:#111;color:#fff;box-shadow:none}
+.btn.white{background:#fff;color:#111;border:1.5px solid #ddd;box-shadow:none}
 .trust{display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap}
 .trust span{font-size:11px;background:#f5f5f5;padding:6px 10px;border-radius:20px;font-weight:600}
-.support{font-size:12px;color:#999;margin-top:18px}
-.support a{color:#ff6600;text-decoration:none;font-weight:700}
 .check-list{text-align:left;background:#f0faf0;border-radius:10px;padding:14px;margin:16px 0}
 .check-list li{list-style:none;font-size:12.5px;padding:6px 0;display:flex;gap:8px;color:#444}
 </style>
 </head>
 <body>
-<div class="top-bar">
-<a href="index.html">Ikuthu Collections</a>
-<div class="secure">✓ Order Secured</div>
-</div>
+<div class="top-bar"><a href="index.html">Ikuthu Collections</a><div class="secure">✓ Order Secured</div></div>
 <div class="steps"><div class="step active"></div><div class="step active"></div></div>
-<div class="container">
-<div class="card" id="content">
-<h1>Loading...</h1>
-</div>
-</div>
+<div class="container"><div class="card" id="content"><h1>Loading...</h1></div></div>
 <script>
 const params = new URLSearchParams(window.location.search);
 const serverId = params.get('id');
 const order = JSON.parse(localStorage.getItem('pendingOrder') || '{}');
 const content = document.getElementById('content');
-
-// FIXED: Use REAL ID from server, not Date.now()!
 const realOrderId = serverId || order.orderId || localStorage.getItem('lastOrderId') || localStorage.getItem('ikuthu_last_order') || 'IKU-'+Date.now().toString().slice(-6);
+const trackUrl = `track.html?id=${encodeURIComponent(realOrderId)}`;
 
 if(!order.total && !serverId){
+  content.innerHTML = `<div class="icon-wrap pending"><div class="icon">!</div></div><h1>No Order Found</h1><p class="sub">Last order was ${realOrderId}.</p><a href="${trackUrl}" class="btn">📦 Track ${realOrderId}</a><a href="index.html" class="btn white">Back to Shop →</a>`;
+} else {
+  const waText = `Hi, my order ${realOrderId} for KSh ${order.total} - status PENDING`;
+  const isCod = order.paymentMethod === 'cod';
   content.innerHTML = `
-    <div class="icon-wrap pending"><div class="icon">!</div></div>
-    <h1>No Order Found</h1>
-    <p class="sub">Looks like you refreshed the page or your session expired. Your last order was ${realOrderId}.</p>
-    <a href="index.html" class="btn">Back to Shop →</a>
-    <p class="support">Need help? <a href="https://wa.me/254758903057">Chat on WhatsApp</a></p>
-  `;
-} else if(order.paymentMethod === 'cod' || !order.paymentMethod){
-  content.innerHTML = `
-    <div class="badge success">● Order Confirmed</div>
-    <div class="icon-wrap success"><div class="icon">✓</div></div>
-    <h1>Order Placed!</h1>
-    <p class="sub">Thanks ${order.name?.split(' ')[0]||''}! We received your order <b>${realOrderId}</b>. Pay cash to the rider when we deliver.</p>
+    <div class="badge ${isCod?'success':'pending'}">● ${order.status||'PENDING'}</div>
+    <div class="icon-wrap ${isCod?'success':'pending'}"><div class="icon">${isCod?'✓':'⏳'}</div></div>
+    <h1>${isCod?'Order Placed!':'Payment Received!'}</h1>
+    <p class="sub">Thanks ${order.name?.split(' ')[0]||''}! Order <b>${realOrderId}</b> confirmed. You can track it live.</p>
     <div class="order-box">
       <div class="row"><span>Order ID</span><span>${realOrderId}</span></div>
       <div class="row"><span>Customer</span><span>${order.name||''}</span></div>
-      <div class="row"><span>Email</span><span>${order.email||'N/A'}</span></div>
       <div class="row"><span>Phone</span><span>${order.phone||order.mpesaPhone||''}</span></div>
       <div class="row"><span>Address</span><span style="text-align:right;max-width:55%">${order.address||''}</span></div>
-      <div class="row"><span>Payment</span><span>Pay on Delivery 💵</span></div>
-      <div class="row total"><span>Total to Pay</span><span>KSh ${(order.total||0).toLocaleString()}</span></div>
+      <div class="row"><span>Payment</span><span>${isCod?'Pay on Delivery 💵':'M-Pesa 📱'}</span></div>
+      <div class="row total"><span>Total</span><span>KSh ${(order.total||0).toLocaleString()}</span></div>
     </div>
-    <ul class="check-list">
-      <li>📦 <span>Packing your order — we dispatch within 24hrs</span></li>
-      <li>🚚 <span>Rider will call you before delivery</span></li>
-      <li>✉️ <span>Receipt sent to <b>${order.email||'your email'}</b></span></li>
-    </ul>
-    <a href="index.html" class="btn">Continue Shopping →</a>
-    <a href="https://wa.me/254758903057?text=Hi, my order ${realOrderId} for KSh ${order.total}" class="btn sec">Chat on WhatsApp</a>
-    <div class="trust"><span>🚚 Fast Delivery</span><span>🔄 7-Day Return</span><span>🔒 Secure</span></div>
-  `;
-} else {
-  content.innerHTML = `
-    <div class="badge pending">● Awaiting Verification</div>
-    <div class="icon-wrap pending"><div class="icon">⏳</div></div>
-    <h1>Payment Pending</h1>
-    <p class="sub">We received your order <b>${realOrderId}</b>${order.screenshot ? ' and screenshot' : ''}. We’ll verify in 5-10 mins.</p>
-    <div class="order-box">
-      <div class="row"><span>Order ID</span><span>${realOrderId}</span></div>
-      <div class="row"><span>Total Paid</span><span>KSh ${(order.total||0).toLocaleString()}</span></div>
-      <div class="row"><span>Phone</span><span>${order.mpesaPhone||order.phone||''}</span></div>
-      <div class="row"><span>Email</span><span>${order.email||''}</span></div>
-      <div class="row"><span>Status</span><span style="color:#e65100">Awaiting Verification ⏳</span></div>
-      <div class="row total"><span>Amount</span><span>KSh ${(order.total||0).toLocaleString()}</span></div>
-    </div>
-    <ul class="check-list" style="background:#fff8f0">
-      <li>🔍 <span>We are verifying your M-Pesa transaction</span></li>
-      <li>📲 <span>You will get SMS confirmation once verified</span></li>
-      <li>✉️ <span>Receipt will be sent to <b>${order.email||'your email'}</b></span></li>
-    </ul>
-    <a href="index.html" class="btn">Back to Shop</a>
-    <a href="https://wa.me/254758903057?text=Hi, verify my M-Pesa order ${realOrderId} KSh ${order.total}" class="btn sec">Send WhatsApp for Fast Verify</a>
-    <p class="support">M-Pesa not confirmed? <a href="tel:+254758903057">Call 0758903057</a></p>
+    <a href="${trackUrl}" class="btn">📦 Track Your Order →</a>
+    <a href="https://wa.me/254758903057?text=${encodeURIComponent(waText)}" class="btn sec">Chat on WhatsApp</a>
+    <a href="index.html" class="btn white">Continue Shopping</a>
+    <div class="trust"><span>🚚 24hr Dispatch</span><span>🔄 7-Day Return</span><span>🔒 Secure</span></div>
   `;
 }
 </script>
