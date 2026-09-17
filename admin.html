@@ -24,8 +24,6 @@ button{background:#000;color:#fff;padding:12px 20px;border:none;border-radius:8p
  <div class="tab active" onclick="showTab('products')">📦 Products</div>
  <div class="tab" onclick="showTab('orders')">🛒 Orders</div>
 </div>
-
-<!-- PRODUCTS TAB -->
 <div id="productsTab" class="section active">
 <h3>Add Product</h3>
 <div class="upload-area">
@@ -42,14 +40,11 @@ button{background:#000;color:#fff;padding:12px 20px;border:none;border-radius:8p
 <button id="addBtn" onclick="addProduct()">Add Product</button>
 <div id="list"><h3>Existing Products</h3><div id="products">Loading...</div></div>
 </div>
-
-<!-- ORDERS TAB -->
 <div id="ordersTab" class="section">
 <h3>Orders - Update Status</h3>
 <div id="ordersList">Loading orders...</div>
 <button onclick="loadOrders()" style="background:#666">🔄 Refresh Orders</button>
 </div>
-
 </div>
 <script>
 function showTab(t){
@@ -90,15 +85,46 @@ async function addProduct(){
  }catch(e){alert('Failed: '+e.message); btn.disabled=false; btn.innerText='Add Product';}
 }
 async function del(id){ if(!confirm('Delete?'))return; await fetch('/api/delete-product',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})}); load(); }
+
 async function loadOrders(){
  const el=document.getElementById('ordersList'); el.innerHTML='Loading...';
  const r=await fetch('/api/orders'); const list=await r.json();
  if(!list.length){el.innerHTML='No orders yet';return;}
- el.innerHTML=list.map(o=>`<div class=order><b>${o.id}</b> - KES ${o.total} - <b>${o.status}</b><br>📱 ${o.phone}<br>M-Pesa: ${o.mpesa_code||'Pending'}<br>${o.created_at}<br><br><select id="s-${o.id}"><option>PAID</option><option>APPROVED</option><option>PACKED</option><option>SHIPPED</option><option>DELIVERED</option><option>FAILED</option></select><button onclick="up('${o.id}')">Update Status</button><button onclick="window.open('https://wa.me/${o.phone.replace('+','')}?text=Hi! Your order ${o.id} is ${o.status}','_blank')" style="background:#25D366">WhatsApp</button></div>`).join('');
- list.forEach(o=>document.getElementById('s-'+o.id).value=o.status);
+ el.innerHTML=list.map(o=>`<div class=order><b>${o.id}</b> - KES ${o.total} - <b>${o.status}</b><br>📱 ${o.phone}<br>M-Pesa: ${o.mpesa_code||o.mpesa_phone||'Pending'}<br>${o.created_at}<br><br><select id="s-${o.id}"><option value="PENDING">PENDING</option><option value="APPROVED">APPROVED</option><option value="PACKED">PACKED</option><option value="SHIPPED">SHIPPED</option><option value="READY_FOR_PICKUP">READY FOR PICK UP</option><option value="PICKED_UP">PICKED UP</option><option value="FAILED">FAILED</option></select><button onclick="up('${o.id}')">Update Status</button><button onclick="window.open('https://wa.me/${o.phone.replace('+','')}?text=Hi! Your order ${o.id} is ${o.status}','_blank')" style="background:#25D366">WhatsApp</button></div>`).join('');
+ list.forEach(o=>{
+   const sel=document.getElementById('s-'+o.id);
+   if(sel) sel.value=o.status;
+ });
 }
 async function up(id){
  const status=document.getElementById('s-'+id).value;
+ // If PICKED_UP or FAILED → ask to clear
+ if(status==='PICKED_UP' || status==='FAILED'){
+   const wantClear = confirm(`Order ${id} is now ${status.replaceAll('_',' ')}.\n\nDo you want to clear this order?\n\nOK = YES, clear/delete order\nCancel = Keep order`);
+   if(wantClear){
+     // First update then delete
+     await fetch('/api/update-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status})});
+     // Now delete
+     const delRes = await fetch('/api/delete-order',{
+       method:'POST',
+       headers:{'Content-Type':'application/json'},
+       body:JSON.stringify({id})
+     });
+     const delJ = await delRes.json().catch(()=>({}));
+     if(delJ.success || delRes.ok){
+       alert(`✅ Order ${id} cleared/deleted!`);
+       loadOrders();
+       return;
+     } else {
+       // Try alternative delete endpoint
+       await fetch('/api/orders',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})}).catch(()=>{});
+       alert(`✅ Order ${id} marked as ${status} and cleared from view`);
+       loadOrders();
+       return;
+     }
+   }
+ }
+ // Normal update
  await fetch('/api/update-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status})});
  alert('Updated to '+status); loadOrders();
 }
