@@ -1,9 +1,9 @@
-export async function onRequestGet(c){
-  const db = c.env.DB;
+export async function onRequest(context){
+  const db = context.env.DB;
   try{
-    const d = await db.prepare("SELECT * FROM orders ORDER BY created_at DESC").all();
-    return Response.json(d.results);
+    const { results } = await db.prepare("SELECT * FROM orders ORDER BY created_at DESC LIMIT 100").all();
+    return new Response(JSON.stringify(results), { headers: { "Content-Type":"application/json","Access-Control-Allow-Origin":"*"}});
   }catch(e){
-    return Response.json({error: e.message}, {status: 500});
+    return new Response(JSON.stringify({error:e.message}), {status:500, headers:{"Content-Type":"application/json","Access-Control-Allow-Origin":"*"}});
   }
 }
