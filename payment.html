@@ -171,7 +171,7 @@ function selectMethod(m){
     },150);
   }else{
     document.getElementById('opt-cod').classList.add('selected');
-    finalizeOrder('cod','PAID');
+    finalizeOrder('cod','PENDING');
   }
 }
 function backToMethod(){
@@ -220,7 +220,7 @@ async function initiateSTK(){
     document.getElementById('statusText').innerHTML='STK sent to <b>'+phone+'</b><br>Enter your M-Pesa PIN to complete payment.';
     toast('STK sent to your phone!');
     polling=setInterval(async()=>{
-      await finalizeOrder('mpesa_stk','PAID', phone, data.CheckoutRequestID||data.checkoutRequestID);
+      await finalizeOrder('mpesa_stk','PENDING', phone, data.CheckoutRequestID||data.checkoutRequestID);
       clearInterval(polling);
     },3000);
   }catch(err){
@@ -233,10 +233,8 @@ async function initiateSTK(){
   }
 }
 async function confirmManual(){ 
-  await finalizeOrder('mpesa_manual','PAID', document.getElementById('phoneInput').value); 
+  await finalizeOrder('mpesa_manual','PENDING', document.getElementById('phoneInput').value); 
 }
-
-// === FIXED: SAVE TO D1 WITH SAME ID ===
 async function finalizeOrder(method,status,stkPhone,checkoutId){
   const orderId = order.orderId || 'IKU-' + Math.floor(100000 + Math.random()*899999);
   order.orderId = orderId;
@@ -246,7 +244,6 @@ async function finalizeOrder(method,status,stkPhone,checkoutId){
   order.submittedAt=new Date().toISOString(); 
   order.mpesaPhone=stkPhone||order.phone; 
   order.checkoutRequestId=checkoutId||'';
-
   try{
     const payload = {
       id: orderId,
@@ -255,7 +252,7 @@ async function finalizeOrder(method,status,stkPhone,checkoutId){
       total: order.total,
       subtotal: order.subtotal || order.total,
       delivery_fee: order.delivery || 0,
-      status: 'PAID',
+      status: status,
       payment_method: method,
       customer_name: order.name||'',
       customer_email: order.email||'',
@@ -283,12 +280,10 @@ async function finalizeOrder(method,status,stkPhone,checkoutId){
       return;
     }
   }catch(e){ console.error('D1 Save Failed', e); }
-
   localStorage.setItem('pendingOrder',JSON.stringify(order));
   await sendToFormspree(order);
   location.href='confirmation.html?id='+orderId;
 }
-
 async function sendToFormspree(order){
   const fd=new FormData();
   fd.append('name',order.name||'');
