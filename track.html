@@ -1,43 +1,132 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Track Order - Ikuthu Collections</title>
 <style>
-body{font-family:Arial;padding:20px;max-width:500px;margin:auto}
-input{width:100%;padding:12px;margin:10px 0;border:1px solid #ccc;border-radius:8px}
-button{width:100%;padding:12px;background:black;color:white;border:0;border-radius:8px}
-.card{border:1px solid #eee;padding:15px;border-radius:10px;margin-top:20px}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#f6f7f9;min-height:100vh}
+.top-bar{background:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.06);position:sticky;top:0;z-index:10}
+.top-bar a{color:#111;text-decoration:none;font-weight:800;font-size:15px}
+.wrap{max-width:520px;margin:0 auto;padding:20px 16px}
+h1{font-size:28px;font-weight:900;letter-spacing:-0.5px;margin:18px 0}
+.search-card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.input{width:100%;padding:14px 16px;border:1.5px solid #e6e6e6;border-radius:12px;font-size:15px;outline:none;background:#fafafa;transition:.2s}
+.input:focus{border-color:#ff6600;background:#fff;box-shadow:0 0 0 3px rgba(255,102,0,.12)}
+.btn{width:100%;background:#111;color:#fff;border:none;padding:15px;border-radius:12px;font-weight:800;font-size:15px;margin-top:12px;cursor:pointer;transition:.2s}
+.btn:active{transform:scale(.98)} .btn:disabled{opacity:.6}
+.result-card{background:#fff;border-radius:18px;padding:22px;margin-top:18px;box-shadow:0 8px 30px rgba(0,0,0,.07);display:none;animation:up .3s}
+.result-card.show{display:block}
+@keyframes up{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
+.id-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.id{font-size:20px;font-weight:900;letter-spacing:.3px}
+.badge{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:800;letter-spacing:.3px}
+.badge.PENDING{background:#fff3e0;color:#e65100}
+.badge.APPROVED{background:#e3f2fd;color:#1565c0}
+.badge.PACKED{background:#f3e5f5;color:#7b1fa2}
+.badge.SHIPPED{background:#e0f2f1;color:#00695c}
+.badge.READY_FOR_PICKUP{background:#fff8e1;color:#f57f17}
+.badge.PICKED_UP{background:#e8f5e9;color:#2e7d32}
+.badge.FAILED{background:#ffebee;color:#c62828}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#f9fafb;border:1px solid #f0f0f0;border-radius:12px;padding:14px;margin:16px 0}
+.grid div span{font-size:11px;color:#888;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:4px}
+.grid div b{font-size:14px;color:#111}
+
+/* TIMELINE */
+.timeline{margin-top:18px;position:relative;padding-left:26px}
+.timeline::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:#eee}
+.step{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;position:relative;opacity:.35;transition:.3s}
+.step.active{opacity:1}
+.step.done{opacity:1}
+.dot{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid #e0e0e0;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;margin-left:-26px;font-size:10px}
+.step.active .dot,.step.done .dot{background:#ff6600;border-color:#ff6600;color:#fff;box-shadow:0 0 0 4px rgba(255,102,0,.15)}
+.step.done .dot{background:#111;border-color:#111}
+.step-info b{font-size:14px;display:block}
+.step-info p{font-size:12px;color:#777;margin-top:2px}
+.support{margin-top:18px;background:#111;color:#fff;border-radius:12px;padding:14px;display:flex;justify-content:space-between;align-items:center}
+.support a{background:#25D366;color:#fff;padding:10px 16px;border-radius:20px;text-decoration:none;font-weight:800;font-size:13px}
 </style>
 </head>
 <body>
-<h2>Track Your Order</h2>
-<input id="orderId" placeholder="Enter Order ID e.g IKUTHU-1234">
-<button onclick="track()">Track Order</button>
-<div id="result"></div>
-
+<div class="top-bar"><a href="index.html">Ikuthu Collections</a><span style="font-size:12px;font-weight:700;color:#25D366">✓ Secure Tracking</span></div>
+<div class="wrap">
+<h1>Track Your Order</h1>
+<div class="search-card">
+<input id="orderId" class="input" placeholder="Enter Order ID e.g IKU-253824" value="IKU-253824">
+<button class="btn" onclick="track()">Track Order</button>
+</div>
+<div id="result" class="result-card">
+<div class="id-row"><span class="id" id="rId">IKU-253824</span><span class="badge PENDING" id="rStatus">PENDING</span></div>
+<div class="grid">
+<div><span>Customer</span><b id="rCustomer">-</b></div>
+<div><span>Phone</span><b id="rPhone">-</b></div>
+<div><span>Total Paid</span><b id="rTotal">-</b></div>
+<div><span>Date</span><b id="rDate">-</b></div>
+</div>
+<div class="timeline" id="timeline"></div>
+<div class="support">
+<div><b style="font-size:13px">Need help?</b><p style="font-size:11px;opacity:.7">Chat with us instantly</p></div>
+<a id="waBtn" href="#">WhatsApp</a>
+</div>
+</div>
+</div>
 <script>
-async function track(){
-  const id=document.getElementById('orderId').value.trim();
-  if(!id) return alert('Enter Order ID');
-  document.getElementById('result').innerHTML='Searching...';
-  const r=await fetch(`/api/track-order?id=${id}`);
-  const data=await r.json();
-  if(!data || data.length===0){
-    document.getElementById('result').innerHTML='<p style=color:red>Order not found</p>';
-    return;
-  }
-  const o=data[0];
-  document.getElementById('result').innerHTML=`
-    <div class=card>
-      <h3>${o.id}</h3>
-      <p><b>Status:</b> ${o.status||'Processing'}</p>
-      <p><b>Customer:</b> ${o.customer_name||''}</p>
-      <p><b>Phone:</b> ${o.phone||''}</p>
-      <p><b>Total:</b> KES ${o.total||''}</p>
-      <p><b>Date:</b> ${o.created_at||''}</p>
-    </div>`;
+const STEPS = [
+ {id:'PENDING', label:'Order Received', desc:'We received your order'},
+ {id:'APPROVED', label:'Order Approved', desc:'Your order is confirmed'},
+ {id:'PACKED', label:'Packed', desc:'Items packed and ready'},
+ {id:'SHIPPED', label:'Shipped', desc:'On the way to you'},
+ {id:'READY_FOR_PICKUP', label:'Ready for Pick Up', desc:'Ready at shop / rider station'},
+ {id:'PICKED_UP', label:'Picked Up', desc:'Order collected / delivered'},
+];
+function formatDate(iso){
+ try{ const d=new Date(iso); return d.toLocaleString('en-KE',{dateStyle:'medium', timeStyle:'short'});}catch(e){return iso}
 }
+async function track(){
+ const id = document.getElementById('orderId').value.trim().toUpperCase();
+ if(!id){ alert('Enter Order ID'); return; }
+ const btn = document.querySelector('.btn'); btn.textContent='Tracking...'; btn.disabled=true;
+ try{
+  const r = await fetch(`/api/orders?id=${encodeURIComponent(id)}`);
+  const data = await r.json();
+  // Support both array and single object response
+  const o = Array.isArray(data) ? data.find(x=>x.id===id) || data[0] : data;
+  if(!o || o.error){ throw new Error('Order not found'); }
+  document.getElementById('rId').textContent = o.id;
+  document.getElementById('rStatus').textContent = o.status.replaceAll('_',' ');
+  document.getElementById('rStatus').className = 'badge ' + o.status;
+  document.getElementById('rCustomer').textContent = o.customer_name || o.name || '-';
+  document.getElementById('rPhone').textContent = o.phone || o.mpesa_phone || '-';
+  document.getElementById('rTotal').textContent = 'KES ' + (o.total||0).toLocaleString();
+  document.getElementById('rDate').textContent = formatDate(o.created_at);
+  document.getElementById('waBtn').href = `https://wa.me/254758903057?text=Hi, tracking ${o.id} - status ${o.status}`;
+  
+  // Build timeline
+  const tl = document.getElementById('timeline');
+  const currentIdx = STEPS.findIndex(s=>s.id===o.status);
+  const isFailed = o.status==='FAILED';
+  if(isFailed){
+    tl.innerHTML = `<div class="step active"><div class="dot">✕</div><div class="step-info"><b>Order Failed / Cancelled</b><p>Contact support for refund</p></div></div>`;
+  } else {
+    tl.innerHTML = STEPS.map((s,i)=>{
+      const isDone = i < currentIdx;
+      const isActive = i === currentIdx;
+      const cls = isDone ? 'done' : isActive ? 'active' : '';
+      const icon = isDone ? '✓' : isActive ? '●' : '';
+      return `<div class="step ${cls}"><div class="dot">${icon}</div><div class="step-info"><b>${s.label}</b><p>${s.desc}</p></div></div>`;
+    }).join('');
+  }
+  document.getElementById('result').classList.add('show');
+ }catch(e){
+  alert(e.message);
+ }finally{ btn.textContent='Track Order'; btn.disabled=false; }
+}
+window.addEventListener('DOMContentLoaded',()=>{
+ const params = new URLSearchParams(location.search);
+ const qid = params.get('id');
+ if(qid){ document.getElementById('orderId').value=qid; track(); }
+});
 </script>
 </body>
 </html>
