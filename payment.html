@@ -222,7 +222,6 @@ async function initiateSTK(){
     polling=setInterval(async()=>{
       await finalizeOrder('mpesa_stk','PAID', phone, data.CheckoutRequestID||data.checkoutRequestID);
       clearInterval(polling);
-      location.href='confirmation.html?id='+order.orderId;
     },3000);
   }catch(err){
     document.getElementById('statusTitle').textContent='STK Failed';
@@ -233,29 +232,39 @@ async function initiateSTK(){
     toast(err.message);
   }
 }
-async function confirmManual(){ await finalizeOrder('mpesa_manual','PAID', document.getElementById('phoneInput').value); location.href='confirmation.html?id='+order.orderId; }
+async function confirmManual(){ 
+  await finalizeOrder('mpesa_manual','PAID', document.getElementById('phoneInput').value); 
+}
 
-// === PRO FIX: SAVE TO D1 + FORM + LOCAL ===
+// === FIXED: SAVE TO D1 WITH SAME ID ===
 async function finalizeOrder(method,status,stkPhone,checkoutId){
   const orderId = order.orderId || 'IKU-' + Math.floor(100000 + Math.random()*899999);
   order.orderId = orderId;
-  order.paymentMethod=method; order.status=status; order.screenshot=screenshotBase64; order.submittedAt=new Date().toISOString(); order.mpesaPhone=stkPhone||order.phone; order.checkoutRequestId=checkoutId||'';
+  order.paymentMethod=method; 
+  order.status=status; 
+  order.screenshot=screenshotBase64; 
+  order.submittedAt=new Date().toISOString(); 
+  order.mpesaPhone=stkPhone||order.phone; 
+  order.checkoutRequestId=checkoutId||'';
 
-  // SAVE TO D1 - THIS FIXES YOUR PROBLEM
   try{
-    const d1Status = 'PAID';
-    const mpesaCode = method==='cod' ? 'COD' : (checkoutId || 'STK-'+Date.now().toString().slice(-6));
     const payload = {
       id: orderId,
       phone: order.mpesaPhone || order.phone || '0700000000',
+      mpesa_phone: order.mpesaPhone || order.phone || '0700000000',
       total: order.total,
-      status: d1Status,
-      mpesa_code: mpesaCode,
+      subtotal: order.subtotal || order.total,
+      delivery_fee: order.delivery || 0,
+      status: 'PAID',
       payment_method: method,
       customer_name: order.name||'',
       customer_email: order.email||'',
       address: order.address||'',
-      items: JSON.stringify(order.cart||[])
+      town: order.town||'',
+      area: order.area||'',
+      landmark: order.landmark||'',
+      checkout_request_id: checkoutId || '',
+      items: order.cart||[]
     };
     const r = await fetch('/api/create-order',{
       method:'POST',
@@ -264,16 +273,22 @@ async function finalizeOrder(method,status,stkPhone,checkoutId){
     });
     const j = await r.json();
     console.log('D1 Save:', j);
-    localStorage.setItem('lastOrderId', orderId);
-    localStorage.setItem('ikuthu_last_order', orderId);
+    if(j.success && j.id){
+      order.orderId = j.id;
+      localStorage.setItem('lastOrderId', j.id);
+      localStorage.setItem('ikuthu_last_order', j.id);
+      localStorage.setItem('pendingOrder',JSON.stringify(order));
+      await sendToFormspree(order);
+      location.href='confirmation.html?id='+j.id;
+      return;
+    }
   }catch(e){ console.error('D1 Save Failed', e); }
 
   localStorage.setItem('pendingOrder',JSON.stringify(order));
   await sendToFormspree(order);
-  if(method==='cod'){
-    location.href='confirmation.html?id='+orderId;
-  }
+  location.href='confirmation.html?id='+orderId;
 }
+
 async function sendToFormspree(order){
   const fd=new FormData();
   fd.append('name',order.name||'');
